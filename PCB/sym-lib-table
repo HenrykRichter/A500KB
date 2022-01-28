@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name MX_Hybrid)(type Legacy)(uri ${KIPRJMOD}/Partlibs/MX_Alps_Hybrid.lib)(options "")(descr ""))
+  (lib (name Commodore)(type Legacy)(uri ${KIPRJMOD}/Partlibs/Commodore.lib)(options "")(descr ""))
+)

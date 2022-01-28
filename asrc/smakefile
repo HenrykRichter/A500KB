@@ -1,0 +1,35 @@
+#
+# SAS/C Makefile for Sensors on Workbench
+#
+
+TARGET  = A500KBConfig 
+
+RM	= delete force quiet
+CC	= sc
+LD      = slink
+CFLAGS	= NOVER NOICONS nostackcheck math=standard strmerge strsect=code parameters=regs data=far opt optsize ignore 315
+
+CFLAGS  = $(CFLAGS) 
+LDFLAGS	= NOICONS SC SD ND QUIET
+LDFLAGS = LIB sc:lib/scm.lib LIB sc:lib/sc.lib $(LDFLAGS)
+
+# debug stuff
+#CFLAGS  = DEFINE DEBUG=1 $(CFLAGS)
+#LDFLAGS = LIB sc:lib/debug.lib LIB sc:lib/amiga.lib $(LDFLAGS)
+
+OBJS	= startup.o utils.o config.o cx_main.o window.o 
+
+all:	$(TARGET) 
+
+$(TARGET): $(OBJS) 
+	$(LD) $(OBJS) $(LDFLAGS) TO $(TARGET)
+
+clean:
+	-$(RM) $(TARGET) $(OBJS) #?.lnk
+
+# dependencies
+config.o: config.c config.h version.h
+startup.o: startup.c config.h version.h window.h
+cx_main.o: cx_main.c config.h version.h window.h
+window.o: window.c config.h version.h window.h
+utils.o: utils.c utils.h

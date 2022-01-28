@@ -1,0 +1,45 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ATmega128-16AU
+D 16MHz, 128kB Flash, 4kB SRAM, 4kB EEPROM, JTAG, TQFP-64
+K AVR 8bit Microcontroller MegaAVR
+F http://ww1.microchip.com/downloads/en/DeviceDoc/doc2467.pdf
+$ENDCMP
+#
+$CMP ATmega128A-AU
+D 16MHz, 128kB Flash, 4kB SRAM, 4kB EEPROM, TQFP-64
+K AVR 8bit Microcontroller MegaAVR
+F http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8151-8-bit-AVR-ATmega128A_Datasheet.pdf
+$ENDCMP
+#
+$CMP ATmega128L-8AU
+D 8MHz, 128kB Flash, 4kB SRAM, 4kB EEPROM, JTAG, TQFP-64
+K AVR 8bit Microcontroller MegaAVR
+F http://ww1.microchip.com/downloads/en/DeviceDoc/doc2467.pdf
+$ENDCMP
+#
+$CMP ATmega64-16AU
+D 16MHz, 64kB Flash, 4kB SRAM, 2kB EEPROM, TQFP-64
+K AVR 8bit Microcontroller MegaAVR
+F http://ww1.microchip.com/downloads/en/DeviceDoc/atmel-2490-8-bit-avr-microcontroller-atmega64-l_datasheet.pdf
+$ENDCMP
+#
+$CMP ATmega64A-AU
+D 16MHz, 64kB Flash, 4kB SRAM, 2kB EEPROM, TQFP-64
+K AVR 8bit Microcontroller MegaAVR
+F http://ww1.microchip.com/downloads/en/DeviceDoc/atmel-8160-8-bit-avr-microcontroller-atmega64a-datasheet.pdf
+$ENDCMP
+#
+$CMP C=6570-036
+D 8-Bit Microprocessing unit 3.0MHz, DIP-40
+K MCU
+F http://pdf.datasheetcatalog.com/datasheet/motorola/MC68A00L.pdf
+$ENDCMP
+#
+$CMP IS32FL3237_DS
+D 36 Channel I2C LED controller
+K LED Controller
+F https://www.mouser.de/datasheet/2/198/IS32FL3237_DS-1950357.pdf
+$ENDCMP
+#
+#End Doc Library
