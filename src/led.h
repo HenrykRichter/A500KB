@@ -14,7 +14,7 @@ unsigned char led_getinputstate();
 unsigned char led_updatecontroller( unsigned char state );
 
 /* save current configuration */
-void led_saveconfig();
+void led_saveconfig( char );
 
 /* apply new configuration commands from host (command stream by serial input) */
 unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
@@ -32,5 +32,8 @@ unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 #define LEDCMD_COLOR  0x40
 /* get config (1 byte argument which is currently 0) */
 #define LEDCMD_GETCONFIG 0x60
+/* save to EEPROM (no argument) */
+#define LEDCMD_SAVECONFIG 0x80
+
 
 #endif

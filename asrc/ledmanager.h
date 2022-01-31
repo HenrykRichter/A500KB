@@ -17,6 +17,9 @@
 /* 7 RGB LEDs are on the prototype board */
 #define N_LED	7
 
+/* virtual 8th LED for save config command */
+#define LEDIDX_SAVEEEPROM 7
+
 /* possible LED states */
 #define LED_IDLE      0 /* idle             */
 #define LED_ACTIVE    1 /* primary   active */
@@ -50,6 +53,8 @@
 #define LEDCMD_COLOR  0x40
 /* get config (1 byte argument which is currently 0) */
 #define LEDCMD_GETCONFIG 0x60
+/* save config (o argument) */
+#define LEDCMD_SAVEEEPROM 0x80
 
 /* PUBLIC PROTO */
 

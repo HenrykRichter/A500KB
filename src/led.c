@@ -264,10 +264,11 @@ void twi_ledupdate_callback( uint8_t address, uint8_t *data )
 	twi_write(I2CADDRESS, initseq, 7, twi_ledupdate_callback );
 }
 
+
 unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 {
 	unsigned char index,st,r,g,b;
-	char confget = -1;
+	char confget = -1,needsave = -1;
 	unsigned char *sendbuf = recvcmd; /* just re-use the command buffer */
 
 	while( nrecv )
@@ -277,6 +278,9 @@ unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 		nrecv--;
 		switch( *recvcmd++ & LEDCMD_MASK )
 		{
+			case LEDCMD_SAVECONFIG:
+				needsave = 0x7f; /* save all */
+				break;
 			case LEDCMD_GETCONFIG:
 				if( !nrecv )
 					break;
@@ -339,6 +343,10 @@ unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 		}
 		return (LED_STATES*3)+1;
 	}
+	if( needsave >= 0 )
+	{
+		led_saveconfig( needsave );
+	}
 
 	return 0;
 }
@@ -393,12 +401,121 @@ unsigned char led_updatecontroller( unsigned char state )
 }
 
 
+void led_saveconfig( char neededleds )
+{
+	unsigned char start = 0;
+	unsigned char last  = N_LED-1;
+	unsigned char i,k;
+	unsigned char *obuf;
+	unsigned char *adr = (unsigned char *)0x0;
+
+	/* 
+		header:
+		 0xBA, 0x58 = 0xBA 'X'
+
+		record per LED (2+11*LED_IDX):
+		 1 Byte SRCMAP
+		 3*3 Bytes RGB
+		 1 Byte Mode
+
+	*/
+	for( i=start ; i <= last ; i++ )
+	{
+		obuf = adr + 2 + i*11;
+		eeprom_update_byte( obuf++, LED_SRCMAP[i] );
+		for( k=0 ; k < LED_STATES; k++ )
+		{
+			eeprom_update_byte( obuf++, LED_RGB[i][k][0] );
+			eeprom_update_byte( obuf++, LED_RGB[i][k][1] );
+			eeprom_update_byte( obuf++, LED_RGB[i][k][2] );
+		}
+		eeprom_update_byte( obuf++, LED_MODES[i] );
+	}
+
+	obuf = adr;
+	eeprom_update_byte( obuf, 0xBA );
+	obuf++;
+	eeprom_update_byte( obuf, 0x58 );
+#ifdef DEBUG
+	uart1_puts("Config Saved ");
+	uart_puthexuint( (uint16_t)obuf );
+	uart1_puts("\n");
+#endif
+}
+
+#if 0
+uint8_t eeprom_read_byte (const uint8_t *__p);
+void eeprom_read_block (void *__dst, const void *__src, size_t __n);
+
+void eeprom_write_byte (uint8_t *__p, uint8_t __value);
+
+void eeprom_update_byte (uint8_t *__p, uint8_t __value);
+void eeprom_update_word (uint16_t *__p, uint16_t __value);
+void eeprom_update_block (const void *__src, void *__dst, size_t __n);
+
+Suppose we want to write a 55 value to address 64 in EEPROM, then we can write it as,
+uint8_t ByteOfData = 0 x55 ;
+eeprom_update_byte (( uint8_t *) 64, ByteOfData );
+#endif
+
+void led_loadconfig( char neededleds )
+{
+        unsigned char start = 0;
+        unsigned char last  = N_LED-1; /* TODO: verify neededleds */
+        unsigned char i,k,nf;
+        unsigned char *obuf;
+        unsigned char *adr = (unsigned char *)0x0;
+
+	/* check header 
+		 0xBA, 0x58 = 0xBA 'X'
+	*/
+	nf = 0;
+	obuf = adr;
+	if( eeprom_read_byte( obuf++ ) != 0xBA )
+		nf = 1;
+	if( eeprom_read_byte( obuf++ ) != 0x58 )
+		nf = 1;
+	if( nf == 1 )
+	{
+#ifdef DEBUG
+		uart1_puts("Config not found in EEPROM\n");
+#endif
+		return;
+	}
+	uart1_puts("Loading Config from EEPROM\n");
+	/* 
+		record per LED (2+11*LED_IDX):
+		 1 Byte SRCMAP
+		 3*3 Bytes RGB
+		 1 Byte Mode
+
+	*/
+	for( i=start ; i <= last ; i++ )
+	{
+		obuf = adr + 2 + i*11;
+
+		LED_SRCMAP[i] = eeprom_read_byte( obuf++ );
+
+		for( k=0 ; k < LED_STATES; k++ )
+		{
+			LED_RGB[i][k][0] = eeprom_read_byte( obuf++ );
+			LED_RGB[i][k][1] = eeprom_read_byte( obuf++ );
+			LED_RGB[i][k][2] = eeprom_read_byte( obuf++ );
+		}
+
+		LED_MODES[i]  = eeprom_read_byte( obuf++ );
+	}
+
+}
+
+
 /* TODO: better TWI receive function (but not needed in this code) */
 unsigned char twirec;
 void twi_callback(uint8_t adr, uint8_t *data)
 {
 	twirec=*data;
 }
+
 
 
 void led_defaults()
@@ -536,6 +653,9 @@ void led_init()
 
 	/* set RGB defaults and input port assignments */
 	led_defaults();
+
+	/* load config from EEPROM, if present */
+	led_loadconfig( 0x7f );
 
 	/* write some RGB values */
 #if 0

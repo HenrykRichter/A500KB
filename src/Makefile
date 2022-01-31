@@ -23,14 +23,14 @@ PROGRAMMER = -c usbasp
 OBJECTS    = uart.o twi.o led.o main.o 
 DEFS       = -DDEBUG
 HEADERS	   = kbdefs.h 
-FUSES      = -U hfuse:w:0x99:m -U lfuse:w:0xdf:m
+FUSES      = -U hfuse:w:0x91:m -U lfuse:w:0xdf:m
 # 99/5E are default for ATMegaUSB1287
 # DA/FF were what my Atmega 328p's had as default...
 
 # ATMegaUSB1287:
 # Example for 16 MHz external oscillator
 # Fuse high byte (def:0x99):
-# 0x99 = 1 0 0 1   1 0 0 1 <-- BOOTRST (boot reset vector at 0x0000)
+# 0x99 = 1 0 0 1   0 0 0 1 <-- BOOTRST (boot reset vector at 0x0000)
 #        ^ ^ ^ ^   ^ ^ ^------ BOOTSZ0
 #        | | | |   | +-------- BOOTSZ1
 #        | | | |   +---------- EESAVE (set to 0 to preserve EEPROM over chip erase)

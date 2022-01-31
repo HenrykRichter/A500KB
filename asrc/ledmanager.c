@@ -25,10 +25,11 @@ unsigned short LED_lastSRCMAP[N_LED][LED_STATES];
 unsigned char  LED_lastRGB[N_LED][LED_STATES][3]; /* RGB config for LEDs */
 unsigned char  LED_lastMODES[N_LED];  /* static,cycle, rainbow, knight rider etc. */
 
-UBYTE cmdstream[32]; /* 2 bytes preamble, 1 CMD SOURCE (2 bytes), 3 CMDs RGB (5 bytes each) */
-SHORT lastchange; /* index of last LED that was changed in config tool */
+UBYTE cmdstream[48]; /* 2 bytes preamble, 1 CMD SOURCE (2 bytes), 3 CMDs RGB (5 bytes each) */
+SHORT lastchange;    /* index of last LED that was changed in config tool */
 SHORT lastsent;
-SHORT retries;    /* we try to re-send data a couple of times */
+SHORT retries;       /* we try to re-send data a couple of times */
+SHORT needcfg;       /* we need to save current config in EEPROM */
 #define NRETRIES 10
 
 #define LEMCF_CHK 1
@@ -44,6 +45,7 @@ LONG ledmanager_init(void)
 	led_defaults();
 	lastchange = -1; /* no LED config was changed recently */
 	lastsent   = -1; /* last attempted transmission LED index */
+	needcfg    =  0; /* we don't need to send save command */
 
 	return CIAKB_Init();
 }
@@ -52,6 +54,12 @@ LONG ledmanager_init(void)
 LONG ledmanager_exit(void)
 {
 	return CIAKB_Exit();
+}
+
+/* store config in Keyboard's eeprom */
+LONG ledmanager_saveEEPROM(void)
+{
+	return ledmanager_sendConfig( LEDIDX_SAVEEEPROM );
 }
 
 /*
@@ -69,6 +77,17 @@ LONG ledmanager_sendConfig( LONG tosendled )
 //	LONG tosendled = -1; /* index that needs sending next (or retry) */
 	LONG res = KCMD_IDLE;
 
+	if( tosendled == LEDIDX_SAVEEEPROM )
+	{
+		needcfg	= 1;
+	}
+
+	/* check if busy (1/0) = try again later */
+	if( CIAKB_IsBusy() )
+	{
+		return KCMD_BUSY;
+	}
+
 	/* did we recently send something ? */
 	if( lastsent >= 0 )
 	{
@@ -76,6 +95,8 @@ LONG ledmanager_sendConfig( LONG tosendled )
 		if( (res == KCMD_ACK) || (res==KCMD_IDLE) )
 		{
 			ledmanager_copy_last( lastsent, 0 );
+			if( lastsent == LEDIDX_SAVEEEPROM )
+				needcfg = 0;
 			lastsent = -1; /* ok, done.  */
 			retries  =  0; /* no retries */
 		}
@@ -87,18 +108,23 @@ LONG ledmanager_sendConfig( LONG tosendled )
 				res |= KCMD_RETRYING;
 		}
 	}
-
+	
 	/* nothing to send yet ? check LED list */
 	if( tosendled < 0 )
 	{
-		for( tosendled=0 ; tosendled < N_LED ; tosendled++ )
+		if( needcfg )
+			tosendled = LEDIDX_SAVEEEPROM;
+		else
 		{
-			/* any LED that has changes ? */
-			if( 0 != ledmanager_copy_last( tosendled, LEMCF_CHK ) )
-				break;
+			for( tosendled=0 ; tosendled < N_LED ; tosendled++ )
+			{
+				/* any LED that has changes ? */
+				if( 0 != ledmanager_copy_last( tosendled, LEMCF_CHK ) )
+					break;
+			}
+			if( tosendled == N_LED )
+				tosendled = -1;
 		}
-		if( tosendled == N_LED )
-			tosendled = -1;
 	}
 
 	if( tosendled >= 0 )
@@ -128,41 +154,49 @@ LONG ledmanager_sendcommands( LONG led )
 	*cmd++ = 0x00;
 	*cmd++ = 0x03;
 
-	/* source mapping:
-	   if LED_ACTIVE < LED_SECONDARY, then send inverse flag
-	   alongside activation mask
-	   if both are the same source, then use ACTIVE only
-	   if( SECONDARY but not ACTIVE), then send inverse flag,too
-	*/
-	*cmd++ = LEDCMD_SOURCE | led;
-	act    = LED_SRCMAP[led][LED_ACTIVE];
-	sec    = LED_SRCMAP[led][LED_SECONDARY];
-	if( (sec != LEDB_SRC_INACTIVE) &&               /* if secondary is inactive, we won't need to swap */
-	    ( (act < sec) || (act==LEDB_SRC_INACTIVE) ) /* if primary is inactive or the secondary has a higher index, then swap */
-	  )
+	if( led == LEDIDX_SAVEEEPROM )
 	{
-		res = (1<<act) | (1<<sec) | LEDF_SRC_SWAP;
+		*cmd++ = LEDCMD_SAVEEEPROM;
 	}
 	else
-	{	/* secondary is < primary, hence primary will light first */
-		res = (1<<act) | (1<<sec);
-	}
-	*cmd++ = (UBYTE)res;
-
-	/* now send colors = CMD+STATE+RGB */
-	for( i=LED_IDLE ; i <= LED_SECONDARY ; i++ )
 	{
-		*cmd++ = LEDCMD_COLOR | led;
-		*cmd++ = i;
-		*cmd++ = LED_RGB[led][i][0];
-		*cmd++ = LED_RGB[led][i][1];
-		*cmd++ = LED_RGB[led][i][2];
+		/* source mapping:
+		   if LED_ACTIVE < LED_SECONDARY, then send inverse flag
+		   alongside activation mask
+		   if both are the same source, then use ACTIVE only
+		   if( SECONDARY but not ACTIVE), then send inverse flag,too
+		*/
+		*cmd++ = LEDCMD_SOURCE | led;
+		act    = LED_SRCMAP[led][LED_ACTIVE];
+		sec    = LED_SRCMAP[led][LED_SECONDARY];
+		if( (sec != LEDB_SRC_INACTIVE) &&               /* if secondary is inactive, we won't need to swap */
+		    ( (act < sec) || (act==LEDB_SRC_INACTIVE) ) /* if primary is inactive or the secondary has a higher index, then swap */
+		  )
+		{
+			res = (1<<act) | (1<<sec) | LEDF_SRC_SWAP;
+		}
+		else
+		{	/* secondary is < primary, hence primary will light first */
+			res = (1<<act) | (1<<sec);
+		}
+		*cmd++ = (UBYTE)res;
+
+		/* now send colors = CMD+STATE+RGB */
+		for( i=LED_IDLE ; i <= LED_SECONDARY ; i++ )
+		{
+			*cmd++ = LEDCMD_COLOR | led;
+			*cmd++ = i;
+			*cmd++ = LED_RGB[led][i][0];
+			*cmd++ = LED_RGB[led][i][1];
+			*cmd++ = LED_RGB[led][i][2];
+		}
 	}
 
 	ncmd = cmd - cmdstream;
 
 	/* 0==OK, else FAIL */
 	return CIAKB_Send( cmdstream, ncmd );
+//	return 0;
 }
 
 LONG ledmanager_getColor(LONG led,LONG state,LONG rgb)

@@ -38,6 +38,7 @@ CMD_TIMEOUT	EQU	$5A	;no answer
 	XDEF	_CIAKB_Init	;startup
 	XDEF	 _CIAKB_Send	;send a sequence
 	XDEF	 _CIAKB_Wait	;wait for end of sequence (and stop)
+	XDEF	 _CIAKB_IsBusy  ;
 	XDEF	 _CIAKB_Stop	;stop sending instance (implicit in "Wait")
 	XDEF	_CIAKB_Exit	;shutdown
 
@@ -190,6 +191,19 @@ _CIAKB_Exit:
 	rts
 
 
+_CIAKB_IsBusy:
+	moveq	#0,d0
+	move.w  cia_allocated(pc),d0
+	beq.s	.exit
+
+	move.b	kbsend_sending(pc),d0	; will be on as long as neither a timeout or ACK/NACK occured
+	beq.s	.exit
+
+	moveq	#1,d0
+.exit:
+	rts
+
+
 ; Wait for end of sending sequence (void)
 ; Returns: received code
 _CIAKB_Wait:
@@ -250,9 +264,10 @@ CIAKB_SetSigTask:
 
 	moveq	#0,d0
 	move.l	kbsend_sigbit,d1		;consecutive send ? (keep signal -> alternative: re-allocate)
-	bne.s	.rts
+	bge.s	.rts
 	move.l	d0,kbsend_sigtask		;no task, for now
 
+	move.l	4.w,a6
 	moveq	#-1,d0
 	jsr	_LVOAllocSignal(A6)
 	move.l	d0,kbsend_sigbit
@@ -261,7 +276,6 @@ CIAKB_SetSigTask:
 	bset	d0,d1
 	move.l	d1,kbsend_sigmask		;we have a mask
 
-	move.l	4.w,a6
 	suba.l	a1,a1
 	jsr	_LVOFindTask(a6)
 	move.l	d0,kbsend_sigtask		;add task
@@ -298,7 +312,7 @@ _CIAKB_Stop:
 ;out: D0 ==0 OK
 ;     D0 !=0 FAIL
 _CIAKB_Send:
-	movem.l	d6/a6,-(sp)
+	movem.l	d1-d7/a2-a6,-(sp)
 	;TODO: check if sending is already in progress
 	move.l	d0,d6				;remember length
 
@@ -339,7 +353,7 @@ _CIAKB_Send:
 	moveq	#0,d0				;OK
 .fail:
 .rts:
-	movem.l	(sp)+,d6/a6
+	movem.l	(sp)+,d1-d7/a2-a6
 	rts
 
 
@@ -390,6 +404,8 @@ CIAKB_TimerInt:
 
 	clr.b	kbsend_sending			; timeout: we're done sending
 	move.b	#CMD_TIMEOUT,kbsend_result	; remember outcome
+
+	move.b	#%10000000,ciacra+_ciaa		;E01 CIACRAF_TODIN (disable timer)
 
 	;signal waiting task
 	bsr	CIAKB_SendSignal
@@ -502,12 +518,23 @@ CIAKB_KeyboardInt:
 		move.w	d0,kbrolloff
 	endc
 
+	move.b	kbsend_active(pc),d0
+	beq.s	.dontswallow
+	
+	or.b    #CIACRAF_SPMODE,_ciaa+ciacra		;
+	bsr	Delay75us
+	and.b   #~(CIACRAF_SPMODE)&$ff,_ciaa+ciacra	;
+
+	bra.s	.swallowed
+.dontswallow:
 	move.l	cia_oriKBInt(pc),d0		;get original keyboard interrupt handler
 	beq.s	.rts
 	move.l	d0,a1
 	move.l	IS_CODE(a1),a0
 	move.l	IS_DATA(a1),a1
 	jsr	(a0)
+.swallowed:
+
 .rts
 	moveq	#0,d0
 	rts
@@ -525,10 +552,6 @@ CIAKB_SendSignal:
 	movem.l	(sp)+,d0/d1/a0/a1/a6
 	rts
 
-;	or.b    #CIACRAF_SPMODE,_ciaacra
-;keyhandshake_END:
-; ; set up to shift in next key
-;       and.b   #~(CIACRAF_SPMODE)&$ff,_ciaacra
 ; 75us busy loop
 Delay75us:
 	move.l	d0,-(sp)
