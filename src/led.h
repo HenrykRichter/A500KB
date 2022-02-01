@@ -16,8 +16,13 @@ unsigned char led_updatecontroller( unsigned char state );
 /* save current configuration */
 void led_saveconfig( char );
 
-/* apply new configuration commands from host (command stream by serial input) */
-unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
+/* apply new configuration commands from host (command stream by serial input) 
+
+   returns: 0 = no special action for caller
+           >0 = number of bytes to send back to Amiga (typically config bytes)
+	   -1 = save configuration requested
+*/
+char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 
 /* force flag for led_updatecontroller() */
 #define LED_FORCE_UPDATE 0x80

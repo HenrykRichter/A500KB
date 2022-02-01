@@ -15,10 +15,11 @@
 /*
   Gamma table
   track LED source changes -> send updated colors
-
   done: LED source map for LED 0-6
-  LED color table idle/active
-  LED mode regular/special (knight rider, rainbow, cycle)
+  LED color table idle/active/secondary
+
+  TODO:
+   LED mode regular/special (knight rider, rainbow, cycle)
 */
 
 #include <avr/interrupt.h>
@@ -47,20 +48,6 @@
 #define NULL (0)
 #endif
 
-#if 0
-uint8_t eeprom_read_byte (const uint8_t *__p);
-void eeprom_read_block (void *__dst, const void *__src, size_t __n);
-
-void eeprom_write_byte (uint8_t *__p, uint8_t __value);
-
-void eeprom_update_byte (uint8_t *__p, uint8_t __value);
-void eeprom_update_word (uint16_t *__p, uint16_t __value);
-void eeprom_update_block (const void *__src, void *__dst, size_t __n);
-
-Suppose we want to write a 55 value to address 64 in EEPROM, then we can write it as,
-uint8_t ByteOfData = 0 x55 ;
-eeprom_update_byte (( uint8_t *) 64, ByteOfData );
-#endif
 
 /* set/clear Bit in register or port */
 #define BitSet( _port_, _bit_ ) _port_ |=   (1 << (_bit_) )
@@ -73,6 +60,9 @@ eeprom_update_byte (( uint8_t *) 64, ByteOfData );
 /* put number on UART */
 extern void uart_puthexuchar(unsigned char a);
 extern void uart_puthexuint(uint16_t a);
+
+/* external variables */
+extern unsigned char caps_on; /* CAPSLOCK state 0=off,1=on */
 
 /* LED controller address (twi.c needs address >>1) */
 #define I2CADDRESS (0x68>>1)
@@ -117,12 +107,13 @@ const unsigned char ledinitlist[] PROGMEM = {
 #define LED_SECONDARY 2 /* secondary active */
 #define LED_STATES    3 
 
-extern unsigned char caps_on; /* CAPSLOCK state 0=off,1=on */
+unsigned char get_secmap( unsigned char srcmap );
 
 unsigned char led_currentstate; /* current input source state    */
 unsigned char src_active;       /* source state as sent to LEDs  */
 
 unsigned char LED_SRCMAP[N_LED]; /* flags applying to this LED      */
+unsigned char LED_SECMAP[N_LED]; /* bit combinations (including SWAP flag) for secondary function */
 unsigned char LED_RGB[N_LED][LED_STATES][3]; /* RGB config for LEDs */
 unsigned char LED_MODES[N_LED];  /* static,cycle, rainbow, knight rider etc. */
 
@@ -265,7 +256,7 @@ void twi_ledupdate_callback( uint8_t address, uint8_t *data )
 }
 
 
-unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
+char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 {
 	unsigned char index,st,r,g,b;
 	char confget = -1,needsave = -1;
@@ -299,6 +290,7 @@ unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 				if( index >= N_LED )
 					break;
 				LED_SRCMAP[index] = r;
+				LED_SECMAP[index] = get_secmap(r); /* bit combinations (including SWAP flag) for secondary function */
 				break;
 
 			case LEDCMD_COLOR:
@@ -343,18 +335,77 @@ unsigned char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 		}
 		return (LED_STATES*3)+1;
 	}
+
 	if( needsave >= 0 )
 	{
-		led_saveconfig( needsave );
+		return -1;
 	}
 
 	return 0;
 }
 
+
+/* bit combinations (including SWAP flag) for secondary function 
+
+   returns bogus comparison value (0xff) if no bit was set in "srcmap"
+*/
+unsigned char get_secmap( unsigned char srcmap )
+{
+	unsigned char ret = 0;
+	int j,pripos,secpos;
+
+	pripos = -1; /* lower bit */
+	secpos = -1; /* upper bit */
+
+	/* identify the two active bits (lower bit first, then upper bit) */
+	for( j = 0 ; j < 7 ; j++ )
+	{
+		if( srcmap & (1<<j) )
+		{
+			pripos = j;
+			j++;
+			break;
+		}
+	}
+	for(  ; j < 7 ; j++ )
+	{
+		if( srcmap & (1<<j) )
+		{
+			secpos = j;
+			break;
+		}
+	}
+	
+	ret = 0xff; /* if no bit found: return bogus bit pattern 7 source bits and "swap" set */
+
+	if( pripos >= 0 ) /* at least one bit found in source map ? */
+	{
+		/* secondary is upper bit ? */
+		if( srcmap & 0x80 )
+		{
+			/* (sec > pri) or pri inactive */
+			if( secpos >= 0 )
+				pripos = secpos;
+			/* secondary is either the only source bit (pripos) or 
+			   the higher bit (from secpos) */
+			ret = 0x80 | (1<<pripos);
+		}
+		else
+		{
+			/* secondary is the lower bit (if both sources are active) */
+			if( secpos >= 0 )
+				ret = (1<<pripos); /* pripos was checked above */
+		}
+	}
+
+	return ret;
+}
+
+
 /* apply input state to LEDs */
 unsigned char led_updatecontroller( unsigned char state )
 {
-	unsigned char chg,*tcmd,i,t;
+	unsigned char chg,*tcmd,i,t,q;
 
 	chg = src_active^state; /* changed inputs */
 	if( !chg )
@@ -380,11 +431,22 @@ unsigned char led_updatecontroller( unsigned char state )
 		if( !( LED_SRCMAP[i] & chg ))
 			continue; /* no, next */
 		*tcmd++ = i; /* this LED needs new RGB */
+#if 1
+		t = LED_SRCMAP[i] & (state|0x80); /* get primary/secondary color from state map, decide based on srcmap what's primary, what's secondary */
+		if( LED_SECMAP[i] == t ) /* is this bit combo (exactly) the secondary condition ? */
+			q = 2;
+		else
+		{
+			q = (t&0x7f) ? 1 : 0; /* either idle or primary */
+		}
+		*tcmd++ = q; // pgm_read_byte(&prisectab[t]);
+#else
 		t = LED_SRCMAP[i] & state; /* on/off state vs. assigned bit(s) */
 		/* TODO: more states: secondary RGB */
 		if( t )
 			*tcmd++ = 1;
 		else	*tcmd++ = 0;
+#endif
 	}
 
 	/* TODO: respect LED_MODES */
@@ -482,7 +544,9 @@ void led_loadconfig( char neededleds )
 #endif
 		return;
 	}
+#ifdef DEBUG
 	uart1_puts("Loading Config from EEPROM\n");
+#endif
 	/* 
 		record per LED (2+11*LED_IDX):
 		 1 Byte SRCMAP
@@ -495,6 +559,7 @@ void led_loadconfig( char neededleds )
 		obuf = adr + 2 + i*11;
 
 		LED_SRCMAP[i] = eeprom_read_byte( obuf++ );
+		LED_SECMAP[i] = get_secmap(LED_SRCMAP[i]); /* bit combinations (including SWAP flag) for secondary function */
 
 		for( k=0 ; k < LED_STATES; k++ )
 		{
@@ -532,6 +597,9 @@ void led_defaults()
 	LED_SRCMAP[5] = LEDF_SRC_POWER;
 
 	LED_SRCMAP[6] = LEDF_SRC_CAPS;
+
+	for( i=0 ; i < 7 ; i++ )
+		LED_SECMAP[i] = get_secmap(LED_SRCMAP[i]); /* bit combinations (including SWAP flag) for secondary function */
 
 	/* RGB defaults */
 	for( i=0 ; i < 2 ; i++ )

@@ -82,6 +82,19 @@
 #define KBDSEND_RSTDDR DDRD
 #define KBDSEND_RSTB 4
 
+/* spare pads */
+#define KBD_SPARE1PORT PORTD
+#define KBD_SPARE1DDR  DDRD
+#define KBD_SPARE1PIN  PIND
+#define KBD_SPARE1B    6
+
+#define KBD_SPARE2PORT PORTD
+#define KBD_SPARE2DDR  DDRD
+#define KBD_SPARE2PIN  PIND
+#define KBD_SPARE2B    7
+
+
+
 /* LED sources: Power (analog), Drive, LED3, LED4 */
 #define PLED_DDR  DDRF
 #define PLED_PORT PORTF

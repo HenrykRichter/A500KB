@@ -62,6 +62,10 @@ char read_ring( RING_TYPE *val );
 void uart_puthexuchar(unsigned char a);
 void uart_puthexuint(uint16_t a);
 
+/* regular caps on/off = 1/0, with force flag 0x40 */
+void show_caps( unsigned char state );
+
+
 unsigned char *recv_commands(unsigned char *nrecv);
 
 
@@ -252,9 +256,10 @@ void twi_callback(uint8_t adr, uint8_t *data)
 
 unsigned char caps_on; /* for LED controller */
 
+
 int main(void)
 {
-  unsigned char ledstat,i,j,pos,state;
+  unsigned char i,j,pos,state; // ledstat
   unsigned short kbdwait = 0;
   unsigned short rstwait = 0;
   unsigned short keyb_idle = 0;
@@ -272,11 +277,13 @@ int main(void)
 
   /* initialize regular Caps LED */
   caps     = KEYIDLE; /* caps lock treated separately */
-  caps_on  = 1;
   LEDDDR  |=   1<<LEDPIN;       /* output */
   LEDPORT &= ~(1<<LEDPIN);	/* off */
-  ledstat  =  (1<<LEDPIN);	/* on  */
-  LEDPORT |=  (1<<LEDPIN);	/* on = NPN transistor switches to GND = LED on */
+
+  caps_on  = 1;         /* for LED controller */
+  show_caps( caps_on ); /* light CAPS-lock until sync with Amiga */
+//  ledstat  =  (1<<LEDPIN);	/* on  */
+//  LEDPORT |=  (1<<LEDPIN);	/* on = NPN transistor switches to GND = LED on */
 
   /* initialized output ports (def: low) */
   ODDR    |= OMASK;     /* output */
@@ -313,6 +320,13 @@ int main(void)
   PLED_PORT   &=  ~(1<<PLED_BIT); /* we use this as analog input */
   ADCSRA = 0x87;                  /* Enable ADC, fr/128  */
   ADMUX  = 0x40;                  /* Vref: Avcc, ADC channel: 0 (PortF on AT90USB1287 */
+
+  /* spare inputs (used for options) */
+  KBD_SPARE1DDR  &= ~(1<<KBD_SPARE1B);
+  KBD_SPARE1PORT |=  (1<<KBD_SPARE1B); /* in, with pull-up */
+  KBD_SPARE2DDR  &= ~(1<<KBD_SPARE2B);
+  KBD_SPARE2PORT |=  (1<<KBD_SPARE2B); /* in, with pull-up */
+
 
   /* initialize keyboard states */
   for( i=0 ; i < OCOUNT*ICOUNT ; i++ )
@@ -502,9 +516,10 @@ int main(void)
 					if( cur == KEYDOWN ) 
 					{
 						caps ^= KEYDOWN;
-						ledstat = (caps<<LEDPIN);			/* on/off */
+						//ledstat = (caps<<LEDPIN);			/* on/off */
 						caps_on = caps;
-						LEDPORT = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* on */
+						//LEDPORT = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* on */
+						show_caps( caps_on );
 
 						if( !write_ring( pgm_read_byte(&kbmap[pos]) | ((caps^KEYDOWN)<<7) ) )
 							state |= STATE_OVERFLOW;
@@ -562,9 +577,11 @@ int main(void)
 		write_ring( KEYCODE_POWERUPSTREAM_STOP );
 		state &= ~STATE_POWERUP2;
 
-		ledstat  = 0;	/* LED off after power-on phase */
-		LEDPORT  = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* off */
-		caps_on  = 0;
+		//ledstat  = 0;	/* LED off after power-on phase */
+		//LEDPORT  = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* off */
+
+		caps_on  = 0;   /* referenced in LED controller */
+		show_caps( caps_on );
 	}
 	/* --------------------------------------------------------------------- */
 
@@ -620,6 +637,30 @@ int main(void)
 						}
 						uart1_puts("\r\n");
 #endif
+						/* 
+							We need to save the configuration. This may take a while.
+							Hence, it's best to acknowledge the command, then take some
+							time and re-sync before sending the final ack 
+						*/
+						if( nsend == -1 )
+						{
+							show_caps( 0x41 );
+							//ledstat  =  (1<<LEDPIN);	/* on  */
+							//LEDPORT  = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* on */
+
+							amiga_kbsend( COMM_ACK1 | 0x80 , 2 ); /* write ACK1 */
+							state |= STATE_RESYNC;
+
+							led_saveconfig( 0x7f );
+
+							/* this will go out after resync */
+							write_ring( COMM_ACK | 0x80 );
+
+							show_caps( 0x40 );
+							//ledstat  =  (1<<LEDPIN);	/* off  */
+							//LEDPORT  = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* off */
+						}
+
 						/* do we need to send something back (like config) */
 						if( nsend > 0 )
 						{
@@ -713,8 +754,8 @@ int main(void)
 
 		DEBUG_ON();
 
-		ledstat  ^= (1<<LEDPIN);	/* on/off */
-		LEDPORT = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* on */
+		//ledstat  ^= (1<<LEDPIN);	/* on/off */
+		//LEDPORT = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* on */
 
 		switch(cur)
 		{
@@ -936,6 +977,32 @@ char read_ring( RING_TYPE *val )
  }
 
  return 1;
+}
+
+/* ----------------------------------------------------------------------- */
+/* caps lock LED (regular LED, not the RGB one) 
+   state&0x1 == 1 -> on
+   state&0x1 == 0 -> off
+   state&040 -> force, regardless of SPARE1PIN
+
+   Normally, the regular CAPS lock will honor the SPARE1PIN. If that
+   pin is pulled down by R10 (2k), then the normal CAPS lock LED will
+   be used. Otherwise, the RGB CAPS lock LED is active only.
+
+   The override (0x40) applies to the Save Config mode.
+*/
+void show_caps( unsigned char state )
+{
+	unsigned char ledstat;
+
+	/* not pulled down ? */
+	if(   ( KBD_SPARE1PIN & (1<<IN3LED_BIT) )
+	   || ( state & 0x40 )
+	  ) 
+	{
+	  ledstat  = (state & 1 ) ? (1<<LEDPIN) : 0;
+	  LEDPORT  = (LEDPORT&(~(1<<LEDPIN)))|ledstat;     /* on/off */
+	}
 }
 
 /* ----------------------------------------------------------------------- */
