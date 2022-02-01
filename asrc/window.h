@@ -104,6 +104,8 @@ struct myWindow {
 	ULONG	comm_timeouts;
 	ULONG	comm_fails;
 	ULONG	comm_success;
+	
+	ULONG   refreshlist;		/* gadgets that need refreshing */
 };
 
 

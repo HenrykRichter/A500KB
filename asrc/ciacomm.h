@@ -17,6 +17,7 @@ ASM LONG CIAKB_Send( ASMR(a1) UBYTE *sendbuffer ASMREG(a1),
                      ASMR(d0) LONG  nBytes      ASMREG(d0) );
 
 ASM LONG CIAKB_Wait( void ); /* wait until last send is finished */
+ASM LONG CIAKB_IsBusy(void); /* check if busy (1/0) */
 ASM LONG CIAKB_Stop( void );
 
 ASM LONG CIAKB_Exit( void );
@@ -31,5 +32,6 @@ ASM LONG CIAKB_Exit( void );
 
 #define KCMD_NOWORK     0x200   // flag: nothing to be done (in ledmanager.c)
 #define KCMD_RETRYING   0x100   // flag: retrying (in ledmanager.c)
+#define KCMD_BUSY       0x400   // flag: busy (in ledmanager.c)
 
 #endif

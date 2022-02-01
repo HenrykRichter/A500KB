@@ -1,5 +1,6 @@
 # Prerequisites
 *.d
+.DS_Store
 
 # Object files
 *.o
@@ -17,7 +18,6 @@
 *.pch
 
 # Libraries
-*.lib
 *.a
 *.la
 *.lo

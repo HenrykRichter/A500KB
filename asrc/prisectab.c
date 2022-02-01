@@ -95,7 +95,7 @@ int main( int argc, char **argv )
  printf("unsigned char prisectab[256] = {\n");
  for( i=0 ; i < 256 ; i++ )
  {
-	if( (i>0) && !(i&15) )
+	if( (i>0) && !(i&7) )
 		printf("\n");
 
 	printf("%d",LED_DSTMAP[i]);
