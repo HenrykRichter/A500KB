@@ -16,6 +16,9 @@ ASM LONG CIAKB_Init( void );
 ASM LONG CIAKB_Send( ASMR(a1) UBYTE *sendbuffer ASMREG(a1),
                      ASMR(d0) LONG  nBytes      ASMREG(d0) );
 
+ASM LONG CIAKB_GetData( ASMR(a1) UBYTE *recvbuffer ASMREG(a1),   /* receive buffer  */
+                        ASMR(d0) LONG  nBytes      ASMREG(d0) ); /* bytes in buffer */
+
 ASM LONG CIAKB_Wait( void ); /* wait until last send is finished */
 ASM LONG CIAKB_IsBusy(void); /* check if busy (1/0) */
 ASM LONG CIAKB_Stop( void );

@@ -14,6 +14,11 @@
 #include "compiler.h"
 #include "ledmanager.h"
 //#include "ciacomm.h" // see ledmanager.h
+#include <proto/exec.h>
+#include <proto/dos.h>
+#include <exec/memory.h>
+#include <dos/dos.h>
+
 
 /* current state */
 unsigned short LED_SRCMAP[N_LED][LED_STATES]; /* flag bits (not flags) applying to this LED (state 0 is bogus) */
@@ -199,11 +204,111 @@ LONG ledmanager_sendcommands( LONG led )
 //	return 0;
 }
 
+
+/* decode packed SRCMAP (including SWAP flag) into activation
+   flag numbers 
+
+   returns primary or secondary activation flag number (not mask) or
+   LEDB_SRC_INACTIVE for unused activation options (primary and/or
+   secondary)
+*/
+ULONG ledmanager_decodesrcmap( ULONG srcmap, ULONG which )
+{
+	ULONG ret;
+	int j,lobit,hibit;
+
+
+	lobit = -1; /* lower bit */
+	hibit = -1; /* upper bit */
+
+	/* identify the two active bits (lower bit first, then upper bit) */
+	for( j = 0 ; j < 7 ; j++ )
+	{
+		if( srcmap & (1<<j) )
+		{
+			lobit = j;
+			j++;
+			break;
+		}
+	}
+	for(  ; j < 7 ; j++ )
+	{
+		if( srcmap & (1<<j) )
+		{
+			hibit = j;
+			break;
+		}
+	}
+	
+	ret = LEDB_SRC_INACTIVE; /* if no bit found: assume inactive */ 
+
+	if( lobit >= 0 ) /* at least one bit found in source map ? */
+	{
+		/* secondary is upper bit ? */
+		if( srcmap & 0x80 )
+		{
+			/* (sec > pri) or pri inactive */
+			if( hibit < 0 ) /* only one bit in mask -> secondary == lobit */
+			 ret = (which == LED_ACTIVE) ? LEDB_SRC_INACTIVE : lobit;
+			else
+			 ret = (which == LED_ACTIVE) ? lobit : hibit;
+		}
+		else
+		{
+			/* secondary is the lower bit (if both sources are active) */
+			if( hibit < 0 )
+			 ret = (which == LED_ACTIVE) ? lobit : LEDB_SRC_INACTIVE;
+			else
+			 ret = (which == LED_ACTIVE) ? hibit : lobit;
+		}
+	}
+
+	return ret;
+}
+
+
+/* load single configuration entry */
+LONG ledmanager_loadconfigentry( LONG led, UBYTE *recvbuf, LONG nbytes, ULONG flags )
+{
+	SHORT i;
+
+	if( (ULONG)led >= N_LED )
+		return -1;
+ /* format:
+     LED_SRCMAP (1 byte)
+     RGB idle   (3 bytes)
+     RGB active (3 bytes)
+     RGB secondary (3 bytes)
+ */
+	/* TODO: decode sourcemap */
+	LED_SRCMAP[led][LED_ACTIVE]   = ledmanager_decodesrcmap( *recvbuf, LED_ACTIVE );
+	LED_SRCMAP[led][LED_SECONDARY]= ledmanager_decodesrcmap( *recvbuf, LED_SECONDARY );
+	recvbuf++;
+
+	/* copy RGB */
+	for( i=LED_IDLE ; i <= LED_SECONDARY ; i++ )
+	{
+		LED_RGB[led][i][0] = *recvbuf++;
+		LED_RGB[led][i][1] = *recvbuf++;
+		LED_RGB[led][i][2] = *recvbuf++;
+	}
+
+	if( flags & 1 )
+	{
+		/* this is from keyboard, hence we are currently in sync and there is no
+		   need to send these parameters back
+		*/
+		ledmanager_copy_last( led, 0 );
+	}
+
+	return 0;
+}
+
 LONG ledmanager_getColor(LONG led,LONG state,LONG rgb)
 {
-	long ret = 0;
+	LONG ret = 0;
 
-	if( (ULONG)led > N_LED )
+	if( (ULONG)led >= N_LED )
 		return ret;
 	if( (ULONG)state >= LED_STATES )
 		return ret;
@@ -218,9 +323,9 @@ LONG ledmanager_getColor(LONG led,LONG state,LONG rgb)
 
 LONG ledmanager_getSrc(LONG led, LONG state)
 {
-	long ret = 0;
+	LONG ret = 0;
 
-	if( (ULONG)led > N_LED )
+	if( (ULONG)led >= N_LED )
 		return LEDB_SRC_INACTIVE;
 	if( state == LED_IDLE )
 		return LEDB_SRC_INACTIVE;
@@ -235,7 +340,7 @@ LONG ledmanager_getMode(LONG led)
 {
 	long ret = 0;
 
-	if( (ULONG)led > N_LED )
+	if( (ULONG)led >= N_LED )
 		return ret;
 
 	ret = LED_MODES[led];
@@ -274,7 +379,7 @@ void ledmanager_setSrc( LONG led, LONG state, LONG src)
 
 void ledmanager_setMode(LONG led, LONG mode)
 {
-	if( (ULONG)led > N_LED )
+	if( (ULONG)led >= N_LED )
 		return;
 
 	lastchange = led;
@@ -362,6 +467,12 @@ void led_defaults()
         LED_RGB[i][LED_ACTIVE][1] = 0x60; /* green-ish */
         LED_RGB[i][LED_ACTIVE][2] = 0x10;
 
+	/* don't assign "changed" status that would cause to send
+	   the default configuration to the keyboard at startup:
+	   bring both arrays in sync */
+	for( i=0 ; i < N_LED ; i++ )
+		ledmanager_copy_last( i, 0 );
+
 }
 
 /*
@@ -376,7 +487,7 @@ LONG ledmanager_copy_last( LONG led, LONG flags )
 {
 	LONG i;
 
-	if( (ULONG)led > N_LED )
+	if( (ULONG)led >= N_LED )
 		return 0;
 
 	/* check for changes */
@@ -410,4 +521,113 @@ LONG ledmanager_copy_last( LONG led, LONG flags )
 
 	return 0;
 }
+
+#define HDR 0xBAFFEEDD
+#define PRE_NLED 7
+struct ledm_Preset {
+	ULONG  Header;
+	USHORT Version;
+	struct {
+	 USHORT srcA;
+	 USHORT srcS;
+	 UBYTE  mode;
+	 UBYTE  RGB[9];
+	} LED[PRE_NLED];
+};
+
+/* load/save preset (FILE) */
+LONG ledmanager_loadpresets( STRPTR fname )
+{
+	struct ledm_Preset *pre;
+	SHORT i;
+	BPTR  ifile;
+
+	pre = (struct ledm_Preset *)AllocVec( sizeof( struct ledm_Preset ), MEMF_PUBLIC );
+	if( !pre )
+		return -1;
+
+	ifile = Open( fname, MODE_OLDFILE );
+	if( !ifile )
+	{
+		FreeVec( pre );
+		return -3;
+	}
+
+	Read( ifile, pre, sizeof( struct ledm_Preset ) );
+	Close( ifile );
+
+	if( pre->Header != HDR )
+		return -2;
+	if( pre->Version != 1  )
+		return -2;
+
+	for( i = 0 ; i < PRE_NLED ; i++ )
+	{
+		LED_SRCMAP[i][LED_ACTIVE]   	= pre->LED[i].srcA;  
+		LED_SRCMAP[i][LED_SECONDARY]	= pre->LED[i].srcS;  
+		LED_MODES[i]                	= pre->LED[i].mode;
+		LED_RGB[i][LED_IDLE][0]     	= pre->LED[i].RGB[0];
+		LED_RGB[i][LED_IDLE][1]     	= pre->LED[i].RGB[1];
+		LED_RGB[i][LED_IDLE][2]     	= pre->LED[i].RGB[2];
+		LED_RGB[i][LED_ACTIVE][0]   	= pre->LED[i].RGB[3];
+		LED_RGB[i][LED_ACTIVE][1]   	= pre->LED[i].RGB[4];
+		LED_RGB[i][LED_ACTIVE][2]   	= pre->LED[i].RGB[5];
+		LED_RGB[i][LED_SECONDARY][0]	= pre->LED[i].RGB[6];
+		LED_RGB[i][LED_SECONDARY][1]	= pre->LED[i].RGB[7];
+		LED_RGB[i][LED_SECONDARY][2]	= pre->LED[i].RGB[8];
+	}
+
+	FreeVec( pre );
+
+	return 0;
+}
+
+LONG ledmanager_savepresets( STRPTR fname )
+{
+	struct ledm_Preset *pre;
+	SHORT  i;
+	BPTR   ofile;
+	LONG   ret = 0;
+
+	Printf("save %s\n",(ULONG)fname);
+
+	pre = (struct ledm_Preset *)AllocVec( sizeof( struct ledm_Preset ), MEMF_PUBLIC );
+	if( !pre )
+		return -1;
+
+	Printf("have mem\n");
+
+	pre->Header  = HDR;
+	pre->Version = 1;
+	for( i = 0 ; i < PRE_NLED ; i++ )
+	{
+		pre->LED[i].srcA   = LED_SRCMAP[i][LED_ACTIVE];
+		pre->LED[i].srcS   = LED_SRCMAP[i][LED_SECONDARY];
+		pre->LED[i].mode   = LED_MODES[i];
+		pre->LED[i].RGB[0] = LED_RGB[i][LED_IDLE][0];
+		pre->LED[i].RGB[1] = LED_RGB[i][LED_IDLE][1];
+		pre->LED[i].RGB[2] = LED_RGB[i][LED_IDLE][2];
+		pre->LED[i].RGB[3] = LED_RGB[i][LED_ACTIVE][0];
+		pre->LED[i].RGB[4] = LED_RGB[i][LED_ACTIVE][1];
+		pre->LED[i].RGB[5] = LED_RGB[i][LED_ACTIVE][2];
+		pre->LED[i].RGB[6] = LED_RGB[i][LED_SECONDARY][0];
+		pre->LED[i].RGB[7] = LED_RGB[i][LED_SECONDARY][1];
+		pre->LED[i].RGB[8] = LED_RGB[i][LED_SECONDARY][2];
+	}
+
+	ofile = Open( fname, MODE_NEWFILE );
+	if( ofile )
+	{
+		Printf("have file\n");
+		Write( ofile, pre, sizeof( struct ledm_Preset ) );
+		Close( ofile );
+	}
+	else
+		ret = -2;
+
+	FreeVec( pre );
+
+	return ret;
+}
+
 

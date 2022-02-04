@@ -61,8 +61,8 @@
 /* startup */
 LONG ledmanager_init(void);
 
-/* load config from target keyboard */
-LONG ledmanager_loadconfig(void);
+/* copy loaded config from target keyboard to active variables */
+LONG ledmanager_loadconfigentry( LONG led, UBYTE *recvbuf, LONG nbytes, ULONG flags );
 /* send one LED's config to keyboard (src,rgb,mode) */
 LONG ledmanager_sendConfig(LONG led);
 /* store config in Keyboard's eeprom */
@@ -78,5 +78,9 @@ void ledmanager_setMode(LONG led, LONG mode);
 
 /* quit */
 LONG ledmanager_exit(void);
+
+/* load/save preset (FILE) */
+LONG ledmanager_loadpresets( STRPTR fname );
+LONG ledmanager_savepresets( STRPTR fname );
 
 #endif /* _INC_LEDMANAGER_H */

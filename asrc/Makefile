@@ -15,7 +15,7 @@ VASMFLAGS = -Faout -quiet -I$(PREFIX)
 
 OBJS	= startup.o utils.o config.o cx_main.o window.o \
           capsimage.o pledimage.o pledbutton.o ledmanager.o \
-	  ciacomm.o
+	  ciacomm.o savereq.o
 HEADERS = config.h version.h
 
 all: $(TARGET1) 

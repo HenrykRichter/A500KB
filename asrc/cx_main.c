@@ -34,6 +34,7 @@
 #include "pledbutton.h"
 #include "ledmanager.h"
 #include "capsimage.h"
+#include "savereq.h"
 
 const STRPTR cx_Name = "A500KBConfig";
 STRPTR cx_Desc = "Keyboard Configurator," \
@@ -96,7 +97,7 @@ LONG cx_main( struct configvars *conf )
   CxObj *cx_Broker = NULL;
   ULONG keeprunning;
   struct cx_Custom cust;
-  ULONG interval;
+//  ULONG interval;
   LONG  flg;
 
   struct MsgPort *TimerPort = NULL;
@@ -118,7 +119,6 @@ LONG cx_main( struct configvars *conf )
 	/* initialize LED manager (and allocate resources = CIA,CIA-A Timer A) */
 	if( ledmanager_init() != 0 )
 	{
-		/* TODO: EasyRequest */
 	        ULONG iflags = 0;
    		const struct EasyStruct libnotfoundES = {
 	           sizeof (struct EasyStruct),
@@ -127,7 +127,7 @@ LONG cx_main( struct configvars *conf )
 		   "Cannot initialize CIA Communication.\n Timer-A allocation fail. Quitting.",
 		   "OK",
 		  };
-		EasyRequest( NULL, &libnotfoundES, &iflags );
+		EasyRequest( NULL, (struct EasyStruct *)&libnotfoundES, &iflags );
 		break;
 	}
 
@@ -157,8 +157,7 @@ LONG cx_main( struct configvars *conf )
 	timerio->tr_time.tv_micro = 1;
 	SendIO((struct IORequest *) timerio);
 #endif
-	interval = (conf->interval) ? *conf->interval : DEF_INTERVAL;
-//	interval = (interval<<6) - (interval<<2); /* seconds from minutes (*64-*4) */
+//	interval = (conf->interval) ? *conf->interval : DEF_INTERVAL;
 
 	if( !(cx_Broker = cx_Setup( cx_Port, conf, &cust )) )
 	{
@@ -170,6 +169,9 @@ LONG cx_main( struct configvars *conf )
 	cx_AddEventFilter( cx_Broker, FindTask(NULL) , cx_Signal );
 #endif
 
+	/* Load Config from Keyboard (with or without main window) */
+	LoadConfig_Req( mywin );
+
 	{
 	 UBYTE flg = 1;
 	 if( conf->cx_popup )
@@ -177,18 +179,14 @@ LONG cx_main( struct configvars *conf )
 		 flg = 0;
 	 if( flg )
 	 {
-		if( conf->startdelay )
-		{
-			LONG dly = *conf->startdelay;
-			if( (dly > 0) && (dly < 120) )
-			{
-				dly = UMult32( dly, 50 ); /* for DOS Delay() */
-				Delay( dly );
-			}
-		}
 		mywin = Window_Open(conf);
+		if( !mywin ) /* Screen setup failure or out of memory: Quit */
+		{
+			break;
+		}
 	 }
 	}
+
 
 	//Printf("Main loop\n");
 

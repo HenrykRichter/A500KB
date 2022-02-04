@@ -2,6 +2,9 @@
 *.d
 .DS_Store
 
+*.sch-bak
+*.pcb-bak
+
 # Object files
 *.o
 *.ko

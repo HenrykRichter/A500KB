@@ -20,27 +20,10 @@ struct configvars {
         APTR    cx_popup;
 	APTR    cx_popkey;
 	ULONG	*pri;
-	ULONG	quiet;
-	ULONG	*interval;
 	ULONG	*win_x;
 	ULONG	*win_y;
-	ULONG	*winwidth;
 	APTR    fontname;
 	ULONG   *fontsize;
-	APTR	disabledsensors;
-	ULONG   *startdelay;
-	APTR    background; /* background type */
-	ULONG   *showtitle; /* show titles in foreground */
-	ULONG   *textpen;   /* regular text pen */
-	ULONG	*shadowpen; /* text shadow pen in transparent mode */
-	ULONG	*recessed;  /* recessed frame or not */
-	APTR    colorT;	/* Temp */
-	APTR    colorV; /* Voltage */
-	APTR    colorC; /* Current */
-	APTR    colorF; /* Fans */
-	APTR    colorP;	/* Pressure */
-	APTR    colorH; /* Humidity */
-	ULONG	*boxh;  /* box height */
 
 	/* ----------- safekeeping for CLI args from RDArgs --------- */
 	APTR	args;	 /* RDArgs */

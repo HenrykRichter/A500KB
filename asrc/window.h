@@ -75,6 +75,7 @@ struct myWindow {
 	struct DrawInfo   *DrawInfo;
 	struct VisualInfo *VisualInfo;
 	struct TextAttr    Font;	/* used font (either from config or current screen) */
+	struct Menu       *Menus;
 
 	SHORT  Pens[nPENS+1];
 	SHORT  GradPens[nPENS_GRAD+2];  /* this is a copy for the gradient slider including Black */
@@ -97,6 +98,8 @@ struct myWindow {
 	struct Gadget *FloppyLED;
 	struct Gadget *CapsLED;        /* generic Gadget + CapsImage */
 
+	struct Gadget *ActiveText;     /* TEXT_KIND showing active gadget */
+
 	ULONG	active_state;		/* current state 0-2 */
 	ULONG	active_led;             /* LED index */
 
@@ -104,6 +107,7 @@ struct myWindow {
 	ULONG	comm_timeouts;
 	ULONG	comm_fails;
 	ULONG	comm_success;
+	ULONG	comm_notified;
 	
 	ULONG   refreshlist;		/* gadgets that need refreshing */
 };

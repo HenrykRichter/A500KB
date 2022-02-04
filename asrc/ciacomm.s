@@ -1,4 +1,4 @@
-;APS0000054A000000000000000000000000000000000000000000000000000000000000000000000000
+;APS00000723000000000000000000000000000000000000000000000000000000000000000000000000
 ; ciacomm.s
 ;
 ; (C) 2022 Henryk Richter
@@ -33,15 +33,25 @@ CMD_IDLE	EQU	0	;we haven't sent anything
 CMD_ACK		EQU	$80|$73	;ACK = OK
 CMD_NACK	EQU	$80|$77	;failed reception
 CMD_TIMEOUT	EQU	$5A	;no answer
+CMD_ACK1        EQU     $80|$7B ;ACK1 = ack command, please wait
 
+TIMEOUT_WAIT2	EQU	50	;in 92 ms units -> 50 equals 4.6s
 	;
 	XDEF	_CIAKB_Init	;startup
 	XDEF	 _CIAKB_Send	;send a sequence
 	XDEF	 _CIAKB_Wait	;wait for end of sequence (and stop)
 	XDEF	 _CIAKB_IsBusy  ;
+	XDEF	 _CIAKB_GetData ;get data stream (after CIAKB_Wait)
 	XDEF	 _CIAKB_Stop	;stop sending instance (implicit in "Wait")
 	XDEF	_CIAKB_Exit	;shutdown
 
+
+; next position in ring buffer (argument: Dn)
+KBRING_SIZE	EQU	64	;must be 2^n
+KBRING_NEXT	MACRO
+		addq.w	#1,\1
+		and.w	#KBRING_SIZE-1,\1
+		ENDM
 
 
 	section	text,code
@@ -53,10 +63,16 @@ DBG:
 	bne.s	.nosend
 
 	lea	sendbuf(pc),a1
-	moveq	#10,d0
+	moveq	#4,d0
 	bsr	_CIAKB_Send
 
 	bsr	_CIAKB_Wait	;does implicit "STOP"	
+
+		;extra debug: check return
+		lea	recvbuf(pc),a1
+		moveq	#32,d0	
+		bsr	_CIAKB_GetData
+		bra.s	.exit
 .nosend
 
 	;pause loop
@@ -69,12 +85,18 @@ DBG:
 	bne	.loop
 
 	bsr	_CIAKB_Wait	;does implicit "STOP"	
+.exit:
 	bsr	_CIAKB_Exit
 	rts
 
 sendbuf:
-	dc.b	$00,$03,$BA,00,$ff,$55,$AA,$55,$AA,$ff,$00,$11
+	dc.b	$00,$03
+;	dc.b	$80,$00
+	dc.b	$62,$00
+	;,$BA,00,$ff,$55,$AA,$55,$AA,$ff,$00,$11
 	even
+recvbuf:	ds.b	32
+	dc.w	$BAAF
 
 ; void
 ; return: 0=OK, else FAIL
@@ -239,6 +261,57 @@ _CIAKB_Wait:
 	movem.l	(sp)+,a5/a6
 	rts
 
+;
+; Get Data that arrived while waiting into supplied buffer
+;  A1 = buffer
+;  D0 = buffersize
+; Semantics:
+;  The keyboard sends CMD_ACK1 for the beginning of the data stream.
+;  CMD_ACK terminates the byte stream.
+;  While waiting for CMD_ACK, inputs are swallowed and not handed
+;  to keyboard.device.
+;
+; Returns: number of received bytes (D0)
+_CIAKB_GetData:
+	movem.l	d2-d3/a2,-(sp)
+
+	move.b	kbsend_result(pc),d1	; last command successful ?
+	cmp.b	#CMD_ACK,d1		;
+	bne.s	.getdata_retzero	; nope: we did not finish successfully.
+
+	lea	kbroll(pc),a0
+	move.w	kback1off(pc),d1	; at ACK1
+	blt.s	.getdata_retzero	; no ACK1 received
+
+	move.b	(a0,d1.w),d2		; overwritten in ring buffer ?
+	cmp.b	#CMD_ACK1,d2		; 
+	bne.s	.getdata_retzero	; sorry, can't get data -> the damn user typed too much
+
+	KBRING_NEXT	d1		; +1 & 63
+	moveq	#0,d2
+	move.b	(a0,d1.w),d2		; number of bytes received (beore ACK)
+	beq.s	.getdata_retzero	; 0 = we're out
+
+	cmp.l	d0,d2			; out buffer too small ? 
+	ble.s	.getdata_fit		;
+	move.l	d0,d2			; just store what fits
+.getdata_fit
+	move.l	d2,d0			; number of copied bytes
+
+	;we come in with the length tag position in d1, advance first
+.getdata_copy:
+	KBRING_NEXT	d1		; next byte to read
+	move.b	(a0,d1.w),(a1)+		; copy from keyboard roll
+	subq.b	#1,d2
+	bne.s	.getdata_copy
+
+.getdata_ret:
+	movem.l	(sp)+,d2-d3/a2
+	rts
+
+.getdata_retzero:
+	moveq	#0,d0
+	bra.s	.getdata_ret
 
 
 CIAKB_ClearSigTask:
@@ -345,6 +418,8 @@ _CIAKB_Send:
 	subq.l	#1,d6
 	move.l	d6,cia_sendlen
 
+	move.b	#-1,kback1streamlen		;no length after ACK1 yet
+	move.w	#-1,kback1off			;no ACK1 received yet
 	move.b	#1,kbsend_sending		;stays on until ACK/NACK or timeout
 	move.b	#1,kbsend_active		;actively send data
 	;write first byte -> starts serial output
@@ -445,7 +520,7 @@ CIAKB_KeyboardInt:
 
 	move.l	kbsend_num(pc),d0
 	addq.l	#1,d0
-	move.l	d0,kbsend_num
+	move.l	d0,kbsend_num			;total sent bytes
 
 	bra	.rts
 .nosend:
@@ -483,7 +558,7 @@ CIAKB_KeyboardInt:
 	;don't forget AbleICR(0x1) and timer stop when done
 	;make sure
 	;bsr	CIAKB_SendSignal
-	bra.s	.rts
+	bra	.rts
 
 .inactive_orikeyboard:
 	move.b	ciasdr+_ciaa,d1			;get current keycode
@@ -493,6 +568,40 @@ CIAKB_KeyboardInt:
 	move.b	kbsend_sending(pc),d0		;stays on until ACK/NACK or timeout
 	beq.s	.notsending
 
+;approach:
+; - check if incoming data stream is expected and don't parse commands in that case
+; - if we have seen ACK1, then use next byte as stream length, unless it's again ACK1
+; - 
+
+	move.b	kback1streamlen(pc),d0		; did we get a stream length byte yet ? (after CMD_ACK1)
+	blt.s	.checkcmd			; no stream length (-1)
+	beq.s	.noack1				; stream done, wait for ACK
+	; we have a "literal" stream, store in kbroll -> after we get to 0, resume regular processing
+	subq.b	#1,d0
+	move.b	d0,kback1streamlen		; remember remaining bytes
+	bra.s	.notsending
+
+.checkcmd:
+
+	move.w	kback1off(pc),d0
+	blt.s	.noack1_before
+
+	cmp.b	#CMD_ACK1,d1		;keyboard may send ACK1 twice for the reason that sometimes the first
+	beq.s	.another_ack1		;transmitted character is damaged after OUT-IN turnaround of CIA serial
+
+	;ok, we have seen ACK1 and this is the next byte after: store stream length
+	move.b	d1,kback1streamlen
+	bra.s	.notsending
+
+.noack1_before:
+	cmp.b	#CMD_ACK1,d1
+	bne.s	.noack1
+.another_ack1:
+	move.w	kbrolloff(pc),kback1off
+	move.b	#TIMEOUT_WAIT2,kbsend_timercount	;allow for longer delay (65536*100-> ~10s)
+	bra.s	.notsending
+
+.noack1:
 	cmp.b	#CMD_ACK,d1
 	beq.s	.haveack
 	cmp.b	#CMD_NACK,d1
@@ -508,17 +617,16 @@ CIAKB_KeyboardInt:
 	clr.b	kbsend_timercount		;disable timer interrupt handler
 .notsending:
 
-	ifne	1
-	; DEBUG: record keystrokes
+	; record keystrokes (and incoming data)
 		lea	kbroll(pc),a0
 		move.w	kbrolloff(pc),d0
 		move.b	d1,(a0,d0)
-		addq	#1,d0
-		and.w	#63,d0
+		KBRING_NEXT	d0		; +1 & 63
 		move.w	d0,kbrolloff
-	endc
+	
 
-	move.b	kbsend_active(pc),d0
+	move.b	kbsend_sending(pc),d0		;stays on until ACK/NACK or timeout
+;	move.b	kbsend_active(pc),d0
 	beq.s	.dontswallow
 	
 	or.b    #CIACRAF_SPMODE,_ciaa+ciacra		;
@@ -593,9 +701,13 @@ kbsend_sending:	dc.b	0	;still sending?
 kbsend_timercount: dc.b 0	;return when 0, send signal when reaching 0
 kbsend_result:	dc.b	0	;result (CMD_ACK,CMD_NACK,CMD_TIMEOUT)
 
-kbsend_num:	dc.l	0	;
-kbrolloff:	dc.w	0
-kbroll:		ds.b	64
+; 
+kbsend_num:	 dc.l	0	;total sent bytes (debug)
+kback1off:	 dc.w	0	;offset of CMD_ACK1 in current command cycle (-1)
+kback1streamlen: dc.b	0	;stream length after CMD_ACK1 (-1, counted down to zero if present)
+		 dc.b	0	;align
+kbrolloff:	dc.w	0	;
+kbroll:		ds.b	KBRING_SIZE	;64
 
 	cnop	0,4
 ciares_name:	dc.b	'ciaa.resource',0
