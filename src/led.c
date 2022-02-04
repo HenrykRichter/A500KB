@@ -481,6 +481,11 @@ void led_saveconfig( char neededleds )
 		 1 Byte Mode
 
 	*/
+	obuf = adr;
+	eeprom_update_byte( obuf, 0xBA );
+	obuf++;
+	eeprom_update_byte( obuf, 0x58 );
+
 	for( i=start ; i <= last ; i++ )
 	{
 		obuf = adr + 2 + i*11;
@@ -498,6 +503,7 @@ void led_saveconfig( char neededleds )
 	eeprom_update_byte( obuf, 0xBA );
 	obuf++;
 	eeprom_update_byte( obuf, 0x58 );
+
 #ifdef DEBUG
 	uart1_puts("Config Saved ");
 	uart_puthexuint( (uint16_t)obuf );
