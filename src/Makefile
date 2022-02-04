@@ -21,7 +21,7 @@ DEVICE     = at90usb1287
 CLOCK      = 16000000
 PROGRAMMER = -c usbasp
 OBJECTS    = uart.o twi.o led.o main.o 
-DEFS       = -DDEBUG
+#DEFS       = -DDEBUG
 HEADERS	   = kbdefs.h 
 FUSES      = -U hfuse:w:0x91:m -U lfuse:w:0xdf:m
 # 99/5E are default for ATMegaUSB1287

@@ -27,7 +27,7 @@
 
 #include "kbdefs.h"
 
-#define DEBUGONLY
+//#define DEBUGONLY
 #ifdef DEBUG
 #include "uart.h"
 #define DBGOUT(a) uart1_putc(a);
@@ -260,6 +260,7 @@ unsigned char caps_on; /* for LED controller */
 int main(void)
 {
   unsigned char i,j,pos,state; // ledstat
+  unsigned char need_confeeprom = 0; /* 1 = config to EEPROM requested */
   unsigned short kbdwait = 0;
   unsigned short rstwait = 0;
   unsigned short keyb_idle = 0;
@@ -602,8 +603,29 @@ int main(void)
 	/* --------------------------------------------------------------------- */
 	if( !(state & (STATE_KBWAIT|STATE_KBWAIT2) )) /* redundant: keyb_idle is 0 while in wait */
 	{
+		if( need_confeeprom == 1 ) /* TODO: put this in the flags */
+		{
+			/* we need to wait for acknowledge from Amiga to "COMM_ACK1" before 
+			   we can spend the time (8ms per Byte) to update the EEPROM
+			*/
+			if( keyb_idle > 1 )
+			{
+				led_saveconfig( 0x7f );
+#ifdef DEBUG
+				uart1_puts(" Saved config\r\n");
+#endif
+				/* DONE here ! */
+				write_ring( COMM_ACK | 0x80 ); /* one should be sufficient... */
+				write_ring( COMM_ACK | 0x80 );
+
+				show_caps( 0x40 ); /* clear caps lock (if necessary) */
+				need_confeeprom = 0;
+			}
+		}
+
 		if( keyb_idle > 5 )
 		{
+
 			/* check if there is a command from remote end */
 			if( !(KBDSEND_ACKPIN & (1<<KBDSEND_ACKB)) )	/* data low ? */
 			{
@@ -620,12 +642,13 @@ int main(void)
 						uart1_puts(" Command Sync error!\r\n");
 #endif
 						keyb_idle = 0;
-						write_ring( COMM_NACK | 0x80 ); 
+						/* this sometimes leads to SNAFU = endless ping-pong when a command was mis-detected by us */
+//						write_ring( COMM_NACK | 0x80 ); 
 					}
 					else
 					if( nrecv > 0 )
 					{
-						unsigned char nsend = led_putcommands( recvcmd, nrecv );
+						char nsend = led_putcommands( recvcmd, nrecv );
 						unsigned char *sendbuf = recvcmd;
 #ifdef DEBUG
 						uart_puthexuchar( nrecv );
@@ -644,37 +667,31 @@ int main(void)
 						*/
 						if( nsend == -1 )
 						{
-							show_caps( 0x41 );
-							//ledstat  =  (1<<LEDPIN);	/* on  */
-							//LEDPORT  = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* on */
+							show_caps( 0x41 ); /* indicator: we want to save the config */
 
-							amiga_kbsend( COMM_ACK1 | 0x80 , 2 ); /* write ACK1 */
-							state |= STATE_RESYNC;
-
-							led_saveconfig( 0x7f );
-
-							/* this will go out after resync */
-							write_ring( COMM_ACK | 0x80 );
-
-							show_caps( 0x40 );
-							//ledstat  =  (1<<LEDPIN);	/* off  */
-							//LEDPORT  = (LEDPORT&(~(1<<LEDPIN)))|ledstat;	/* off */
-						}
-
-						/* do we need to send something back (like config) */
-						if( nsend > 0 )
-						{
-							write_ring( COMM_ACK1 | 0x80 ); /* first might get swallowed by CIA */
-							write_ring( COMM_ACK1 | 0x80 );
-							while( nsend > 0 )
-							{
-								write_ring( *sendbuf++ );
-								nsend--;
-							}
+							write_ring( COMM_ACK1 | 0x80 ); /* write ACK1 to host: i.e. we need some time */
+							write_ring( COMM_ACK1 | 0x80 ); /* write ACK1 to host: i.e. we need some time */
+							write_ring( 0 ); /* empty, no further bytes */
+							need_confeeprom = 1;
 						}
 						else
-							write_ring( COMM_ACK | 0x80 ); /* first might get swallowed */
-						write_ring( COMM_ACK | 0x80 ); 
+						{
+							/* do we need to send something back (like config) */
+							if( nsend > 0 )
+							{
+								write_ring( COMM_ACK1 | 0x80 ); /* first might get swallowed by CIA */
+								write_ring( COMM_ACK1 | 0x80 );
+								write_ring( nsend );
+								while( nsend > 0 )
+								{
+									write_ring( *sendbuf++ );
+									nsend--;
+								}
+							}
+							else
+								write_ring( COMM_ACK | 0x80 ); /* first might get swallowed */
+							write_ring( COMM_ACK | 0x80 ); 
+						}
 					}
 				}
 			}
@@ -996,7 +1013,7 @@ void show_caps( unsigned char state )
 	unsigned char ledstat;
 
 	/* not pulled down ? */
-	if(   ( KBD_SPARE1PIN & (1<<IN3LED_BIT) )
+	if(   ( KBD_SPARE1PIN & (1<<KBD_SPARE1B) )
 	   || ( state & 0x40 )
 	  ) 
 	{

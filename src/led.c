@@ -428,7 +428,7 @@ unsigned char led_updatecontroller( unsigned char state )
 	for( i=0 ; i < N_LED ; i++ )
 	{
 		/* does the change in sources apply to this LED? */
-		if( !( LED_SRCMAP[i] & chg ))
+		if( !( LED_SRCMAP[i] & chg ) && (chg != LEDF_ALL) )
 			continue; /* no, next */
 		*tcmd++ = i; /* this LED needs new RGB */
 #if 1
