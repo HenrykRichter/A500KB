@@ -272,6 +272,9 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 			case LEDCMD_SAVECONFIG:
 				needsave = 0x7f; /* save all */
 				break;
+			case LEDCMD_GETVERSION:
+				confget = 0x7F; /* trigger version requested */
+				break;
 			case LEDCMD_GETCONFIG:
 				if( !nrecv )
 					break;
@@ -326,6 +329,14 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 	*/
 	if( confget >= 0 ) /* def: -1 */
 	{
+		if( confget == 0x7F )
+		{
+			*sendbuf++ = LEDGV_HEADER;    /* 0xBA */
+			*sendbuf++ = LEDGV_TYPE_A500; /* LEDGV_TYPE_A3000 */
+			*sendbuf++ = LEDGV_VERSION;   /* */
+			return 3;
+		}
+
 		*sendbuf++ = LED_SRCMAP[(unsigned char)confget];
 		for( st = 0 ; st < LED_STATES ; st++ )
 		{
