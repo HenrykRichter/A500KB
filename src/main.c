@@ -911,7 +911,7 @@ char amiga_kbsync( void )
 
  /* caution: KBDSEND_PIN == KBDSEND_ACKPIN with new keyboard -> hence back to input */
  KBDSEND_SENDD &= ~(1<<KBDSEND_SENDB); /* back to input (with pullup) */
- KBDSEND_CLKP  &= ~(1<<KBDSEND_CLKB);  /* back to input (with pullup) */
+ KBDSEND_CLKD  &= ~(1<<KBDSEND_CLKB);  /* back to input (with pullup, see above "clock high") */
 
  /* 14300*10 us = 143 ms */
  for( count = 1 ; count < SYNC_WAIT ; count++ )
