@@ -589,13 +589,13 @@ LONG ledmanager_savepresets( STRPTR fname )
 	BPTR   ofile;
 	LONG   ret = 0;
 
-	Printf("save %s\n",(ULONG)fname);
+	Printf( (STRPTR)"save %s\n",(ULONG)fname);
 
 	pre = (struct ledm_Preset *)AllocVec( sizeof( struct ledm_Preset ), MEMF_PUBLIC );
 	if( !pre )
 		return -1;
 
-	Printf("have mem\n");
+	Printf( (STRPTR)"have mem\n");
 
 	pre->Header  = HDR;
 	pre->Version = 1;
@@ -618,7 +618,7 @@ LONG ledmanager_savepresets( STRPTR fname )
 	ofile = Open( fname, MODE_NEWFILE );
 	if( ofile )
 	{
-		Printf("have file\n");
+		Printf( (STRPTR)"have file\n");
 		Write( ofile, pre, sizeof( struct ledm_Preset ) );
 		Close( ofile );
 	}

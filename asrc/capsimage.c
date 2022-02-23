@@ -105,7 +105,7 @@ ULONG caps_draw( Class *cls, struct Image *o, struct impDraw *msg )
 
 ULONG caps_set(Class *cls, struct Image *o,struct opSet *msg, BOOL initial)
 {
-	ULONG ret = 0,nscreen=0;
+	ULONG ret = 0;//,nscreen=0;
 	struct TagItem *tlist,*ti;
 	struct caps_data *data = (struct caps_data*)INST_DATA(cls,o);
 
@@ -119,13 +119,13 @@ ULONG caps_set(Class *cls, struct Image *o,struct opSet *msg, BOOL initial)
 		{
 		 case IA_Screen:
 		 	data->screen = (struct Screen*)ti->ti_Data;
-			nscreen = 1;
+			//nscreen = 1;
 			break;
 		 case IA_Pens:	/* 1 pen in Caps mode */
 		 	{
 			 SHORT *ipens = (SHORT*)ti->ti_Data;
 		 	 data->Pens[0] = *ipens++;
-			 nscreen = 1;
+			 //nscreen = 1;
 			}
 		 	break;
 		 case IA_Width:
@@ -134,7 +134,7 @@ ULONG caps_set(Class *cls, struct Image *o,struct opSet *msg, BOOL initial)
 				if( (nw < 0) || (nw > 1024) )
 					nw = CAPS_W;
 				data->w = nw;
-				nscreen = 1;
+				//nscreen = 1;
 			}
 		 	break;
 		 case IA_Height:
@@ -143,7 +143,7 @@ ULONG caps_set(Class *cls, struct Image *o,struct opSet *msg, BOOL initial)
 				if( (nh < 0) || (nh > 1024) )
 					nh = CAPS_H;
 				data->h = nh;
-				nscreen = 1;
+				//nscreen = 1;
 			}
 		 	break;
 		 default:
@@ -249,7 +249,7 @@ Class *init_capsimage_class( void )
 {
   Class *cls;
 
-  if( (cls = MakeClass( NULL , "imageclass" , NULL ,sizeof(struct caps_data), 0 ) ))
+  if( (cls = MakeClass( NULL , (STRPTR)"imageclass" , NULL ,sizeof(struct caps_data), 0 ) ))
   {
 #ifdef DIRECT_HOOK
 	cls->cl_Dispatcher.h_Entry    = (HOOKFUNC)caps_dispatch;

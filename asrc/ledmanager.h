@@ -55,6 +55,24 @@
 #define LEDCMD_GETCONFIG 0x60
 /* save config (o argument) */
 #define LEDCMD_SAVEEEPROM 0x80
+/* get keyboard type/version */
+#define LEDCMD_GETVERSION 0xA0
+                        
+/* Please note that the protocol is designed for short packets to avoid
+   overflows in send/receive buffers. As a consequence, only one command
+   with return values (from Keyboard to Amiga) may be issued at a time.
+   This limitation concerns LEDCMD_GETVERSÌON, LEDCMD_GETCONFIG and
+   LEDCMD_SAVECONFIG (asynchronous EEPROM write, where the command is
+   acknowledged first and some seconds take place for the writes itself). 
+   Use only one of these commands at a time.
+*/              
+                
+/* Arguments for GETVERSION */
+#define LEDGV_HEADER     0xBA /* */
+#define LEDGV_TYPE_A500  0x01 /* 7 LEDs */
+#define LEDGV_TYPE_A3000 0x02 /* 1 LED only */
+#define LEDGV_VERSION    0x01 /* software version */
+
 
 /* PUBLIC PROTO */
 

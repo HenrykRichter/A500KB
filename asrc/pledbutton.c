@@ -453,7 +453,7 @@ Class *init_pledbutton_class( void )
 {
   Class *cls;
 
-  if( (cls = MakeClass( NULL , "gadgetclass" , NULL ,sizeof(struct pled_data), 0 ) ))
+  if( (cls = MakeClass( NULL , (STRPTR)"gadgetclass" , NULL ,sizeof(struct pled_data), 0 ) ))
   {
 #ifdef DIRECT_HOOK
 	cls->cl_Dispatcher.h_Entry    = (HOOKFUNC)pledb_dispatch;

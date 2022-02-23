@@ -88,8 +88,8 @@ struct Library    *SysBase;
 struct DOSLIBTYPE *DOSBase;
 struct Library    *IconBase;
 
-STRPTR myversion = "$VER: " PROGNAME " " LIBVERSION "." LIBREVISION " (" LIBDATE ") (C) Henryk Richter";
-STRPTR mydosname = "dos.library";
+STRPTR myversion = (STRPTR)"$VER: " PROGNAME " " LIBVERSION "." LIBREVISION " (" LIBDATE ") (C) Henryk Richter";
+STRPTR mydosname = (STRPTR)"dos.library";
 
 #if 0
 struct IntuitionBase    *IntuitionBase;
@@ -114,14 +114,14 @@ LONG Startup_WB( struct Process *self, struct configvars *conf, struct WBStartup
     if( !DOSBase )
     	return FAIL_DOS;
 
-    IconBase = OpenLibrary( "icon.library", 36 );
+    IconBase = OpenLibrary( (STRPTR)"icon.library", 36 );
     if( !IconBase )
     	return FAIL_ICON;
 
     wbArg = (*WBenchMsg)->sm_ArgList;
 
     CurrentDir(wbArg->wa_Lock);
-    dobj = GetDiskObject(wbArg->wa_Name);
+    dobj = GetDiskObject( (STRPTR)wbArg->wa_Name);
     conf->diskobj = dobj;
 
     if( !dobj )
@@ -132,7 +132,7 @@ LONG Startup_WB( struct Process *self, struct configvars *conf, struct WBStartup
     {
      if( NameFromLock(wbArg->wa_Lock, conf->progname, 108+256 ) )
      {
-		AddPart( conf->progname, wbArg->wa_Name, 108+256 );
+		AddPart( conf->progname, (STRPTR)wbArg->wa_Name, 108+256 );
      }
     }
 
@@ -180,7 +180,7 @@ LONG Startup_CLI( struct Process *self, struct configvars *conf )
    if( !DOSBase )
    	return FAIL_DOS;
 
-   IconBase = OpenLibrary( "icon.library", 36 ); /* needed for config save */
+   IconBase = OpenLibrary( (STRPTR)"icon.library", 36 ); /* needed for config save */
  
     conf->args = (APTR)ReadArgs( confstringCLI, (LONG*)conf, NULL );
     if( !conf->args )
@@ -191,10 +191,10 @@ LONG Startup_CLI( struct Process *self, struct configvars *conf )
     {
      /* remember program name and path (V36+) */
      BYTE progname[108];
-     GetProgramName( progname, 108 );
+     GetProgramName( (STRPTR)progname, 108 );
      if( NameFromLock(GetProgramDir(), conf->progname, 108+256) )
      {
-		AddPart( conf->progname, progname, 108+256 );
+		AddPart( conf->progname, (STRPTR)progname, 108+256 );
      }
     }
 

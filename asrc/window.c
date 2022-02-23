@@ -129,17 +129,17 @@ STRPTR ActiveStateStrings[8] = {   /* Text active */
 
 
 
-struct myGadProto Wheeltmp = {80,16,80,80,"W",ID_Wheel,WHEELGRAD_KIND,0,0,0,NULL};
-struct myGadProto sliderGradtmp = {164,16,14,80,"V",ID_sliderGrad,GRADSLIDER_KIND,0,255,128,NULL};
-struct myGadProto sliderRtmp = {184,16,14,80,"R",ID_sliderR,SLIDER_KIND,0,255,128,NULL};
-struct myGadProto sliderGtmp = {209,16,14,80,"G",ID_sliderG,SLIDER_KIND,0,255,128,NULL};
-struct myGadProto sliderBtmp = {234,16,14,80,"B",ID_sliderB,SLIDER_KIND,0,255,128,NULL};
-struct myGadProto cycleSource= {74,125,160,14,"Display Source",ID_SourceCycle,CYCLE_KIND,1,0,0,sourceStrings};
-struct myGadProto MXstate =   {16+24, 125, 10, 10, "State",ID_StateMX,MX_KIND,1,0,0,MXstateStrings};
-struct myGadProto LEDPower  = {13, 24, 48, 6, "Power",  ID_LEDPower,PLEDIMAGE_KIND,3,4,5,NULL};
-struct myGadProto LEDFloppy = {13, 48, 48, 6, "Floppy", ID_LEDFloppy,PLEDIMAGE_KIND,0,1,2,NULL};
-struct myGadProto LEDCaps   = {33, 72,  8, 8, "Capslock", ID_LEDCaps,CAPSIMAGE_KIND,6,0,0,NULL};
-struct myGadProto ButtonSave ={142,144, 92,14, "Save EEPROM",ID_SaveEEPROM,BUTTON_KIND,0,0,0,NULL};
+struct myGadProto Wheeltmp = {80,16,80,80,(STRPTR)"W",ID_Wheel,WHEELGRAD_KIND,0,0,0,NULL};
+struct myGadProto sliderGradtmp = {164,16,14,80,(STRPTR)"V",ID_sliderGrad,GRADSLIDER_KIND,0,255,128,NULL};
+struct myGadProto sliderRtmp = {184,16,14,80,(STRPTR)"R",ID_sliderR,SLIDER_KIND,0,255,128,NULL};
+struct myGadProto sliderGtmp = {209,16,14,80,(STRPTR)"G",ID_sliderG,SLIDER_KIND,0,255,128,NULL};
+struct myGadProto sliderBtmp = {234,16,14,80,(STRPTR)"B",ID_sliderB,SLIDER_KIND,0,255,128,NULL};
+struct myGadProto cycleSource= {74,125,160,14,(STRPTR)"Display Source",ID_SourceCycle,CYCLE_KIND,1,0,0,sourceStrings};
+struct myGadProto MXstate =   {16+24, 125, 10, 10, (STRPTR)"State",ID_StateMX,MX_KIND,1,0,0,MXstateStrings};
+struct myGadProto LEDPower  = {13, 24, 48, 6, (STRPTR)"Power",  ID_LEDPower,PLEDIMAGE_KIND,3,4,5,NULL};
+struct myGadProto LEDFloppy = {13, 48, 48, 6, (STRPTR)"Floppy", ID_LEDFloppy,PLEDIMAGE_KIND,0,1,2,NULL};
+struct myGadProto LEDCaps   = {33, 72,  8, 8, (STRPTR)"Capslock", ID_LEDCaps,CAPSIMAGE_KIND,6,0,0,NULL};
+struct myGadProto ButtonSave ={142,144, 92,14,(STRPTR)"Save EEPROM",ID_SaveEEPROM,BUTTON_KIND,0,0,0,NULL};
 struct myGadProto TextActive ={80,4, 94,10, NULL,ID_ActiveLED,TEXT_KIND,0,0,0,NULL};
 
 #define FRAME_UP     0
@@ -160,12 +160,18 @@ struct {
 };
 
 struct TextAttr Topaz = {       /* KeyToy text attributes */
-    "topaz.font",               /* font name */
+    (STRPTR)"topaz.font",       /* font name */
     8,                  /* font height */
     FS_NORMAL, FPF_DISKFONT        /* font style, preferences */
 };
 
 const STRPTR custom_scrname = (STRPTR)"A500KBConfig";
+const STRPTR name500  = (STRPTR)"A500KB V%ld";
+const STRPTR name3000 = (STRPTR)"A3000KB V%ld";
+char  namebuffer[16];
+extern LONG keyboard_type;
+extern LONG keyboard_version;
+
 
 #define CMD_ABOUT 0x80000001
 #define CMD_LOAD  0x80000002
@@ -175,15 +181,22 @@ const STRPTR custom_scrname = (STRPTR)"A500KBConfig";
 
 #define DEF_ITEMS 7
 struct NewMenu defmenus[DEF_ITEMS] = {
- {NM_TITLE,  "Project", 0, 0, 0, NULL },
- {NM_ITEM, "About",0 , 0, 0, (APTR)CMD_ABOUT },
- {NM_ITEM, "Load Preset","O" , 0, 0, (APTR)CMD_LOAD },
- {NM_ITEM, "Save Preset","S" , 0, 0, (APTR)CMD_SAVE },
- {NM_ITEM, "Hide", "H", 0, 0, (APTR)CMD_HIDE },
- {NM_ITEM, "Quit", "Q", 0, 0, (APTR)CMD_QUIT },
+ {NM_TITLE,(STRPTR)"Project", 0, 0, 0, NULL },
+ {NM_ITEM, (STRPTR)"About",0 , 0, 0, (APTR)CMD_ABOUT },
+ {NM_ITEM, (STRPTR)"Load Preset",(STRPTR)"O" , 0, 0, (APTR)CMD_LOAD },
+ {NM_ITEM, (STRPTR)"Save Preset",(STRPTR)"S" , 0, 0, (APTR)CMD_SAVE },
+ {NM_ITEM, (STRPTR)"Hide", (STRPTR)"H", 0, 0, (APTR)CMD_HIDE },
+ {NM_ITEM, (STRPTR)"Quit", (STRPTR)"Q", 0, 0, (APTR)CMD_QUIT },
  {NM_END,  NULL, NULL, 0, 0, NULL},
 };
 
+/* evil Bebbo hack (I like it): move.b d0,(a3+);rts */
+STATIC const ULONG tricky=0x16c04e75;
+VOID mysprintf(char *ostring, char *fmt,...)
+{
+  STRPTR *arg = (STRPTR *)(&fmt+1);
+  RawDoFmt( (STRPTR) fmt, arg, (void (*)())&tricky, ostring );
+}
 
 
 struct myWindow *Window_Open( struct configvars *conf )
@@ -210,11 +223,11 @@ struct myWindow *Window_Open( struct configvars *conf )
    				const struct EasyStruct libnotfoundES = {
 			           sizeof (struct EasyStruct),
 	        		   0,
-		           	   "A500KB Error",
-			   	   "Cannot allocate pens on Default Pubscreen and\n"
+		           	   (STRPTR)"A500KB Error",
+			   	   (STRPTR)"Cannot allocate pens on Default Pubscreen and\n"
 				   "cannot open Custom Screen. Sorry."
 				   ,
-		           	   "Quit",
+		           	   (STRPTR)"Quit",
 		                };
 			        EasyRequest( NULL, &libnotfoundES, &iflags );
 				break;
@@ -239,6 +252,8 @@ struct myWindow *Window_Open( struct configvars *conf )
 		if( conf->win_y )
 			y = *conf->win_y;
 
+		mysprintf( namebuffer, (char*)( (keyboard_type == LEDGV_TYPE_A3000) ? name3000:name500 ), keyboard_version );
+
                 if( !(win->window = OpenWindowTags(NULL,WA_Height,h,
                                                  WA_Width,        w,
                                                  WA_CustomScreen, (ULONG)win->screen,
@@ -250,7 +265,7 @@ struct myWindow *Window_Open( struct configvars *conf )
                                                  WA_DepthGadget,  TRUE,
                                                  WA_Gadgets,      (ULONG)gads,
                                                  WA_Activate,     TRUE,
-						 WA_Title,  (ULONG)cx_Name,
+						 WA_Title,  (ULONG)namebuffer, //cx_Name,
 						 (x<0) ? TAG_IGNORE : WA_Left, x,
 						 (y<0) ? TAG_IGNORE : WA_Top,  y,
                                                  TAG_DONE)))
@@ -260,11 +275,11 @@ struct myWindow *Window_Open( struct configvars *conf )
    			const struct EasyStruct libnotfoundES = {
 			           sizeof (struct EasyStruct),
 	        		   0,
-		           	   "A500KB Error",
-			   	   "Cannot open Window. Something went terribly wrong.\n"
-				   "Sorry."
+		           	   (STRPTR)"A500KB Error",
+			   	   (STRPTR)"Cannot open Window. Something went terribly wrong.\n"
+				           "Sorry."
 				   ,
-		           	   "Quit",
+		           	   (STRPTR)"Quit",
 		                   };
 			EasyRequest( NULL, &libnotfoundES, &iflags );
 			break;
@@ -350,8 +365,8 @@ void ScaleXY( struct myWindow *win, USHORT *x, USHORT *y, USHORT *denom )
 void DrawFrames( struct myWindow *win )
 {
  SHORT i;
- USHORT scalex,scaley,denom=8; /* scaling in relation to Topaz 8 */
- USHORT top,left,x,y,w,h;
+ USHORT scalex=1,scaley=1,denom=8; /* scaling in relation to Topaz 8 */
+ USHORT top,left;//,x,y,w,h;
 
 	if( !win->window )
 		return;
@@ -363,10 +378,10 @@ void DrawFrames( struct myWindow *win )
 	i=0;
 	while( frames[i].type != FRAME_END )
 	{
-		x = left + UDivMod32( frames[i].x * scalex, denom );
-		y = top  + UDivMod32( frames[i].y * scaley, denom );
-		w =       UDivMod32( frames[i].w * scalex, denom );
-		h =       UDivMod32( frames[i].h * scaley, denom );
+		//x = left + UDivMod32( frames[i].x * scalex, denom );
+		//y = top  + UDivMod32( frames[i].y * scaley, denom );
+		//w =       UDivMod32( frames[i].w * scalex, denom );
+		//h =       UDivMod32( frames[i].h * scaley, denom );
 		//Printf("x %ld y %ld w %ld h %ld\n",x,y,w,h);
 		DrawBevelBox( win->window->RPort, 
 			      left + UDivMod32( frames[i].x * scalex, denom ),
@@ -809,9 +824,9 @@ LONG Window_Event(struct configvars *conf, struct myWindow *win )
    				struct EasyStruct libnotfoundES = {
 			           sizeof (struct EasyStruct),
 	        		   0,
-		           	   "A500KB Error",
+		           	   (STRPTR)"A500KB Error",
 					NULL,
-		           	   "OK",
+		           	   (STRPTR)"OK",
 		                };
 				if( win->comm_success > 3 )
 					libnotfoundES.es_TextFormat = manyfail;
@@ -914,7 +929,7 @@ struct Gadget *MakeGad( struct myWindow *win, struct Gadget *glist, struct myGad
 {
 	struct Gadget *gad = NULL;
 	struct NewGadget ng;
-	USHORT scalex,scaley,denom=8; /* scaling in relation to Topaz 8 */
+	USHORT scalex=0,scaley=0,denom=8; /* scaling in relation to Topaz 8 */
 	USHORT top,left;
 
 	if( !prot )
@@ -1072,7 +1087,7 @@ struct Gadget *MakeGad( struct myWindow *win, struct Gadget *glist, struct myGad
 	}
 	if( prot->type == GRADSLIDER_KIND )
 	{
-           gad = (struct Gadget *)NewObject(NULL,"gradientslider.gadget",
+           gad = (struct Gadget *)NewObject(NULL,(STRPTR)"gradientslider.gadget",
                                                 GA_Top,        ng.ng_TopEdge,
                                                 GA_Left,       ng.ng_LeftEdge,
                                                 GA_Width,      ng.ng_Width,
@@ -1086,7 +1101,7 @@ struct Gadget *MakeGad( struct myWindow *win, struct Gadget *glist, struct myGad
 	}
 	if( prot->type == WHEELGRAD_KIND )
 	{
-            gad = (struct Gadget *)NewObject(NULL, "colorwheel.gadget",
+            gad = (struct Gadget *)NewObject(NULL, (STRPTR)"colorwheel.gadget",
                                                 GA_Top,        ng.ng_TopEdge,
                                                 GA_Left,       ng.ng_LeftEdge,
                                                 GA_Width,      ng.ng_Width,
@@ -1109,7 +1124,7 @@ struct Gadget *CreateGads( struct myWindow *win )
 {
 	struct Gadget *glist = NULL;
 	struct Gadget *gtprev,*first = NULL;
-	LONG success = 0;
+	//LONG success = 0;
 
 	win->refreshlist = 0;		/* gadgets that need refreshing */
 
@@ -1146,8 +1161,8 @@ struct Gadget *CreateGads( struct myWindow *win )
 		if( !(win->ButtonSave =glist= MakeGad( win, glist, &ButtonSave)) )
 			break;
 		if( !(win->ActiveText =glist= MakeGad( win, glist, &TextActive)) )
-
-		success = 1;
+			break;
+		//success = 1;
 	}
 	while(0);
 
@@ -1370,7 +1385,7 @@ LONG SetupScreen(struct configvars *conf, struct myWindow *win, ULONG flags )
 	  if( ( !win->Font.ta_Name ) && (scr != NULL) ) 
 	  {
 		 win->Font.ta_YSize = 8;
-		 win->Font.ta_Name  = "topaz.font";
+		 win->Font.ta_Name  = (STRPTR)"topaz.font";
 
 		 if( conf->fontname )
 			win->Font.ta_Name = conf->fontname;

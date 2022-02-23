@@ -21,37 +21,40 @@
 
 #define LCS_NLEDs    N_LED
 
+LONG keyboard_type;
+LONG keyboard_version;
+
 struct EasyStruct SavingES = {
 	    sizeof (struct EasyStruct),
 	    0,
-	    "A500KB Save EEPROM",
-	    "Please wait while updating EEPROM.",
-	    "Cancel"
+	    (STRPTR)"A500KB Save EEPROM",
+	    (STRPTR)"Please wait while updating EEPROM.",
+	    (STRPTR)"Cancel"
 	};
 struct EasyStruct AboutES = {
 	    sizeof (struct EasyStruct),
 	    0,
-	    "About A500KB",
-	    "Configurator for LEDs on A500KB custom Keyboard\n(C) 2022 Henryk Richter\n\nPlease note that this tool is not useful\nfor regular Amiga keyboards.",
-	    "OK"
+	    (STRPTR)"About A500KB",
+	    (STRPTR)"Configurator for LEDs on A500KB custom Keyboard\n(C) 2022 Henryk Richter\n\nPlease note that this tool is not useful\nfor regular Amiga keyboards.",
+	    (STRPTR)"OK"
 	};
 struct EasyStruct LoadConfigES = {
 	    sizeof (struct EasyStruct),
 	    0,
-	    "A500KB Loading",
-	    "Loading current configuration from A500KB keyboard...\n"
-	    "ATTENTION: DON'T TOUCH ANY KEY UNTIL THE REQUESTER DISAPPEARS!\n\n"
-	    "This process might take some seconds\n",
-	    "Cancel"
+	    (STRPTR)"A500KB Loading",
+	    (STRPTR)"Loading current configuration from A500KB keyboard...\n"
+	            "ATTENTION: DON'T TOUCH ANY KEY UNTIL THE REQUESTER DISAPPEARS!\n\n"
+	            "This process might take some seconds\n",
+	    (STRPTR)"Cancel"
 	};
 struct EasyStruct ErrLoadES  = {
 	    sizeof (struct EasyStruct),
 	    0,
-	    "A500KB Loading",
-	    "Failed to load Config from keyboard.\n"
-	    "Your keyboard did not respond with it's current\n"
-	    "config codes. Keeping Defaults.\n",
-	    "Continue"
+	    (STRPTR)"A500KB Loading",
+	    (STRPTR)"Failed to load Config from keyboard.\n"
+	            "Your keyboard did not respond with it's current\n"
+	            "config codes. Keeping Defaults.\n",
+	    (STRPTR)"Continue"
 	};
 
 
@@ -133,18 +136,20 @@ void LoadConfig_Req( struct myWindow *win )
 	}
 }
 
+
+
 UBYTE lc_cmdstream[4];
 UBYTE lc_recvbuffer[64];
 LONG LoadConfig_Func( struct myWindow *win, ULONG *state )
 {
-#define LCS_LEDs     15
+#define LCS_LEDs     15	       /* last possible index reserved for identification string */
 #define LCS_SENT     (1<<4)
 #define LCS_TOADD    (1<<24)   /* timeout addition */
 #define LCS_TOMASK   (255<<24) /* mask for timeouts */
 #define LCS_TOTHRESH (20<<24)  /* give up after 20 timeouts */
 
 	LONG cmdres;
-	LONG idx = *state & LCS_LEDs;
+	LONG idx = (*state & LCS_LEDs)-1;
 
 	/* Printf("IDX %ld state %lx\n",idx,*state); */
 /*
@@ -159,14 +164,26 @@ LONG LoadConfig_Func( struct myWindow *win, ULONG *state )
 	/* we are at start condition ? */
 	if( !(*state & LCS_SENT ) )
 	{
-		/* TODO: use ledmanager_sendcommands */
-		/* send request */
+		LONG n;
+
+		/* preamble */
 		lc_cmdstream[0] = 0x00;
 		lc_cmdstream[1] = 0x03;
-		lc_cmdstream[2] = LEDCMD_GETCONFIG | idx;
-		lc_cmdstream[3] = 0x00;
-		CIAKB_Send( lc_cmdstream, 4 );
 
+		if( idx == -1 )
+		{
+			lc_cmdstream[2] = LEDCMD_GETVERSION;
+			n = 3;
+		}
+		else
+		{
+			/* send request */
+			lc_cmdstream[2] = LEDCMD_GETCONFIG | idx;
+			lc_cmdstream[3] = 0x00;
+			n = 4;
+		}
+		/* TODO: use ledmanager_sendcommands */
+		CIAKB_Send( lc_cmdstream, n );
 		*state |= LCS_SENT;
 		return -1;
 	}
@@ -186,12 +203,25 @@ LONG LoadConfig_Func( struct myWindow *win, ULONG *state )
 		LONG n = CIAKB_GetData( lc_recvbuffer, 64 );
 		if( n > 1 )
 		{
-			ledmanager_loadconfigentry( idx, lc_recvbuffer, n, 1 );
+			if( idx == -1 )
+			{
+				/* getconfig -> 0xBA,(LEDGV_TYPE_A500/LEDGV_TYPE_A3000),VERSION */
+				if( lc_recvbuffer[0] == 0xBA )
+				{
+					keyboard_type    = lc_recvbuffer[1];
+					keyboard_version = lc_recvbuffer[2];
+				}
+			}
+			else
+			{
+				ledmanager_loadconfigentry( idx, lc_recvbuffer, n, 1 );
+			}
 
 			/* next LED or "done" */
 			idx++;
 			if( idx >= LCS_NLEDs )
 				return idx;		/* done */
+			idx++; /* "-1" in the beginning of the file */
 			*state = (*state & ~(LCS_LEDs) ) | idx;
 			return -1; /* next LED in next run */
 		}
