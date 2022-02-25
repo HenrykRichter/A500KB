@@ -36,9 +36,9 @@
 #include "capsimage.h"
 #include "savereq.h"
 
-const STRPTR cx_Name = "A500KBConfig";
-STRPTR cx_Desc = "Keyboard Configurator," \
-		 "H. Richter (C) 2022";
+const STRPTR cx_Name = (STRPTR)"A500KBConfig";
+STRPTR cx_Desc = (STRPTR)"Keyboard Configurator," \
+                         "H. Richter (C) 2022";
 
 struct cx_Custom {
 	struct MsgPort  *eventport;
@@ -123,9 +123,9 @@ LONG cx_main( struct configvars *conf )
    		const struct EasyStruct libnotfoundES = {
 	           sizeof (struct EasyStruct),
         	   0,
-	           "Error",
-		   "Cannot initialize CIA Communication.\n Timer-A allocation fail. Quitting.",
-		   "OK",
+	           (STRPTR)"Error",
+		   (STRPTR)"Cannot initialize CIA Communication.\n Timer-A allocation fail. Quitting.",
+		   (STRPTR)"OK",
 		  };
 		EasyRequest( NULL, (struct EasyStruct *)&libnotfoundES, &iflags );
 		break;
@@ -175,7 +175,7 @@ LONG cx_main( struct configvars *conf )
 	{
 	 UBYTE flg = 1;
 	 if( conf->cx_popup )
-	 	if( 0 == Strnicmp(conf->cx_popup, "NO", 2 ) )
+	 	if( 0 == Strnicmp( conf->cx_popup, (STRPTR)"NO", 2 ) )
 		 flg = 0;
 	 if( flg )
 	 {
@@ -316,17 +316,17 @@ LONG openLibs( void )
 	ColorWheelBase = NULL;
 	GradientSliderBase = NULL;
 
-	if( !(IntuitionBase = (struct IntuitionBase*)OpenLibrary("intuition.library",39)))
+	if( !(IntuitionBase = (struct IntuitionBase*)OpenLibrary( (STRPTR)"intuition.library",39)))
 		res = 1;
-	if( !(CxBase = OpenLibrary("commodities.library",37)))
+	if( !(CxBase = OpenLibrary((STRPTR)"commodities.library",37)))
 		res = 1;
-	if( !(GfxBase = (struct GfxBase*)OpenLibrary("graphics.library",37)))
+	if( !(GfxBase = (struct GfxBase*)OpenLibrary((STRPTR)"graphics.library",37)))
 		res = 1;
-	if( !(UtilityBase = OpenLibrary("utility.library",37)))
+	if( !(UtilityBase = OpenLibrary((STRPTR)"utility.library",37)))
 		res = 1;
-	if( !(GadToolsBase = OpenLibrary("gadtools.library",37)))
+	if( !(GadToolsBase = OpenLibrary((STRPTR)"gadtools.library",37)))
 		res = 1;
-	if( !(AslBase = OpenLibrary("asl.library",37)))
+	if( !(AslBase = OpenLibrary((STRPTR)"asl.library",37)))
 		res = 1;
 	pledimage_class = init_pledimage_class();
 	capsimage_class = init_capsimage_class();
@@ -334,17 +334,17 @@ LONG openLibs( void )
 		
 	if( !res )
 	{
-		ColorWheelBase     = OpenLibrary("gadgets/colorwheel.gadget",39);
-		GradientSliderBase = OpenLibrary("gadgets/gradientslider.gadget",39);
+		ColorWheelBase     = OpenLibrary( (STRPTR)"gadgets/colorwheel.gadget",39);
+		GradientSliderBase = OpenLibrary( (STRPTR)"gadgets/gradientslider.gadget",39);
 		if( !(ColorWheelBase ) )
 		{
 		        ULONG iflags = 0;
    			const struct EasyStruct libnotfoundES = {
 		           sizeof (struct EasyStruct),
 	        	   0,
-		           "Error",
-			       "colorwheel.gadget V39 not found. Quitting.",
-		           "OK",
+		           (STRPTR)"Error",
+			   (STRPTR)"colorwheel.gadget V39 not found. Quitting.",
+		           (STRPTR)"OK",
 		       };
 		       EasyRequest( NULL, &libnotfoundES, &iflags );
 		       res = 1;
@@ -355,9 +355,9 @@ LONG openLibs( void )
    			const struct EasyStruct libnotfoundES = {
 		           sizeof (struct EasyStruct),
 	        	   0,
-		           "Error",
-			       "gradientslider.gadget V39 not found. Quitting.",
-		           "OK",
+		           (STRPTR)"Error",
+			   (STRPTR)"gradientslider.gadget V39 not found. Quitting.",
+		           (STRPTR)"OK",
 		       };
 		       EasyRequest( NULL, &libnotfoundES, &iflags );
 		       res = 1;

@@ -225,8 +225,8 @@ ULONG pled_draw( Class *cls, struct Image *o, struct impDraw *msg )
 		LONG   l;
 		struct DrawInfo *myDrawInfo = msg->imp_DrInfo;
 
-		StrNCpy(textbuf,"State ",6);
-		l=myInt2Str(textbuf+6,10,msg->imp_State,10);
+		StrNCpy(textbuf,(STRPTR)"State ",6);
+		l=myInt2Str( (BYTE*)textbuf+6,10,msg->imp_State,10);
 		textbuf[l+6]=0;
 
 		SetAPen(rp,myDrawInfo->dri_Pens[TEXTPEN]);
@@ -243,8 +243,8 @@ ULONG pled_draw( Class *cls, struct Image *o, struct impDraw *msg )
 		struct DrawInfo *myDrawInfo = msg->imp_DrInfo;
 		LONG   l;
 
-		StrNCpy(textbuf,"State ",6);
-		l=myInt2Str(textbuf+6,10,msg->imp_State,10);
+		StrNCpy(textbuf,(STRPTR)"State ",6);
+		l=myInt2Str( (BYTE*)textbuf+6,10,msg->imp_State,10);
 		textbuf[l+6]=0;
 		
 		myText.IText    = textbuf;
@@ -465,7 +465,7 @@ Class *init_pledimage_class( void )
 {
   Class *cls;
 
-  if( (cls = MakeClass( NULL , "imageclass" , NULL ,sizeof(struct pled_data), 0 ) ))
+  if( (cls = MakeClass( NULL , (STRPTR)"imageclass" , NULL ,sizeof(struct pled_data), 0 ) ))
   {
 #ifdef DIRECT_HOOK
 	cls->cl_Dispatcher.h_Entry    = (HOOKFUNC)pled_dispatch;
