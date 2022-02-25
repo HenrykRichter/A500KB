@@ -104,8 +104,8 @@ unsigned char kbtable[(OCOUNT+OCOUNT_SPC)*ICOUNT];
 #define SYNC_WAIT	14300
 /* waiting time for reset (in 10 us units) = 10ms+500ms */
 #define RESET_WAIT	60000
-/* waiting time before rest is issued (in 10 us units) = 10ms */
-#define RESET_WAIT1	100
+/* waiting time before rest is issued */
+#define RESET_WAIT1	20
 
 /* map row/column to scan code, each start with 1 (labeling on board) */
 #define SCANCODE(_row_,_column_) (((_row_)-1)*ICOUNT) + (_column_)-1
@@ -722,25 +722,31 @@ int main(void)
 	else
 	{
 		/* CTRL-LAMIGA-LAMIGA released ? */
-//		if( (state & STATE_RESET) && (rstwait < RESET_WAIT1)  )
-//		{
-		 KBDSEND_CLKP  |= (1<<KBDSEND_CLKB);  /* clock high */
+		 KBDSEND_CLKD  &= ~(1<<KBDSEND_CLKB);  /* switch to input */
+		 KBDSEND_CLKP  |=  (1<<KBDSEND_CLKB);  /* clock high (internal pullup) */
 		 state &= ~STATE_RESET; /* no longer prepare to demand reset */
-//		}
 	}
 
 	if( (state & STATE_RESET) )
 	{
 		rstwait += OCOUNT/2; /* 10 us units (assume 40us per KB scan loop) */
+#if 0
+		if( rstwait >= RESET_WAIT0 )
+		{
+			write_ring(KEYCODE_RESET_WARN);
+		}
+#endif
 		if( rstwait >= RESET_WAIT1 )
 		{
 #ifdef KBDSEND_RSTP
 			KBDSEND_RSTDDR |=  (1<<KBDSEND_RSTB); /* output */
 			KBDSEND_RSTP   &= ~(1<<KBDSEND_RSTB); /* /RST */
 #endif
+			KBDSEND_CLKD |=  (1<<KBDSEND_CLKB);  /* switch to output */
 			KBDSEND_CLKP &= ~(1<<KBDSEND_CLKB);  /* clock low */
 			state &= ~(STATE_KBWAIT|STATE_KBWAIT2); /* no longer wait for KB ACK */
 		}
+#if 0
 		if( rstwait >= RESET_WAIT ) /* (auto) hold time elapsed ? */
 		{
 #ifdef KBDSEND_RSTP
@@ -751,6 +757,7 @@ int main(void)
 		 	KBDSEND_CLKP  |= (1<<KBDSEND_CLKB);  /* clock high  */
 			state = STATE_POWERUP; /* repeat power-up procedure */
 		}
+#endif
 	}
 	else
 	{
