@@ -15,6 +15,7 @@ The keyboard may be populated with tactile Mitsumi mechanical switches (E25-33-1
 
 ![front view](https://github.com/HenrykRichter/A500KB/raw/main/Pics/A500KB_Full.JPG)
 
+![A3000](https://github.com/HenrykRichter/A500KB/raw/main/Pics/A3000KB4.JPG)
 
 ## Acknowledgements
 
