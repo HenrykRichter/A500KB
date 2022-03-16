@@ -28,10 +28,10 @@
   (pad "" np_thru_hole circle (at -57.1 8.2) (size 3.9878 3.9878) (drill 3.9878) (layers *.Cu *.Mask))
   (pad "" np_thru_hole circle (at 57.075 8.205) (size 3.9878 3.9878) (drill 3.9878) (layers *.Cu *.Mask))
   (pad "" np_thru_hole circle (at 57.075 -6.985) (size 3.048 3.048) (drill 3.048) (layers *.Cu *.Mask))
-  (pad 1 thru_hole oval (at -4.5 -5.05 280) (size 2.524 1.524) (drill 1 (offset 0.5 0)) (layers *.Cu B.Mask))
   (pad 1 thru_hole circle (at -3.86 -2.49) (size 2.25 2.25) (drill 1.47) (layers *.Cu B.Mask))
-  (pad 2 thru_hole oval (at 4.5 -5) (size 2.524 1.524) (drill 1 (offset -0.5 0)) (layers *.Cu B.Mask))
   (pad 2 thru_hole circle (at 2.54 -5.08) (size 2.25 2.25) (drill 1.47) (layers *.Cu B.Mask))
+  (pad 1 thru_hole oval (at 4.85 4.5 180) (size 2.524 1.524) (drill 1 (offset 0.5 0)) (layers *.Cu B.Mask))
+  (pad 2 thru_hole oval (at 4.85 -4.5 349) (size 2.524 1.524) (drill 1 (offset -0.5 0)) (layers *.Cu B.Mask))
   (model ${KIPRJMOD}/MX_Mitsumi_Hybrid.pretty/3d_shapes/SW_Cherry_MX_PCB.stp
     (at (xyz 0 0 0))
     (scale (xyz 1 1 1))

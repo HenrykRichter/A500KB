@@ -21,14 +21,18 @@ The keyboard may be populated with tactile Mitsumi mechanical switches (E25-33-1
 Kicad 3D Models and original Footprints imported from:
 https://github.com/perigoso/keyswitch-kicad-library
 
+## History
+
+Version 2 of the PCBs addresses several small issues with the prototype. Better fitment is provided for Costar style suports of the larger keys (Shift,Return,Space,Tab etc.). Also, those keys are rotated 90 degrees such that the wire of the supports gets better clearance. The plate PCB got positioning holes for the pins in the top cover of A3000/A4000 keyboards.  Some minor additions were done to the electronics, including larger Diodes and more pullup/down resistors. 
+
 ## Caveats
 
 Two styles of A500 top covers need to be considered when it comes to the cabling. 
 My prototype features a pin header for the cable to the Amiga. 
-While this works for my top case which is smooth underneath, there is another type of case which contains a large "+" style spacer underneath. Presumably that "+" was added to keep the keyboard in position.
-So to be flexible and on the safe side, I'd suggest to solder the wires towards the Amiga keyboard connector directly into the PCB. The external inputs (IN3, IN4) may be provided as pin headers, though.
+While this works for my top case which is smooth underneath, there is another type of case which contains a large "+" style spacer in the area of the keyboard cables. Presumably that "+" was added to keep the keyboard in position.
+So to be flexible and on the safe side, I'd suggest to solder the wires towards the Amiga keyboard connector directly into the PCB, just like the original A500 keyboards were done. The external inputs (IN3, IN4) may be provided as pin headers, though.
 ![plus style spacer](https://github.com/HenrykRichter/A500KB/raw/main/Pics/A500KB_A500Case_potential_Problem.JPG)
 
-Please note that the diode orientation is wrong on the silkscreen of the prototype PCBs. The cathode of all diodes is supposed to point upwards (facing the row of ESC and F-keys). A later revision will be equipped with larger diodes and corrected silkscreen.
+Please note that the SOD-523 diode orientation is wrong on the silkscreen of the prototype PCBs (V1). The cathode of all diodes is supposed to point upwards (facing the row of ESC and F-keys). Revision 2 is equipped with larger diodes (SOD-123) and corrected silkscreen.
 
 The two pull-up resistors for I2C are missing on the prototype PCB (R13,R14, 4.7k). Another resistor that needs to be added on the prototype PCB concerns the drive LED pull-down (R12). Please populate R9 with 1k on the prototype PCB and connect it's right hand side pad to the GND plane.

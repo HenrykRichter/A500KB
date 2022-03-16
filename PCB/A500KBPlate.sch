@@ -1549,4 +1549,26 @@ Wire Wire Line
 	10700 1475 11400 1475
 Wire Wire Line
 	10700 875  11400 875 
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 620F0795
+P 2250 9375
+F 0 "H3" H 2350 9421 50  0000 L CNN
+F 1 "MountingHole" H 2350 9330 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4" H 2250 9375 50  0001 C CNN
+F 3 "~" H 2250 9375 50  0001 C CNN
+	1    2250 9375
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 620F0A65
+P 2975 9375
+F 0 "H4" H 3075 9421 50  0000 L CNN
+F 1 "MountingHole" H 3075 9330 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4" H 2975 9375 50  0001 C CNN
+F 3 "~" H 2975 9375 50  0001 C CNN
+	1    2975 9375
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

@@ -7,7 +7,7 @@
       "Application": "Pcbnew",
       "Version":     "(5.1.6-0)"
     },
-    "CreationDate":  "2021-12-10T16:25:12+01:00"
+    "CreationDate":  "2022-03-16T08:27:56+01:00"
   },
   "GeneralSpecs":
   {
@@ -19,7 +19,7 @@
     },
     "Size":
     {
-      "X": 449.630,
+      "X": 447.850,
       "Y": 139.300
     },
     "LayerNumber": 2,
@@ -72,6 +72,16 @@
     {
       "Path":  "A500KB-Edge_Cuts.gm1",
       "FileFunction":  "Profile",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "A500KB-F_Fab.gbr",
+      "FileFunction":  "AssemblyDrawing,Top",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "A500KB-B_Fab.gbr",
+      "FileFunction":  "AssemblyDrawing,Bot",
       "FilePolarity":  "Positive"
     }
   ],

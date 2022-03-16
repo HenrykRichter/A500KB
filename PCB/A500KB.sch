@@ -2464,17 +2464,6 @@ F 3 "" H 4225 3325 50  0001 C CNN
 	1    4225 3325
 	0    1    1    0   
 $EndComp
-$Comp
-L Connector:USB_B J2
-U 1 1 62100E1A
-P 2600 3025
-F 0 "J2" H 2657 3492 50  0000 C CNN
-F 1 "USB_B" H 2657 3401 50  0000 C CNN
-F 2 "Connector_USB:USB_B_Lumberg_2411_02_Horizontal" H 2750 2975 50  0001 C CNN
-F 3 " ~" H 2750 2975 50  0001 C CNN
-	1    2600 3025
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	4825 2825 3000 2825
 $Comp
@@ -2915,8 +2904,8 @@ Text Label 2925 3025 0    50   ~ 0
 D++
 Text Label 2925 3125 0    50   ~ 0
 D--
-Text Notes 11050 1175 0    50   ~ 0
-TODO:\n- shorten by 1mm on the right side of the PCB (DONE)\n- Pull-Down for DRVLED (1k) (DONE)\n- Pull-Up for IN_LED3, IN_LED4 (10k) (DONE)\n- Pull-Up for SCL,SDA (DONE)\n- R7: 3.9k Resistor for LED driver (was: 3.3k) (DONE)\n- Turn Diodes around (DONE)\n
+Text Notes 11000 1450 0    50   ~ 0
+TODO:\n- shorten by 1mm on the right side of the PCB (DONE)\n- Pull-Down for DRVLED (1k) (DONE)\n- Pull-Up for IN_LED3, IN_LED4 (10k) (DONE)\n- Pull-Up for SCL,SDA (DONE)\n- R7: 3.9k Resistor for LED driver (was: 3.3k) (DONE)\n- Turn Diodes around (DONE)\n- Bax Logo (done)\n- Spacebar retention update on Plate\n- Version 2 (done)\n- Micro USB (done)
 $Comp
 L Device:R R6
 U 1 1 62F4054E
@@ -4963,7 +4952,7 @@ L Device:R R13
 U 1 1 6227AB06
 P 9775 3325
 F 0 "R13" V 9568 3325 50  0000 C CNN
-F 1 "2k" V 9659 3325 50  0000 C CNN
+F 1 "3.3k" V 9659 3325 50  0000 C CNN
 F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 9705 3325 50  0001 C CNN
 F 3 "~" H 9775 3325 50  0001 C CNN
 	1    9775 3325
@@ -4974,7 +4963,7 @@ L Device:R R14
 U 1 1 6227B3FD
 P 10150 3325
 F 0 "R14" V 9943 3325 50  0000 C CNN
-F 1 "2k" V 10034 3325 50  0000 C CNN
+F 1 "3.3k" V 10034 3325 50  0000 C CNN
 F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10080 3325 50  0001 C CNN
 F 3 "~" H 10150 3325 50  0001 C CNN
 	1    10150 3325
@@ -5050,4 +5039,17 @@ Wire Wire Line
 	3800 4825 4825 4825
 Wire Wire Line
 	2100 9050 2100 15025
+$Comp
+L Connector:USB_B_Micro J2
+U 1 1 6235B472
+P 2600 3025
+F 0 "J2" H 2657 3492 50  0000 C CNN
+F 1 "USB_B_Micro" H 2657 3401 50  0000 C CNN
+F 2 "Connector_USB:USB_Micro-B_Molex-105017-0001" H 2750 2975 50  0001 C CNN
+F 3 "https://www.mouser.de/datasheet/2/276/1/1050170001_IO_CONNECTORS-230168.pdf" H 2750 2975 50  0001 C CNN
+F 4 "538-105017-0001 " H 2600 3025 50  0001 C CNN "Mouser"
+	1    2600 3025
+	1    0    0    -1  
+$EndComp
+NoConn ~ 2900 3225
 $EndSCHEMATC
