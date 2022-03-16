@@ -2905,7 +2905,7 @@ D++
 Text Label 2925 3125 0    50   ~ 0
 D--
 Text Notes 11000 1450 0    50   ~ 0
-TODO:\n- shorten by 1mm on the right side of the PCB (DONE)\n- Pull-Down for DRVLED (1k) (DONE)\n- Pull-Up for IN_LED3, IN_LED4 (10k) (DONE)\n- Pull-Up for SCL,SDA (DONE)\n- R7: 3.9k Resistor for LED driver (was: 3.3k) (DONE)\n- Turn Diodes around (DONE)\n- Bax Logo (done)\n- Spacebar retention update on Plate\n- Version 2 (done)\n- Micro USB (done)
+TODO:\n- shorten by 1mm on the right side of the PCB (DONE)\n- Pull-Down for DRVLED (1k) (DONE)\n- Pull-Up for IN_LED3, IN_LED4 (10k) (DONE)\n- Pull-Up for SCL,SDA (DONE)\n- R7: 3.9k Resistor for LED driver (was: 3.3k) (DONE)\n- Turn Diodes around (DONE)\n- Bax Logo :-) (done)\n- Spacebar retention update on Plate\n- Version 2 (done)\n- Micro USB (done)
 $Comp
 L Device:R R6
 U 1 1 62F4054E
