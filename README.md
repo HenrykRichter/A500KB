@@ -37,3 +37,6 @@ So to be flexible and on the safe side, I'd suggest to solder the wires towards 
 Please note that the SOD-523 diode orientation is wrong on the silkscreen of the prototype PCBs (V1). The cathode of all diodes is supposed to point upwards (facing the row of ESC and F-keys). Revision 2 is equipped with larger diodes (SOD-123) and corrected silkscreen.
 
 The two pull-up resistors for I2C are missing on the prototype PCB (R13,R14, 4.7k). Another resistor that needs to be added on the prototype PCB concerns the drive LED pull-down (R12). Please populate R9 with 1k on the prototype PCB and connect it's right hand side pad to the GND plane.
+
+## License
+The PCB, it's design files and all support code (Amiga, Atmega) are licensed as [CC BY NC SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en).

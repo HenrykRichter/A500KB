@@ -12,4 +12,5 @@ are for testing and therefore print only approximate labels you find on the keys
 Also, the UART is connected to KBCLOCK and KBDATA lines. With debug on, please
 connect the FT232RL to KBCLOCK/KBDATA and use IN3/IN4 for Amiga communication.
 
+Consequently, IN3/IN4 inputs are not available while debugging.
 
