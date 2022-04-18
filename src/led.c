@@ -94,6 +94,8 @@ const unsigned char ledinitlist[] PROGMEM = {
 #define LEDF_SRC_IN4    (1<<LEDB_SRC_IN4)
 #define LEDF_SRC_CAPS   (1<<LEDB_SRC_CAPS)
 #define LEDF_ALL ( (LEDF_SRC_POWER)|(LEDF_SRC_FLOPPY)|(LEDF_SRC_IN3)|(LEDF_SRC_IN4)|(LEDF_SRC_CAPS) )
+#define LEDB_MAP_SWAP	7
+#define LEDF_MAP_SWAP	(1<<LEDB_MAP_SWAP)
 
 /* number of LEDs */
 #define N_LED         7
@@ -605,9 +607,9 @@ void led_defaults()
 	uint8_t i;
 
 	/* 0,1,2 are the floppy LED (left,mid,right) */
-	LED_SRCMAP[0] = LEDF_SRC_FLOPPY;
-	LED_SRCMAP[1] = LEDF_SRC_FLOPPY;
-	LED_SRCMAP[2] = LEDF_SRC_IN3;
+	LED_SRCMAP[0] = LEDF_SRC_FLOPPY | LEDF_SRC_IN4 | LEDF_MAP_SWAP;
+	LED_SRCMAP[1] = LEDF_SRC_FLOPPY | LEDF_SRC_IN3;
+	LED_SRCMAP[2] = LEDF_SRC_FLOPPY | LEDF_SRC_IN3 | LEDF_MAP_SWAP;
 
 	LED_SRCMAP[3] = LEDF_SRC_POWER;
 	LED_SRCMAP[4] = LEDF_SRC_POWER;

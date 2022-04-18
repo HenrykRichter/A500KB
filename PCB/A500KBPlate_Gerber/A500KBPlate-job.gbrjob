@@ -7,7 +7,7 @@
       "Application": "Pcbnew",
       "Version":     "(5.1.6-0)"
     },
-    "CreationDate":  "2022-03-16T08:36:45+01:00"
+    "CreationDate":  "2022-03-28T09:53:18+02:00"
   },
   "GeneralSpecs":
   {
@@ -23,7 +23,7 @@
       "Y": 124.510
     },
     "LayerNumber": 2,
-    "BoardThickness":  1.600
+    "BoardThickness":  1.000
   },
   "DesignRules":
   [
@@ -45,28 +45,13 @@
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "A500KBPlate-B_Cu.gbl",
-      "FileFunction":  "Copper,L2,Bot",
-      "FilePolarity":  "Positive"
-    },
-    {
       "Path":  "A500KBPlate-F_SilkS.gto",
       "FileFunction":  "Legend,Top",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "A500KBPlate-B_SilkS.gbo",
-      "FileFunction":  "Legend,Bot",
-      "FilePolarity":  "Positive"
-    },
-    {
       "Path":  "A500KBPlate-F_Mask.gts",
       "FileFunction":  "SolderMask,Top",
-      "FilePolarity":  "Negative"
-    },
-    {
-      "Path":  "A500KBPlate-B_Mask.gbs",
-      "FileFunction":  "SolderMask,Bot",
       "FilePolarity":  "Negative"
     },
     {
@@ -93,18 +78,6 @@
       "Type":  "Dielectric",
       "Material":  "FR4",
       "Notes":  "Layers L1/L2"
-    },
-    {
-      "Type":  "Copper",
-      "Notes":  "Layer B.Cu"
-    },
-    {
-      "Type":  "SolderMask",
-      "Notes":  "Layer B.Mask"
-    },
-    {
-      "Type":  "Legend",
-      "Notes":  "Layer B.SilkS"
     }
   ]
 }

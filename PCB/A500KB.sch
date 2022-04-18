@@ -5052,4 +5052,26 @@ F 4 "538-105017-0001 " H 2600 3025 50  0001 C CNN "Mouser"
 	1    0    0    -1  
 $EndComp
 NoConn ~ 2900 3225
+$Comp
+L Mechanical:MountingHole H20
+U 1 1 62668E64
+P 17875 1750
+F 0 "H20" H 17975 1796 50  0000 L CNN
+F 1 "MountingHole" H 17975 1705 50  0000 L CNN
+F 2 "MXMitsumi:MountingHole_3.2mm_M3_Small_Bax" H 17875 1750 50  0001 C CNN
+F 3 "~" H 17875 1750 50  0001 C CNN
+	1    17875 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H21
+U 1 1 62669442
+P 17875 1950
+F 0 "H21" H 17975 1996 50  0000 L CNN
+F 1 "MountingHole" H 17975 1905 50  0000 L CNN
+F 2 "MXMitsumi:MountingHole_3.2mm_M3_Small_Bax" H 17875 1950 50  0001 C CNN
+F 3 "~" H 17875 1950 50  0001 C CNN
+	1    17875 1950
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
