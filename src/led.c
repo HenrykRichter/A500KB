@@ -607,9 +607,9 @@ void led_defaults()
 	uint8_t i;
 
 	/* 0,1,2 are the floppy LED (left,mid,right) */
-	LED_SRCMAP[0] = LEDF_SRC_FLOPPY | LEDF_SRC_IN4 | LEDF_MAP_SWAP;
-	LED_SRCMAP[1] = LEDF_SRC_FLOPPY | LEDF_SRC_IN3;
-	LED_SRCMAP[2] = LEDF_SRC_FLOPPY | LEDF_SRC_IN3 | LEDF_MAP_SWAP;
+	LED_SRCMAP[0] = LEDF_SRC_FLOPPY | LEDF_SRC_IN4;
+	LED_SRCMAP[1] = LEDF_SRC_FLOPPY | LEDF_SRC_IN3 | LEDF_MAP_SWAP;
+	LED_SRCMAP[2] = LEDF_SRC_FLOPPY | LEDF_SRC_IN3;
 
 	LED_SRCMAP[3] = LEDF_SRC_POWER;
 	LED_SRCMAP[4] = LEDF_SRC_POWER;
@@ -621,23 +621,35 @@ void led_defaults()
 		LED_SECMAP[i] = get_secmap(LED_SRCMAP[i]); /* bit combinations (including SWAP flag) for secondary function */
 
 	/* RGB defaults */
-	for( i=0 ; i < 2 ; i++ )
+	for( i=0 ; i < 3 ; i++ )
 	{ /* floppy */
 		LED_RGB[i][LED_IDLE][0] = 0x00;
 		LED_RGB[i][LED_IDLE][1] = 0x00;
 		LED_RGB[i][LED_IDLE][2] = 0x00;
-		LED_RGB[i][LED_ACTIVE][0] = 0xFF; /* orange */
-		LED_RGB[i][LED_ACTIVE][1] = 0x90;
-		LED_RGB[i][LED_ACTIVE][2] = 0x00;
 	}
-	/* IN3 */
+	i=0;
+	LED_RGB[i][LED_ACTIVE][0] = 0x00; /* green-ish */
+	LED_RGB[i][LED_ACTIVE][1] = 0xFF;
+	LED_RGB[i][LED_ACTIVE][2] = 0xEA;
+	LED_RGB[i][LED_SECONDARY][0] = 0xFF; /* orange */
+	LED_RGB[i][LED_SECONDARY][1] = 0x90;
+	LED_RGB[i][LED_SECONDARY][2] = 0x00;
+
+	i=1;
+	LED_RGB[i][LED_ACTIVE][0] = 0xFF; /* orange */
+	LED_RGB[i][LED_ACTIVE][1] = 0x90;
+	LED_RGB[i][LED_ACTIVE][2] = 0x00;
+	LED_RGB[i][LED_SECONDARY][0] = 0x00; /* cyan */
+	LED_RGB[i][LED_SECONDARY][1] = 0xEA;
+	LED_RGB[i][LED_SECONDARY][2] = 0xFF;
+
 	i=2;
-	LED_RGB[i][LED_IDLE][0] = 0x00;
-	LED_RGB[i][LED_IDLE][1] = 0x00;
-	LED_RGB[i][LED_IDLE][2] = 0x00;
 	LED_RGB[i][LED_ACTIVE][0] = 0x00; /* cyan */
 	LED_RGB[i][LED_ACTIVE][1] = 0xEA;
 	LED_RGB[i][LED_ACTIVE][2] = 0xFF;
+	LED_RGB[i][LED_SECONDARY][0] = 0xFF; /* orange */
+	LED_RGB[i][LED_SECONDARY][1] = 0x90;
+	LED_RGB[i][LED_SECONDARY][2] = 0x00;
 
 	/* Power */
 	for( i=3 ; i < 6 ; i++ )
