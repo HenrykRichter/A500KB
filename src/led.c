@@ -118,6 +118,7 @@ unsigned char LED_SRCMAP[N_LED]; /* flags applying to this LED      */
 unsigned char LED_SECMAP[N_LED]; /* bit combinations (including SWAP flag) for secondary function */
 unsigned char LED_RGB[N_LED][LED_STATES][3]; /* RGB config for LEDs */
 unsigned char LED_MODES[N_LED];  /* static,cycle, rainbow, knight rider etc. */
+unsigned char LED_MODESTATE[N_LED]; /* mode-private storage for current state */
 
 /* 
   TWI command list: 
@@ -215,6 +216,142 @@ unsigned char led_getinputstate()
 	return led_currentstate;
 }
 
+#define PRINT(a)
+void cycle_rainbow( uint8_t *rgb, uint8_t increment )
+{
+	uint8_t r,g,b;
+	uint8_t rmax,rmin; /* channel index */
+	uint8_t delta;
+	int16_t h,s,v;
+
+	/* RGB 2 HSV conversion */
+	r = rgb[0];
+	g = rgb[1];
+	b = rgb[2];
+
+	/* sort channel indices by level */
+	rmin = 2;
+	rmax = 0;
+	if( g > r )
+	{ /* r < g */
+		rmax = 1;
+		if( b > g )
+		{
+			rmax = 2;
+			rmin = 0;
+		}
+		else
+		 if( r < b )
+		 	rmin = 0;
+	}
+	else
+	{ /* r >= g */
+	 if( b > r )
+	 {
+		rmax = 2;
+		rmin = 1;
+	 }
+	 else
+	  if( g < b )
+		 rmin = 1;
+	}
+
+	PRINT(("rmin %d rmax %d\n",rmin,rmax));
+
+	delta = rgb[rmax]-rgb[rmin];
+	v = rgb[rmax];
+	if( delta < 128 )
+		s = (v) ? (((uint16_t)delta)*255)/v : 0;
+	else	s = (v) ? (((uint16_t)delta)<<7)/((v+1)>>1) : 0;
+	if( s > 255 )
+		s=255;
+	// v is in Levels 0...255
+	// s is Saturation * 256
+	// H is in degrees * 255/360 
+
+	if( !delta )
+		h=0;
+	else
+	{
+		switch( rmax )
+		{
+			case 0: /* R is max */
+			/* 60° * ( (G-B)/delta mod 6 ) */ 
+				h = 171*((int16_t)g-(int16_t)b)/delta;
+				break;
+			case 1: /* G is max */
+			/* 60° * ( (B-R)/delta + 2 )   */
+				h = (171*((int16_t)b-(int16_t)r))/delta + 342;
+				break;
+			default: /* B is max */
+			/* 60° * ( (R-G)/delta + 4 )   */
+				h = 171*((int16_t)r-(int16_t)g)/delta + 683;
+				break;
+		}
+	}
+	if( h < 0 )
+		h=h+1024;
+	if( h > 1023 )
+		h=h-1024;
+
+	PRINT(("%d %d %d -> hsv %d %d %d \n",r,g,b,h,s,v));
+
+#if 1
+	/* increase Hue */
+	h += ((int)increment)<<2;
+	h &= 0x3ff; /* periodicity with 1024 */
+#endif
+	/* transform back */
+	r = v;
+	g = v;
+	b = v;
+	if( s )
+	{
+	 int region,remainder,p,q,t;
+
+	 region = h/171;
+	 remainder=((h - (region * 171)) * 6)>>2;
+	
+	 p = (v * (255 - s)) >> 8;
+	 q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+	 t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+	 if( q < 0 ) q=0;
+	 if( t < 0 ) t=0;
+	 if( p < 0 ) p=0;
+
+#if 1
+	 if(1)// if( (p>255) || (q>255) || (t>255) )
+	 {
+		PRINT(("hsv %d %d %d -> p %d q %d t%d v%d rem %d\n",h,s,v,p,q,t,v,remainder));
+//		printf("%d %d %d -> hsv %d %d %d \n",r,g,b,h,s,v);
+	 }
+#endif
+
+	 switch(region)
+	 {
+	  case 0:
+	  	r = v; g = t; b = p; break;
+	  case 1:
+	        r = q; g = v; b = p; break;
+	  case 2:
+	  	r = p; g = v; b = t; break;
+	  case 3:
+	        r = p; g = q; b = v; break;
+	  case 4:
+	        r = t; g = p; b = v; break;
+	  default:
+	        r = v; g = p; b = q; break;
+	 }
+	}
+
+	/* store */
+	rgb[0] = r;
+	rgb[1] = g;
+	rgb[2] = b;
+
+}
+
+
 unsigned char twi_ledupdate_pos;
 unsigned char led_sending;
 void twi_ledupdate_callback( uint8_t address, uint8_t *data )
@@ -236,6 +373,9 @@ void twi_ledupdate_callback( uint8_t address, uint8_t *data )
 	t = twicmds[twi_ledupdate_pos+1]; /* get state index */
 
 	initseq[0] = 0x01+i*3*2; /* LED index to hardware register */
+
+	if( LED_MODES[i] == LEDM_RAINBOW )
+		cycle_rainbow( LED_RGB[i][t], 30 );
 #if 1
 	initseq[1] = pgm_read_byte(&gamma24_tableLH[LED_RGB[i][t][0]][GAMMATAB_L]); /* red L */
 	initseq[2] = pgm_read_byte(&gamma24_tableLH[LED_RGB[i][t][0]][GAMMATAB_H]); /* red H */
@@ -297,7 +437,16 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 				LED_SRCMAP[index] = r;
 				LED_SECMAP[index] = get_secmap(r); /* bit combinations (including SWAP flag) for secondary function */
 				break;
-
+			case LEDCMD_SETMODE:
+				if( !nrecv )
+					break;
+				nrecv--;
+				r = *recvcmd++;
+				if( index >= N_LED )
+					break;
+				LED_MODES[index] = r;
+				LED_MODESTATE[index] = 0;
+					break;
 			case LEDCMD_COLOR:
 				if( nrecv < 4 )
 				{
@@ -346,7 +495,12 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 			*sendbuf++ = LED_RGB[(unsigned char)confget][st][1];
 			*sendbuf++ = LED_RGB[(unsigned char)confget][st][2];
 		}
+#if (LEDGV_VERSION>1)
+		*sendbuf++ = LED_MODES[(unsigned char)confget];
+		return (LED_STATES*3)+2;
+#else
 		return (LED_STATES*3)+1;
+#endif
 	}
 
 	if( needsave >= 0 )
@@ -619,6 +773,11 @@ void led_defaults()
 
 	for( i=0 ; i < 7 ; i++ )
 		LED_SECMAP[i] = get_secmap(LED_SRCMAP[i]); /* bit combinations (including SWAP flag) for secondary function */
+	for( i=0 ; i < N_LED ; i++ )
+	{
+		LED_MODES[i] = 0;
+		LED_MODESTATE[i] = 0;
+	}
 
 	/* RGB defaults */
 	for( i=0 ; i < 3 ; i++ )

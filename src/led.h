@@ -41,6 +41,8 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 #define LEDCMD_SAVECONFIG 0x80
 /* get keyboard type/version */
 #define LEDCMD_GETVERSION 0xA0
+/* set LED mode, 1 byte argument */
+#define LEDCMD_SETMODE    0xC0
 
 /* Please note that the protocol is designed for short packets to avoid
    overflows in send/receive buffers. As a consequence, only one command
@@ -55,7 +57,12 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 #define LEDGV_HEADER     0xBA /* */
 #define LEDGV_TYPE_A500  0x01 /* 7 LEDs */
 #define LEDGV_TYPE_A3000 0x02 /* 1 LED only */
-#define LEDGV_VERSION    0x01 /* software version */
+#define LEDGV_VERSION    0x02 /* software version (1=initial, 2=with mode support) */
 
+/* LED MODES */
+#define LEDM_STATIC  0
+#define LEDM_RAINBOW 1	/* HSV rainbow */
+#define LEDM_PULSE   2  /* Pulsation   */
+#define LEDM_SAT     3  /* Saturation up/down */
 
 #endif
