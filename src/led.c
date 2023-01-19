@@ -289,11 +289,14 @@ void cycle_rainbow( uint8_t *rgb, uint8_t increment )
 				break;
 		}
 	}
+#if 1
+	h &= 0x3ff;
+#else
 	if( h < 0 )
 		h=h+1024;
 	if( h > 1023 )
 		h=h-1024;
-
+#endif
 	PRINT(("%d %d %d -> hsv %d %d %d \n",r,g,b,h,s,v));
 
 #if 1
@@ -357,6 +360,7 @@ unsigned char led_sending;
 void twi_ledupdate_callback( uint8_t address, uint8_t *data )
 {
 	unsigned char i,t;
+	unsigned char led_cur[3];
 
 	/* a little delay between consecutive TWI writes */
 	_delay_us(4);
@@ -374,15 +378,55 @@ void twi_ledupdate_callback( uint8_t address, uint8_t *data )
 
 	initseq[0] = 0x01+i*3*2; /* LED index to hardware register */
 
-	if( LED_MODES[i] == LEDM_RAINBOW )
-		cycle_rainbow( LED_RGB[i][t], 30 );
+	led_cur[0] = LED_RGB[i][t][0];
+	led_cur[1] = LED_RGB[i][t][1];
+	led_cur[2] = LED_RGB[i][t][2];
+
+	switch( LED_MODES[i] )
+	{
+	 case LEDM_STATIC:
+	 	break;
+	 case LEDM_RAINBOW:
+		LED_MODESTATE[i]++;
+		cycle_rainbow( led_cur, LED_MODESTATE[i] );
+		break;
+	 case LEDM_PULSE:
+		{
+		 unsigned char d,c = LED_MODESTATE[i]+1;
+		 LED_MODESTATE[i] = c;
+		 if( c > 127 ) c = 255-c;
+
+		 for( d=0 ; d < 3 ; d++ )
+		 {
+			led_cur[d] = ((int)led_cur[d] * (int)c + 32)>>7;
+		 }
+		}
+		break;
+	 //case LEDM_SAT:
+	 default:
+		{
+		 unsigned char d,c = LED_MODESTATE[i]+1;
+		 int dif,sum;
+		 LED_MODESTATE[i] = c;
+		 if( c > 127 ) c = 255-c;
+
+		 sum = ((int)led_cur[0] + (int)led_cur[1] + (int)led_cur[1] + (int)led_cur[2])>>2;
+		 for( d=0 ; d < 3 ; d++ )
+		 {
+			dif = (int)led_cur[d] - sum;
+			dif = (dif * (int)c + 64)>>7; /* (de)saturate */
+			led_cur[d] = sum + dif;
+		 }
+		}
+	 	break;
+	}
 #if 1
-	initseq[1] = pgm_read_byte(&gamma24_tableLH[LED_RGB[i][t][0]][GAMMATAB_L]); /* red L */
-	initseq[2] = pgm_read_byte(&gamma24_tableLH[LED_RGB[i][t][0]][GAMMATAB_H]); /* red H */
-	initseq[3] = pgm_read_byte(&gamma24_tableLH[LED_RGB[i][t][1]][GAMMATAB_L]); /* grn L */
-	initseq[4] = pgm_read_byte(&gamma24_tableLH[LED_RGB[i][t][1]][GAMMATAB_H]); /* grn H */
-	initseq[5] = pgm_read_byte(&gamma24_tableLH[LED_RGB[i][t][2]][GAMMATAB_L]); /* blu L */
-	initseq[6] = pgm_read_byte(&gamma24_tableLH[LED_RGB[i][t][2]][GAMMATAB_H]); /* blu H */
+	initseq[1] = pgm_read_byte(&gamma24_tableLH[led_cur[0]][GAMMATAB_L]); /* red L */
+	initseq[2] = pgm_read_byte(&gamma24_tableLH[led_cur[0]][GAMMATAB_H]); /* red H */
+	initseq[3] = pgm_read_byte(&gamma24_tableLH[led_cur[1]][GAMMATAB_L]); /* grn L */
+	initseq[4] = pgm_read_byte(&gamma24_tableLH[led_cur[1]][GAMMATAB_H]); /* grn H */
+	initseq[5] = pgm_read_byte(&gamma24_tableLH[led_cur[2]][GAMMATAB_L]); /* blu L */
+	initseq[6] = pgm_read_byte(&gamma24_tableLH[led_cur[2]][GAMMATAB_H]); /* blu H */
 #else
 	/* TODO: Gamma table */
 	initseq[1] = (LED_RGB[i][t][0]<<4);  /* red L */
@@ -636,7 +680,7 @@ void led_saveconfig( char neededleds )
 	unsigned char last  = N_LED-1;
 	unsigned char i,k;
 	unsigned char *obuf;
-	unsigned char *adr = (unsigned char *)0x0;
+	unsigned char *adr = (unsigned char *)0x100;
 
 	/* 
 		header:
@@ -649,9 +693,9 @@ void led_saveconfig( char neededleds )
 
 	*/
 	obuf = adr;
-	eeprom_update_byte( obuf, 0xBA );
+	eeprom_write_byte( obuf, 0xBA );
 	obuf++;
-	eeprom_update_byte( obuf, 0x58 );
+	eeprom_write_byte( obuf, 0x58 );
 
 	for( i=start ; i <= last ; i++ )
 	{
@@ -699,7 +743,7 @@ void led_loadconfig( char neededleds )
         unsigned char last  = N_LED-1; /* TODO: verify neededleds */
         unsigned char i,k,nf;
         unsigned char *obuf;
-        unsigned char *adr = (unsigned char *)0x0;
+        unsigned char *adr = (unsigned char *)0x100;
 
 	/* check header 
 		 0xBA, 0x58 = 0xBA 'X'
