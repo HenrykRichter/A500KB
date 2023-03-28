@@ -3,6 +3,8 @@ This project contains the material related to a custom Commodore Amiga Mechanica
 
 The keyboard may be populated with tactile Mitsumi mechanical switches (E25-33-137) and original A2000/3000/4000 keycaps or A1200.net replica keycaps. It has also been tested with Cherry and KailH switches. The author has not reached out to Keycap manufacturers for a fully Amiga compatible keycap set, though.
 
+If building the full keyboard is not an option, a sub-project of A500KB might be of interest. The controller part of A500KB is also usable as standalone controller for classic Mitsumi keyboards (A500KB Mini). While that A500KB Mini approach won't give the benefit of mechanical switches, it'll offer the custom LED functionality of A500KB.
+
 ## Requirements
 
 - Amiga 500 or A3000/A4000 keyboard case
@@ -33,10 +35,6 @@ My prototype features a pin header for the cable to the Amiga.
 While this works for my top case which is smooth underneath, there is another type of case which contains a large "+" style spacer in the area of the keyboard cables. Presumably that "+" was added to keep the keyboard in position.
 So to be flexible and on the safe side, I'd suggest to solder the wires towards the Amiga keyboard connector directly into the PCB, just like the original A500 keyboards were done. The external inputs (IN3, IN4) may be provided as pin headers, though.
 ![plus style spacer](https://github.com/HenrykRichter/A500KB/raw/main/Pics/A500KB_A500Case_potential_Problem.JPG)
-
-Please note that the SOD-523 diode orientation is wrong on the silkscreen of the prototype PCBs (V1). The cathode of all diodes is supposed to point upwards (facing the row of ESC and F-keys). Revision 2 is equipped with larger diodes (SOD-123) and corrected silkscreen.
-
-The two pull-up resistors for I2C are missing on the prototype PCB (R13,R14, 4.7k). Another resistor that needs to be added on the prototype PCB concerns the drive LED pull-down (R12). Please populate R9 with 1k on the prototype PCB and connect it's right hand side pad to the GND plane.
 
 ## License
 The PCB, it's design files and all support code (Amiga, Atmega) are licensed as [CC BY NC SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en).
