@@ -93,6 +93,7 @@ struct myWindow {
 	struct Gadget *CycleSrc;       /* Source Cycle: None, Power,Floppy,Caps,In3,In4 */
 //	struct Gadget *CycleSecondary; /* Secondary Source Cycle */
 	struct Gadget *SrcState;       /* MX State: Off, On, 2nd */
+	struct Gadget *CycleMode;      /* Mode Cycle: Static, Rainbow 0-3 */
 
 	struct Gadget *PowerLED;
 	struct Gadget *FloppyLED;

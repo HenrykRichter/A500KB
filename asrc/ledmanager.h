@@ -57,7 +57,9 @@
 #define LEDCMD_SAVEEEPROM 0x80
 /* get keyboard type/version */
 #define LEDCMD_GETVERSION 0xA0
-                        
+/* set mode (static, cycle etc.), 1 byte argument */
+#define LEDCMD_SETMODE    0xC0
+
 /* Please note that the protocol is designed for short packets to avoid
    overflows in send/receive buffers. As a consequence, only one command
    with return values (from Keyboard to Amiga) may be issued at a time.

@@ -29,6 +29,7 @@ unsigned char  LED_MODES[N_LED];  /* static,cycle, rainbow, knight rider etc. */
 unsigned short LED_lastSRCMAP[N_LED][LED_STATES];
 unsigned char  LED_lastRGB[N_LED][LED_STATES][3]; /* RGB config for LEDs */
 unsigned char  LED_lastMODES[N_LED];  /* static,cycle, rainbow, knight rider etc. */
+#define MAXMODE 3 /* static,cycle1,cycle2,cycle3 */
 
 UBYTE cmdstream[48]; /* 2 bytes preamble, 1 CMD SOURCE (2 bytes), 3 CMDs RGB (5 bytes each) */
 SHORT lastchange;    /* index of last LED that was changed in config tool */
@@ -44,6 +45,8 @@ void led_defaults();
 LONG ledmanager_copy_last( LONG led, LONG flags ); /* copy LED settings to last sent location */
 LONG ledmanager_sendcommands( LONG led ); /* generate command stream and send data */
 
+/* referenced for version-specific commands */
+extern LONG keyboard_version;
 
 LONG ledmanager_init(void)
 {
@@ -195,6 +198,13 @@ LONG ledmanager_sendcommands( LONG led )
 			*cmd++ = LED_RGB[led][i][1];
 			*cmd++ = LED_RGB[led][i][2];
 		}
+
+		if( keyboard_version > 1 )
+		{
+			/* send cycling mode */
+			*cmd++ = LEDCMD_SETMODE | led;
+			*cmd++ = LED_MODES[led];
+		}
 	}
 
 	ncmd = cmd - cmdstream;
@@ -279,8 +289,9 @@ LONG ledmanager_loadconfigentry( LONG led, UBYTE *recvbuf, LONG nbytes, ULONG fl
      RGB idle   (3 bytes)
      RGB active (3 bytes)
      RGB secondary (3 bytes)
+     LED Mode   (1 byte, optional)
  */
-	/* TODO: decode sourcemap */
+	/* store sourcemap */
 	LED_SRCMAP[led][LED_ACTIVE]   = ledmanager_decodesrcmap( *recvbuf, LED_ACTIVE );
 	LED_SRCMAP[led][LED_SECONDARY]= ledmanager_decodesrcmap( *recvbuf, LED_SECONDARY );
 	recvbuf++;
@@ -291,6 +302,14 @@ LONG ledmanager_loadconfigentry( LONG led, UBYTE *recvbuf, LONG nbytes, ULONG fl
 		LED_RGB[led][i][0] = *recvbuf++;
 		LED_RGB[led][i][1] = *recvbuf++;
 		LED_RGB[led][i][2] = *recvbuf++;
+	}
+
+	/* if given, then copy mode (depends on firmware version) */
+	if( nbytes == 11 )
+	{
+		LED_MODES[led] = *recvbuf;
+		if( LED_MODES[led] > MAXMODE )
+			LED_MODES[led] = 0;
 	}
 
 	if( flags & 1 )

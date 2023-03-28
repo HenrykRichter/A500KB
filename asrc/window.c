@@ -7,7 +7,6 @@
   TODO:
    - Custom Screen
    - rainbow cycle mode (slow, medium, fast )
-   - save config button
 
    - Color/Source Manager (including default config)
      - write to Keyboard
@@ -89,7 +88,7 @@ LONG win_FreeMenus( struct configvars *conf,struct myWindow *win);
 #define ID_LEDCaps 10
 #define ID_SaveEEPROM 11
 #define ID_ActiveLED 12 /* show active LED as text */
-
+#define ID_ModeCycle 13
 
 #define WIN_W 257
 #define WIN_H 164
@@ -127,6 +126,13 @@ STRPTR ActiveStateStrings[8] = {   /* Text active */
  NULL
 };
 
+STRPTR ModeStrings[5] = {
+ (STRPTR)"Fixed",
+ (STRPTR)"Cycle1",
+ (STRPTR)"Cycle2",
+ (STRPTR)"Cycle3",
+ NULL
+};
 
 
 struct myGadProto Wheeltmp = {80,16,80,80,(STRPTR)"W",ID_Wheel,WHEELGRAD_KIND,0,0,0,NULL};
@@ -136,11 +142,12 @@ struct myGadProto sliderGtmp = {209,16,14,80,(STRPTR)"G",ID_sliderG,SLIDER_KIND,
 struct myGadProto sliderBtmp = {234,16,14,80,(STRPTR)"B",ID_sliderB,SLIDER_KIND,0,255,128,NULL};
 struct myGadProto cycleSource= {74,125,160,14,(STRPTR)"Display Source",ID_SourceCycle,CYCLE_KIND,1,0,0,sourceStrings};
 struct myGadProto MXstate =   {16+24, 125, 10, 10, (STRPTR)"State",ID_StateMX,MX_KIND,1,0,0,MXstateStrings};
-struct myGadProto LEDPower  = {13, 24, 48, 6, (STRPTR)"Power",  ID_LEDPower,PLEDIMAGE_KIND,3,4,5,NULL};
-struct myGadProto LEDFloppy = {13, 48, 48, 6, (STRPTR)"Floppy", ID_LEDFloppy,PLEDIMAGE_KIND,0,1,2,NULL};
-struct myGadProto LEDCaps   = {33, 72,  8, 8, (STRPTR)"Capslock", ID_LEDCaps,CAPSIMAGE_KIND,6,0,0,NULL};
+struct myGadProto LEDPower  = {13, 18, 48, 6, (STRPTR)"Power",  ID_LEDPower,PLEDIMAGE_KIND,3,4,5,NULL};
+struct myGadProto LEDFloppy = {13, 40, 48, 6, (STRPTR)"Floppy", ID_LEDFloppy,PLEDIMAGE_KIND,0,1,2,NULL};
+struct myGadProto LEDCaps   = {33, 64,  8, 8, (STRPTR)"Capslock", ID_LEDCaps,CAPSIMAGE_KIND,6,0,0,NULL};
 struct myGadProto ButtonSave ={142,144, 92,14,(STRPTR)"Save EEPROM",ID_SaveEEPROM,BUTTON_KIND,0,0,0,NULL};
 struct myGadProto TextActive ={80,4, 94,10, NULL,ID_ActiveLED,TEXT_KIND,0,0,0,NULL};
+struct myGadProto cycleMode  ={5,88,64,14,(STRPTR)"Mode",ID_ModeCycle,CYCLE_KIND,1,0,0,ModeStrings};
 
 #define FRAME_UP     0
 #define FRAME_DOWN   1
@@ -418,6 +425,9 @@ void UpdateLEDButton( struct myWindow *win, ULONG code, struct Gadget *gad, stru
 	 else   map++;   /* cycle is sorted by LEDB_ definitions */
 	 GT_SetGadgetAttrs( win->CycleSrc, win->window, NULL, GTCY_Active,map,TAG_DONE);
 
+	map = ledmanager_getMode( win->active_led ); /* get source configuration by state (code) */
+	GT_SetGadgetAttrs( win->CycleMode, win->window, NULL, GTCY_Active,map,TAG_DONE);
+
 	color24  = ledmanager_getColor( ledidx, win->active_state, 0 )<<16;
 	color24 |= ledmanager_getColor( ledidx, win->active_state, 1 )<<8;
 	color24 |= ledmanager_getColor( ledidx, win->active_state, 2 );
@@ -440,6 +450,10 @@ void UpdateCycleSrc( struct myWindow *win, ULONG code, struct Gadget *gad  )
 	ledmanager_setSrc( win->active_led, win->active_state, map );
 }
 
+void UpdateCycleMode( struct myWindow *win, ULONG code, struct Gadget *gad )
+{
+	ledmanager_setMode( win->active_led, code );
+}
 
 /*
   code = MX index from Window
@@ -496,6 +510,9 @@ void UpdateSrcState( struct myWindow *win, ULONG code, struct Gadget *gad  )
 	 	map = 0;
 	 else   map++;   /* cycle is sorted by LEDB_ definitions */
 	 GT_SetGadgetAttrs( win->CycleSrc, win->window, NULL, GTCY_Active,map,TAG_DONE);
+
+	 map = ledmanager_getMode( win->active_led );
+	 GT_SetGadgetAttrs( win->CycleMode,win->window, NULL, GTCY_Active,map,TAG_DONE);
 
 	 win->refreshlist |= ( (1<<ID_sliderR)|(1<<ID_sliderG)|(1<<ID_sliderB)|
 	                       (1<<ID_sliderGrad)|(1<<ID_Wheel)|
@@ -705,6 +722,8 @@ LONG Window_Event(struct configvars *conf, struct myWindow *win )
 				win->IdleTickCount = 0;
 				if( gad == win->CycleSrc )
 					UpdateCycleSrc( win, code, gad );
+				if( gad == win->CycleMode )
+					UpdateCycleMode( win, code, gad );
 				if( gad == win->PowerLED )
 					UpdateLEDButton( win, code, gad, &LEDPower ); 
 				if( gad == win->FloppyLED )
@@ -1155,6 +1174,8 @@ struct Gadget *CreateGads( struct myWindow *win )
 		if( !(win->sliderR = glist = MakeGad( win, glist, &sliderRtmp )) )
 			break;
 		if( !(win->CycleSrc = glist = MakeGad( win, glist, &cycleSource )) )
+			break;
+		if( !(win->CycleMode= glist = MakeGad( win, glist, &cycleMode )) )
 			break;
 		if( !(win->SrcState = glist = MakeGad( win, glist, &MXstate )) )
 			break;
