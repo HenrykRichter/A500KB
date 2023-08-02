@@ -15,6 +15,7 @@
 
 #include "ciacomm.h"
 #include "ledmanager.h"
+#include "version.h"
 
 #define SR_WAITBUSY 2
 #define SR_LOADCONFIG 4
@@ -34,14 +35,14 @@ struct EasyStruct SavingES = {
 struct EasyStruct AboutES = {
 	    sizeof (struct EasyStruct),
 	    0,
-	    (STRPTR)"About A500KB",
+	    (STRPTR)("About A500KB " LIBVERSION "." LIBREVISION),
 	    (STRPTR)"Configurator for LEDs on A500KB custom Keyboard\n(C) 2022 Henryk Richter\n\nPlease note that this tool is not useful\nfor regular Amiga keyboards.",
 	    (STRPTR)"OK"
 	};
 struct EasyStruct LoadConfigES = {
 	    sizeof (struct EasyStruct),
 	    0,
-	    (STRPTR)"A500KB Loading",
+	    (STRPTR)("A500KB " LIBVERSION "." LIBREVISION " Loading"),
 	    (STRPTR)"Loading current configuration from A500KB keyboard...\n"
 	            "ATTENTION: DON'T TOUCH ANY KEY UNTIL THE REQUESTER DISAPPEARS!\n\n"
 	            "This process might take some seconds\n",
@@ -50,7 +51,7 @@ struct EasyStruct LoadConfigES = {
 struct EasyStruct ErrLoadES  = {
 	    sizeof (struct EasyStruct),
 	    0,
-	    (STRPTR)"A500KB Loading",
+	    (STRPTR)("A500KB " LIBVERSION "." LIBREVISION " Loading"),
 	    (STRPTR)"Failed to load Config from keyboard.\n"
 	            "Your keyboard did not respond with it's current\n"
 	            "config codes. Keeping Defaults.\n",

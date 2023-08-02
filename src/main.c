@@ -107,6 +107,11 @@ unsigned char kbtable[(OCOUNT+OCOUNT_SPC)*ICOUNT];
 /* waiting time before rest is issued */
 #define RESET_WAIT1	20
 
+/* delay in loops switching between send/receive modes */
+#define KBDSEND_SWITCHDELAY 4
+/* delay in loops after a key was acknowledged by remote end */
+#define KBDSEND_KEYDELAY    2
+
 /* map row/column to scan code, each start with 1 (labeling on board) */
 #define SCANCODE(_row_,_column_) (((_row_)-1)*ICOUNT) + (_column_)-1
 
@@ -261,6 +266,7 @@ int main(void)
 {
   unsigned char i,j,pos,state; // ledstat
   unsigned char need_confeeprom = 0; /* 1 = config to EEPROM requested */
+  unsigned char kbdsend_delay = 0; /* give host some time to switch between send/receive modes (in config tool) */
   unsigned short kbdwait = 0;
   unsigned short rstwait = 0;
   unsigned short keyb_idle = 0;
@@ -396,6 +402,26 @@ int main(void)
 		if( amiga_kbsync() > 0 )
 #endif
 			break;
+
+		/* CTRL-A-A while waiting for sync? */
+		if( !(SPCPIN & (SPCMASK-(1<<SPCB_CTRL)-(1<<SPCB_LAMIGA)-(1<<SPCB_RAMIGA)) ) )
+		{
+#ifdef KBDSEND_RSTP
+			KBDSEND_RSTDDR |=  (1<<KBDSEND_RSTB); /* output */
+			KBDSEND_RSTP   &= ~(1<<KBDSEND_RSTB); /* /RST */
+#endif
+			KBDSEND_CLKD |=  (1<<KBDSEND_CLKB);  /* switch to output */
+			KBDSEND_CLKP &= ~(1<<KBDSEND_CLKB);  /* clock low */
+		}
+		else
+		{
+			KBDSEND_CLKD  &= ~(1<<KBDSEND_CLKB);  /* switch to input */
+			KBDSEND_CLKP  |=  (1<<KBDSEND_CLKB);  /* clock high (internal pullup) */
+#ifdef KBDSEND_RSTP
+			KBDSEND_RSTDDR &= ~(1<<KBDSEND_RSTB); /* input */
+			KBDSEND_RSTP   |=  (1<<KBDSEND_RSTB); /* pull-up RST */
+#endif
+		}
 
 //		inputstate = led_getinputstate(); /* get current inputs state */
 		DBGOUT( '.'  )
@@ -591,14 +617,20 @@ int main(void)
 	/* send next key if any is in list                                       */
 	if( !(state & (STATE_RESET|STATE_KBWAIT|STATE_KBWAIT2) ))
 	{
-		RING_TYPE val;
-		if( read_ring( &val ) )
+		if( kbdsend_delay == 0 )
 		{
-			amiga_kbsend( val, 2 );
-			state |= STATE_KBWAIT;
-			kbdwait = 0;
-			keyb_idle = 0;
+			RING_TYPE val;
+			if( read_ring( &val ) )
+			{
+				amiga_kbsend( val, 2 );
+				state |= STATE_KBWAIT;
+				kbdwait = 0;
+				keyb_idle = 0;
+				kbdsend_delay = KBDSEND_KEYDELAY; /* wait some time */
+			}
 		}
+		else
+			kbdsend_delay--;
 	}
 	/* --------------------------------------------------------------------- */
 	if( !(state & (STATE_KBWAIT|STATE_KBWAIT2) )) /* redundant: keyb_idle is 0 while in wait */
@@ -650,6 +682,9 @@ int main(void)
 					{
 						char nsend = led_putcommands( recvcmd, nrecv );
 						unsigned char *sendbuf = recvcmd;
+
+						kbdsend_delay = KBDSEND_SWITCHDELAY;
+						keyb_idle = 0;
 #ifdef DEBUG
 						uart_puthexuchar( nrecv );
 						uart1_puts(" Bytes received: \r\n");
@@ -867,16 +902,18 @@ char amiga_kbsend( unsigned char scan_internal, unsigned char updown )
 
 	KBDSEND_CLKP |= (1<<KBDSEND_CLKB); /* clock high */
 
-	_delay_us(20);
+	_delay_us(30);
 
 	code <<= 1;
  }
 
+ /* make sure, DAT is high (pull hard) */
+ KBDSEND_SENDP |= (1<<KBDSEND_SENDB);  /* set DAT high (=pullup) */
+
  /* wait some more after finishing */
  _delay_us(20);
 
- /* get DAT up again */
- KBDSEND_SENDP |= (1<<KBDSEND_SENDB);  /* set DAT high (=pullup) */
+ /* get DAT to input again (it's up and has a pull) */
  KBDSEND_SENDD &= ~(1<<KBDSEND_SENDB); /* set DAT back to input  */
 
  /* we're done with clock, leave it high but get it back to input */
@@ -1054,7 +1091,7 @@ void show_caps( unsigned char state )
 unsigned char recv_buffer[RECVBUFSIZE];
 unsigned char *recv_commands(unsigned char *nrecv)
 {
- unsigned char bitcount,recbits,cur,*p;
+ unsigned char bitcount,recbits,cur,*p,loops;
 
  if( !nrecv )
  	return NULL;
@@ -1134,17 +1171,17 @@ unsigned char *recv_commands(unsigned char *nrecv)
  /* Wait until clock gets quiet, then return                       */
  if( (recbits != 0x03) || (bitcount < 5) || (TIFR0 & 0x01) )
  {
-	if( (TIFR0 & 0x01) == 0  ) /* did we have a timeout ? */
+	if( (TIFR0 & 0x01) == 0  ) /* did we have a timeout ? (no further waiting) */
 	{
 	 /* no timeout, wait for end of input stream */
-	 TCNT0  = 0x80; /* start timer at half (2ms@16M,divider 256) */
+	 TCNT0  = 0x00; /* start timer at zero for 4ms (0x80 would be 2ms@16M,divider 256) */
 	 TIFR0  = 0x01; /* clear TOV0 overflow flag (write 1 to set flag to 0) */
 
 	 while( (TIFR0 & 0x01) == 0  ) /* break waiting loop after 4ms */
 	 {
 	 	/* while clock gets to 0, continue waiting */
 		if( !(KBDSEND_CLKPIN & (1<<KBDSEND_CLKB)))
-			TCNT0  = 0x80;
+			TCNT0  = 0x80; /* reduce waiting time for possible next bit to 2ms */
 	 }
 	}
 
@@ -1161,11 +1198,18 @@ unsigned char *recv_commands(unsigned char *nrecv)
  bitcount = 0;
  recbits = 0;
  cur = 0;
+ loops=0;
  TCNT0  = 0x00; /* start timer with 0 */
  TIFR0  = 0x01; /* clear TOV0 overflow flag (write 1 to set flag to 0) */
 
- while( (TIFR0 & 0x01) == 0  ) /* break waiting loop after 4ms */
+ while( loops < 10 ) /* 4ms * 10 */
  {
+	if( ( TIFR0 & 0x01) == 1  ) /* break waiting loop after 4ms * "loops" */
+	{
+		loops++;
+		TIFR0  = 0x01;	/* clear TOV0 flag */
+	}
+
 	_delay_us(10);
 	if( (KBDSEND_CLKPIN & (1<<KBDSEND_CLKB)))
 		cur = 1;

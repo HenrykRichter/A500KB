@@ -57,7 +57,8 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 #define LEDGV_HEADER     0xBA /* */
 #define LEDGV_TYPE_A500  0x01 /* 7 LEDs */
 #define LEDGV_TYPE_A3000 0x02 /* 1 LED only */
-#define LEDGV_VERSION    0x02 /* software version (1=initial, 2=with mode support) */
+#define LEDGV_TYPE_A500Mini 0x03 /* 6 LEDs, no CAPS */
+#define LEDGV_VERSION    0x03 /* software version (1=initial, 2=with mode support, 3=mini added) */
 
 /* LED MODES */
 #define LEDM_STATIC  0

@@ -73,6 +73,7 @@
 #define LEDGV_HEADER     0xBA /* */
 #define LEDGV_TYPE_A500  0x01 /* 7 LEDs */
 #define LEDGV_TYPE_A3000 0x02 /* 1 LED only */
+#define LEDGV_TYPE_A500MINI 0x03
 #define LEDGV_VERSION    0x01 /* software version */
 
 

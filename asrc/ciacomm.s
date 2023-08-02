@@ -544,8 +544,8 @@ CIAKB_KeyboardInt:
 	jsr	_LVOAbleICR(A6)
 	movem.l	(sp)+,a0/a6
 
-	;run timer
-	move.b	#%11010001,ciacra(a0)		;E01 CIACRAF_TODIN|CIACRAF_SPMODE|CIACRAF_LOAD|CIACRAF_START
+	;run timer (CIACRAF_SPMODE stays 0)
+	move.b	#%10010001,ciacra(a0)		;E01 CIACRAF_TODIN|CIACRAF_LOAD|CIACRAF_START
 
 	;AbleICR(0x81)	;needed to enable redirection in INT2
 	;

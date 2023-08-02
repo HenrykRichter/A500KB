@@ -8,11 +8,11 @@
 #ifndef _INC_VERSION_H
 #define _INC_VERSION_H
 
-#define PROGNAME "Sensei"
+#define PROGNAME "A500KBConfig"
 #define LIBVERSION  "1"
-#define LIBREVISION "5"
+#define LIBREVISION "6"
 /* #define DEVICEEXTRA Beta */
-#define LIBDATE     "23.5.21"
+#define LIBDATE     "2.8.23"
 
 #endif
 

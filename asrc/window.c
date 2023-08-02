@@ -90,7 +90,7 @@ LONG win_FreeMenus( struct configvars *conf,struct myWindow *win);
 #define ID_ActiveLED 12 /* show active LED as text */
 #define ID_ModeCycle 13
 
-#define WIN_W 257
+#define WIN_W 265
 #define WIN_H 164
 
 #define MX_FORCE_NEW 0x8000
@@ -128,26 +128,26 @@ STRPTR ActiveStateStrings[8] = {   /* Text active */
 
 STRPTR ModeStrings[5] = {
  (STRPTR)"Fixed",
- (STRPTR)"Cycle1",
- (STRPTR)"Cycle2",
- (STRPTR)"Cycle3",
+ (STRPTR)"CycleH",
+ (STRPTR)"CycleV",
+ (STRPTR)"CycleS",
  NULL
 };
 
 
-struct myGadProto Wheeltmp = {80,16,80,80,(STRPTR)"W",ID_Wheel,WHEELGRAD_KIND,0,0,0,NULL};
-struct myGadProto sliderGradtmp = {164,16,14,80,(STRPTR)"V",ID_sliderGrad,GRADSLIDER_KIND,0,255,128,NULL};
-struct myGadProto sliderRtmp = {184,16,14,80,(STRPTR)"R",ID_sliderR,SLIDER_KIND,0,255,128,NULL};
-struct myGadProto sliderGtmp = {209,16,14,80,(STRPTR)"G",ID_sliderG,SLIDER_KIND,0,255,128,NULL};
-struct myGadProto sliderBtmp = {234,16,14,80,(STRPTR)"B",ID_sliderB,SLIDER_KIND,0,255,128,NULL};
-struct myGadProto cycleSource= {74,125,160,14,(STRPTR)"Display Source",ID_SourceCycle,CYCLE_KIND,1,0,0,sourceStrings};
-struct myGadProto MXstate =   {16+24, 125, 10, 10, (STRPTR)"State",ID_StateMX,MX_KIND,1,0,0,MXstateStrings};
-struct myGadProto LEDPower  = {13, 18, 48, 6, (STRPTR)"Power",  ID_LEDPower,PLEDIMAGE_KIND,3,4,5,NULL};
-struct myGadProto LEDFloppy = {13, 40, 48, 6, (STRPTR)"Floppy", ID_LEDFloppy,PLEDIMAGE_KIND,0,1,2,NULL};
-struct myGadProto LEDCaps   = {33, 64,  8, 8, (STRPTR)"Capslock", ID_LEDCaps,CAPSIMAGE_KIND,6,0,0,NULL};
-struct myGadProto ButtonSave ={142,144, 92,14,(STRPTR)"Save EEPROM",ID_SaveEEPROM,BUTTON_KIND,0,0,0,NULL};
+struct myGadProto Wheeltmp = {88,16,80,80,(STRPTR)"W",ID_Wheel,WHEELGRAD_KIND,0,0,0,NULL};
+struct myGadProto sliderGradtmp = {172,16,14,80,(STRPTR)"V",ID_sliderGrad,GRADSLIDER_KIND,0,255,128,NULL};
+struct myGadProto sliderRtmp = {192,16,14,80,(STRPTR)"R",ID_sliderR,SLIDER_KIND,0,255,128,NULL};
+struct myGadProto sliderGtmp = {217,16,14,80,(STRPTR)"G",ID_sliderG,SLIDER_KIND,0,255,128,NULL};
+struct myGadProto sliderBtmp = {242,16,14,80,(STRPTR)"B",ID_sliderB,SLIDER_KIND,0,255,128,NULL};
+struct myGadProto cycleSource= {82,125,160,14,(STRPTR)"Display Source",ID_SourceCycle,CYCLE_KIND,1,0,0,sourceStrings};
+struct myGadProto MXstate =   {16+26, 125, 10, 10, (STRPTR)"State",ID_StateMX,MX_KIND,1,0,0,MXstateStrings};
+struct myGadProto LEDPower  = {17, 18, 48, 6, (STRPTR)"Power",  ID_LEDPower,PLEDIMAGE_KIND,3,4,5,NULL};
+struct myGadProto LEDFloppy = {17, 40, 48, 6, (STRPTR)"Floppy", ID_LEDFloppy,PLEDIMAGE_KIND,0,1,2,NULL};
+struct myGadProto LEDCaps   = {37, 64,  8, 8, (STRPTR)"Capslock", ID_LEDCaps,CAPSIMAGE_KIND,6,0,0,NULL};
+struct myGadProto ButtonSave ={148,144, 92,14,(STRPTR)"Save EEPROM",ID_SaveEEPROM,BUTTON_KIND,0,0,0,NULL};
 struct myGadProto TextActive ={80,4, 94,10, NULL,ID_ActiveLED,TEXT_KIND,0,0,0,NULL};
-struct myGadProto cycleMode  ={5,88,64,14,(STRPTR)"Mode",ID_ModeCycle,CYCLE_KIND,1,0,0,ModeStrings};
+struct myGadProto cycleMode  ={5,88,72,14,(STRPTR)"Mode",ID_ModeCycle,CYCLE_KIND,1,0,0,ModeStrings};
 
 #define FRAME_UP     0
 #define FRAME_DOWN   1
@@ -160,9 +160,9 @@ struct {
  USHORT h;
  USHORT type;
 } frames[] = {
- { 2,2,71,107, FRAME_DOWN },
- { 73,2,182,107, FRAME_DOWN },
- { 2,109,253,53, FRAME_DOWN },
+ { 2,2,79,107, FRAME_DOWN },
+ { 80,2,184,107, FRAME_DOWN },
+ { 2,109,262,53, FRAME_DOWN },
  { 0,0,0,0,FRAME_END }
 };
 
@@ -175,6 +175,8 @@ struct TextAttr Topaz = {       /* KeyToy text attributes */
 const STRPTR custom_scrname = (STRPTR)"A500KBConfig";
 const STRPTR name500  = (STRPTR)"A500KB V%ld";
 const STRPTR name3000 = (STRPTR)"A3000KB V%ld";
+const STRPTR name500mini = (STRPTR)"A500KBMini V%ld";
+
 char  namebuffer[16];
 extern LONG keyboard_type;
 extern LONG keyboard_version;
@@ -259,7 +261,15 @@ struct myWindow *Window_Open( struct configvars *conf )
 		if( conf->win_y )
 			y = *conf->win_y;
 
-		mysprintf( namebuffer, (char*)( (keyboard_type == LEDGV_TYPE_A3000) ? name3000:name500 ), keyboard_version );
+		{
+		 char *titlestr = name500;
+		 if( keyboard_type == LEDGV_TYPE_A3000)
+		 	titlestr = name3000;
+		 if( keyboard_type == LEDGV_TYPE_A500MINI )
+		 	titlestr = name500mini;
+
+		 mysprintf( namebuffer, titlestr, keyboard_version );
+		}
 
                 if( !(win->window = OpenWindowTags(NULL,WA_Height,h,
                                                  WA_Width,        w,

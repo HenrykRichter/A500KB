@@ -527,7 +527,7 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 		if( confget == 0x7F )
 		{
 			*sendbuf++ = LEDGV_HEADER;    /* 0xBA */
-			*sendbuf++ = LEDGV_TYPE_A500; /* LEDGV_TYPE_A3000 */
+			*sendbuf++ = LEDGV_TYPE_A500Mini; /* LEDGV_TYPE_A3000,LEDGV_TYPE_A500 */
 			*sendbuf++ = LEDGV_VERSION;   /* */
 			return 3;
 		}
