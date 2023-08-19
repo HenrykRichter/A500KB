@@ -527,6 +527,7 @@ CIAKB_KeyboardInt:
 	move.b	#0,kbsend_active
 
 	;we're done sending, now wait for ACK/NACK or Timeout
+	bsr	Delay75us		;wait for actual finish of the last bit sent out (i.e. required on 100 MHz 060)
 
 	;revert CIA serial to input
 	lea	_ciaa,a0

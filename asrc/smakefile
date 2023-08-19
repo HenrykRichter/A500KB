@@ -4,6 +4,7 @@
 
 TARGET  = A500KBConfig 
 
+PREFIX  = SC:Include/
 RM	= delete force quiet
 CC	= sc
 LD      = slink
@@ -13,11 +14,18 @@ CFLAGS  = $(CFLAGS)
 LDFLAGS	= NOICONS SC SD ND QUIET
 LDFLAGS = LIB sc:lib/scm.lib LIB sc:lib/sc.lib $(LDFLAGS)
 
+VASM    = vasmm68k_mot
+VASMFLAGS = -Fhunk -quiet -I$(PREFIX) 
+
+
 # debug stuff
 #CFLAGS  = DEFINE DEBUG=1 $(CFLAGS)
 #LDFLAGS = LIB sc:lib/debug.lib LIB sc:lib/amiga.lib $(LDFLAGS)
 
-OBJS	= startup.o utils.o config.o cx_main.o window.o 
+OBJS	= startup.o utils.o config.o cx_main.o window.o ledmanager.o pledbutton.o pledimage.o capsimage.o savereq.o ciacomm.o
+
+.s.o: $*.s
+	$(VASM) $(VASMFLAGS) -o $@ $*.s
 
 all:	$(TARGET) 
 
@@ -27,9 +35,17 @@ $(TARGET): $(OBJS)
 clean:
 	-$(RM) $(TARGET) $(OBJS) #?.lnk
 
+
+
 # dependencies
 config.o: config.c config.h version.h
 startup.o: startup.c config.h version.h window.h
 cx_main.o: cx_main.c config.h version.h window.h
 window.o: window.c config.h version.h window.h
 utils.o: utils.c utils.h
+ledmanager.o: ledmanager.c ledmanager.h
+pledbutton.o: pledbutton.c pledbutton.h
+pledimage.o: pledimage.c pledimage.h
+capsimage.o: capsimage.c capsimage.h
+savereq.o: savereq.c savereq.h
+ciacomm.o: ciacomm.s ciacomm.h

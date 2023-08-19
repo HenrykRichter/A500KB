@@ -10,9 +10,9 @@
 
 #define PROGNAME "A500KBConfig"
 #define LIBVERSION  "1"
-#define LIBREVISION "6"
+#define LIBREVISION "7"
 /* #define DEVICEEXTRA Beta */
-#define LIBDATE     "2.8.23"
+#define LIBDATE     "19.8.23"
 
 #endif
 
