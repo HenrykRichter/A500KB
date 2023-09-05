@@ -297,9 +297,10 @@ int main(void)
 //  ledstat  =  (1<<LEDPIN);	/* on  */
 //  LEDPORT |=  (1<<LEDPIN);	/* on = NPN transistor switches to GND = LED on */
 
-  /* initialized output ports (def: low) */
+  /* initialized output ports (def: high) */
   ODDR    |= OMASK;     /* output */
-  OPORT   &= ~(OMASK);  /* low */
+  OPORT   |= OMASK;     /* high (i.e. no active scan in progress) */
+//  OPORT   &= ~(OMASK);  /* low */
 
   /* initialize Input ports */
   for( i=0 ; kbinputlist[i] != 0 ; i++ )
