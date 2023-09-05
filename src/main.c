@@ -276,6 +276,11 @@ int main(void)
   unsigned char nrecv=0; /* commands from Host */
   unsigned char *recvcmd;
 
+  /* disable clock prescaler: this is usually intended to be done by "make fuse" (see MakeFile),
+     but when that step is omitted, the device would run at 2 MHz instead of 16 */
+  CLKPR = 0x80; /* enable prescaler change */
+  CLKPR = 0x00; /* prescaler 1 */
+
   /* initialize computer communication ports (D2/D3 regular, F2/F3 in debug) */
   KBDSEND_SENDD &= ~(1<<KBDSEND_SENDB); /* send data port to input */
   KBDSEND_SENDP |=  (1<<KBDSEND_SENDB); /* def: high = pullup on   */
