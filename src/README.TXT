@@ -20,7 +20,7 @@ be reflected in the Amiga configuration software.
 Example flash procedure (here using USBASP):
 
 avrdude -c usbasp -p at90usb1287 -U flash:w:A500.hex:i
-
+avrdude -c usbasp -p at90usb1287 -U hfuse:w:0x91:m -U lfuse:w:0xdf:m
 
 ---
 Debugging of the ATMega program:
