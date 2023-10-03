@@ -20,7 +20,11 @@
 DEVICE     = at90usb1287
 CLOCK      = 16000000
 PROGRAMMER = -c usbasp
-OBJECTS    = uart.o twi.o led.o main.o 
+OBJECTS    = uart.o twi.o main.o
+OBJECTS3000 = led3000.o $(OBJECTS)
+OBJECTS500  = led500.o $(OBJECTS)
+OBJECTS500M = led500M.o $(OBJECTS)
+
 #DEFS       = -DDEBUG
 HEADERS	   = kbdefs.h 
 FUSES      = -U hfuse:w:0x91:m -U lfuse:w:0xdf:m
@@ -79,7 +83,7 @@ COMPILEPP = avr-g++ -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) $(DEFS)
 
 
 # symbolic targets:
-all:	AtmegaBoard.hex
+all:	AtmegaBoard.hex A3000.hex A500.hex A500Mini.hex
 
 .c.o:	$(HEADERS) kbdefs.h
 	$(COMPILE) -c $< -o $@
@@ -114,11 +118,47 @@ load: all
 	bootloadHID AtmegaBoard.hex
 
 clean:
-	rm -f AtmegaBoard.hex main.elf $(OBJECTS)
+	rm -f AtmegaBoard.hex main.elf $(OBJECTS) led.o
+	rm -f A3000.hex A500.hex A500mini.hex led500.o led500M.o led3000.o main3000.elf main500.elf main500M.elf
+
+
+
+led3000.o:	$(HEADERS) kbdefs.h led.c
+	$(COMPILE) -DKEYBOARD_TYPE=LEDGV_TYPE_A3000 -c led.c -o $@
+
+led500.o:	$(HEADERS) kbdefs.h led.c
+	$(COMPILE) -DKEYBOARD_TYPE=LEDGV_TYPE_A500 -c led.c -o $@
+
+led500M.o:	$(HEADERS) kbdefs.h led.c
+	$(COMPILE) -DKEYBOARD_TYPE=LEDGV_TYPE_A500Mini -c led.c -o $@
 
 # file targets:
-main.elf: $(OBJECTS)
-	$(COMPILE) -o main.elf $(OBJECTS)
+main.elf: $(OBJECTS) led.o
+	$(COMPILE) -o main.elf led.o $(OBJECTS)
+
+main3000.elf: $(OBJECTS3000)
+	$(COMPILE) -o $@ $(OBJECTS3000)
+
+main500.elf: $(OBJECTS500)
+	$(COMPILE) -o $@ $(OBJECTS500)
+
+main500M.elf: $(OBJECTS500M) led.o
+	$(COMPILE) -o $@ $(OBJECTS500M)
+
+A3000.hex:	main3000.elf
+	rm -f $@
+	avr-objcopy -j .text -j .data -O ihex main3000.elf $@
+#	avr-size --format=avr --mcu=$(DEVICE) main3000.elf
+
+A500.hex:	main500.elf
+	rm -f $@
+	avr-objcopy -j .text -j .data -O ihex main500.elf $@
+#	avr-size --format=avr --mcu=$(DEVICE) main500.elf
+
+A500Mini.hex:	main500M.elf
+	rm -f $@
+	avr-objcopy -j .text -j .data -O ihex main500M.elf $@
+#	avr-size --format=avr --mcu=$(DEVICE) main500M.elf
 
 AtmegaBoard.hex: main.elf
 	rm -f AtmegaBoard.hex

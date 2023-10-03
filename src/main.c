@@ -410,7 +410,7 @@ int main(void)
 			break;
 
 		/* CTRL-A-A while waiting for sync? */
-		if( !(SPCPIN & (SPCMASK-(1<<SPCB_CTRL)-(1<<SPCB_LAMIGA)-(1<<SPCB_RAMIGA)) ) )
+		if( !(SPCPIN & ( (1<<SPCB_CTRL)+(1<<SPCB_LAMIGA)+(1<<SPCB_RAMIGA) ) ))
 		{
 #ifdef KBDSEND_RSTP
 			KBDSEND_RSTDDR |=  (1<<KBDSEND_RSTB); /* output */

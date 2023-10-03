@@ -75,7 +75,7 @@ extern unsigned char caps_on; /* CAPSLOCK state 0=off,1=on */
 #define MAXLEDINITSEQ 8
 const unsigned char ledinitlist[] PROGMEM = {
  2, 0x00, 0x07, /* [control register 0],[16 bit (0x6), normal op (0x1), 16 Bit (%000<<4)] */
- 2, 0x6E, 0xFF, /* [Global Current Control],[enable full current (0x1-0xFF)]              */
+ 2, 0x6E, 0x60, /* [Global Current Control],[enable full current (0x1-0xFF)]              */
  2, 0x70, 0xBF, /* [Phase Delay and Clock Phase],[PDE=1,PSn=1] */
  /* end of list */
  0
@@ -527,7 +527,11 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 		if( confget == 0x7F )
 		{
 			*sendbuf++ = LEDGV_HEADER;    /* 0xBA */
-			*sendbuf++ = LEDGV_TYPE_A500Mini; /* LEDGV_TYPE_A3000,LEDGV_TYPE_A500 */
+#ifdef KEYBOARD_TYPE
+			*sendbuf++ = KEYBOARD_TYPE;   /* from Makefile */
+#else
+			*sendbuf++ = LEDGV_TYPE_A500; /* LEDGV_TYPE_A3000,LEDGV_TYPE_A500 */
+#endif
 			*sendbuf++ = LEDGV_VERSION;   /* */
 			return 3;
 		}
