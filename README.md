@@ -11,6 +11,7 @@ If building the full keyboard is not an option, a sub-project of A500KB might be
 - Main PCB and Switchplate PCB
 - 96 Keyswitches (Mitsumi or Cherry)
 - parts (including AT90USB1287, IS32FL3237, diodes, LEDs and passives)
+- suitable LEDs need to be of ARGB type (analog, common anode) such as Würth 150141M173100, Brightek QBLP677-RGB or similar
 - 3D Printed parts for LED light guides (transparent) and spacers
 
 ## Pictures
