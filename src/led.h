@@ -10,6 +10,9 @@ void led_init();
 /* scan inputs, return current state of all inputs (returns quickly) */
 unsigned char led_getinputstate();
 
+/* used for USB mode, explicitly set source state */
+uint8_t led_setinputstate( uint8_t source, uint8_t state );
+
 /* update controller based on input state */
 unsigned char led_updatecontroller( unsigned char state );
 
@@ -58,12 +61,31 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 #define LEDGV_TYPE_A500  0x01 /* 7 LEDs */
 #define LEDGV_TYPE_A3000 0x02 /* 1 LED only */
 #define LEDGV_TYPE_A500Mini 0x03 /* 6 LEDs, no CAPS */
-#define LEDGV_VERSION    0x03 /* software version (1=initial, 2=with mode support, 3=mini added) */
+#define LEDGV_VERSION    0x04 /* software version (1=initial, 2=with mode support, 3=mini added, 4=USB added) */
 
 /* LED MODES */
 #define LEDM_STATIC  0
 #define LEDM_RAINBOW 1	/* HSV rainbow */
 #define LEDM_PULSE   2  /* Pulsation   */
 #define LEDM_SAT     3  /* Saturation up/down */
+
+/* LED Sources as flags used for state and change tracking */
+#define LEDB_SRC_POWER  0
+#define LEDB_SRC_FLOPPY 1
+#define LEDB_SRC_IN3    2
+#define LEDB_SRC_IN4    3
+#define LEDB_SRC_CAPS   4
+#define LEDF_SRC_POWER  (1<<LEDB_SRC_POWER)
+#define LEDF_SRC_FLOPPY (1<<LEDB_SRC_FLOPPY)
+#define LEDF_SRC_IN3    (1<<LEDB_SRC_IN3)
+#define LEDF_SRC_IN4    (1<<LEDB_SRC_IN4)
+#define LEDF_SRC_CAPS   (1<<LEDB_SRC_CAPS)
+#define LEDF_ALL ( (LEDF_SRC_POWER)|(LEDF_SRC_FLOPPY)|(LEDF_SRC_IN3)|(LEDF_SRC_IN4)|(LEDF_SRC_CAPS) )
+#define LEDB_MAP_SWAP	7
+#define LEDF_MAP_SWAP	(1<<LEDB_MAP_SWAP)
+
+/* number of LEDs */
+#define N_LED         7
+
 
 #endif

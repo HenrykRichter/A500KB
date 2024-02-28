@@ -82,24 +82,6 @@ const unsigned char ledinitlist[] PROGMEM = {
 };
 
 #if 1
-/* LED Sources as flags used for state and change tracking */
-#define LEDB_SRC_POWER  0
-#define LEDB_SRC_FLOPPY 1
-#define LEDB_SRC_IN3    2
-#define LEDB_SRC_IN4    3
-#define LEDB_SRC_CAPS   4
-#define LEDF_SRC_POWER  (1<<LEDB_SRC_POWER)
-#define LEDF_SRC_FLOPPY (1<<LEDB_SRC_FLOPPY)
-#define LEDF_SRC_IN3    (1<<LEDB_SRC_IN3)
-#define LEDF_SRC_IN4    (1<<LEDB_SRC_IN4)
-#define LEDF_SRC_CAPS   (1<<LEDB_SRC_CAPS)
-#define LEDF_ALL ( (LEDF_SRC_POWER)|(LEDF_SRC_FLOPPY)|(LEDF_SRC_IN3)|(LEDF_SRC_IN4)|(LEDF_SRC_CAPS) )
-#define LEDB_MAP_SWAP	7
-#define LEDF_MAP_SWAP	(1<<LEDB_MAP_SWAP)
-
-/* number of LEDs */
-#define N_LED         7
-
 /* end of command list */
 #define TCMD_END 0xff
 
@@ -155,6 +137,21 @@ unsigned char update_bit( unsigned char old_state, unsigned char decision, unsig
  ret = (decision) ? old_state|flag : old_state&(~flag);
 
  return ret;
+}
+
+/*
+  set LED state outside of regular polling in led_getinputstate() 
+  - used for USB mode
+
+  pass source as flag ( LEDF_... )
+  pass state  as 0 = off , 1 = on
+
+
+*/
+uint8_t led_setinputstate( uint8_t source, uint8_t state )
+{
+  led_currentstate = update_bit( led_currentstate, state, source );
+  return led_currentstate;
 }
 
 /* scan inputs, return current state of all inputs, return quickly */

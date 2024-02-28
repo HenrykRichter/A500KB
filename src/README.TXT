@@ -7,6 +7,16 @@ This is the AT90USB program for a custom Amiga keyboard I was building. The
 keyboard matrix matches the Mitsumi layout. It is active low. Therefore, the 
 6 outputs are on by default and pulled down one-by-one in the scanning process. 
 
+Since V4 of the firmware, the USB port has been enabled in device mode. 
+CAUTION: USE ONLY ONE CONNECTION, EITHER USB OR AMIGA. NEVER BOTH AT THE SAME 
+         TIME. DON'T SAY YOU'VE NOT BEEN WARNED.
+
+The keyboard will act as a Boot mode USB HID device. Please note the following 
+caveats: The "#" key (on German keyboards) and the "\" key will emit different 
+scan codes (0x31,0x32) result in the same response ("#") with default keyboard 
+layouts on PCs/Macs. The keypad [ and ] keys are transmitted as NumLock and 
+ScrollLock (as suggested by the secondary label on the keys). CapsLock,NumLock 
+and ScrollLock are reflected by the 3 LEDs of the regular floppy row.
 
 ---
 The flashing of the AT90USB1287 is supposed to be done by an external programmer.
@@ -33,7 +43,20 @@ DEFS       = -DDEBUG
 Please note that the uart outputs are for testing and therefore print only approximate
 labels you find on the keys. Also, the UART is connected to KBCLOCK and KBDATA lines.
 With debug on, please connect the FT232RL to KBCLOCK/KBDATA and use IN3/IN4 for Amiga
-communicationi (Clock/Data).
+communicationi (Clock/Data, 9k6 8N1).
 
-Consequently, IN3/IN4 inputs are not available while debugging.
+Consequently, IN3/IN4 inputs are not available while debugging. 
 
+Debugging connection overview:
+Amiga:   IN3 = KBCLOCK, IN4 = KBData, remaining pins as usual
+FT232RL: KBCLK=RX->FT232TX, KBDATA=TX->FT232RX
+
+Without debug (default builds)
+just connect the keyboard in the same way as classic keyboards
+--
+
+Software version tags:
+4 = USB mode added to firmware 
+3 = Added A500KB Mini to build variants
+2 = Supports (slowly) animated LED modes
+1 = initial Release

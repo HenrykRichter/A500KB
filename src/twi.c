@@ -19,7 +19,7 @@ void twi_init() {
 
   busy = 0;
 
-  sei();
+  sei(); 
 
   TWCR = _BV(TWEN);
 }

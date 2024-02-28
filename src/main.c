@@ -16,6 +16,7 @@
  *                                                                              *
  ********************************************************************************
 */
+#define ENABLE_USB
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 #include <avr/io.h>
@@ -24,6 +25,9 @@
 #include "baxtypes.h"
 #include "twi.h"
 #include "led.h"
+#ifdef ENABLE_USB
+#include "usb.h"
+#endif /* ENABLE_USB */
 
 #include "kbdefs.h"
 
@@ -71,6 +75,10 @@ unsigned char *recv_commands(unsigned char *nrecv);
 
 /* active key table -> bytes here, could be mapped to bits */
 unsigned char kbtable[(OCOUNT+OCOUNT_SPC)*ICOUNT];
+
+/* commands from Amiga, USB LED configuration */
+#define RECVBUFSIZE 32 
+unsigned char recv_buffer[RECVBUFSIZE];
 
 #define KEYIDLE 0 /* keyidle / keydown should only use one bit (!) */
 #define KEYDOWN 1
@@ -152,6 +160,40 @@ const unsigned char kbmap[(OCOUNT+OCOUNT_SPC)*ICOUNT] PROGMEM = {
 };
 unsigned char kbinputspecials[8]  = { 1<<SPCB_LAMIGA, 1<<SPCB_LALT,1<<SPCB_LSHIFT,1<<SPCB_CTRL,
                                       1<<SPCB_RAMIGA, 1<<SPCB_RALT,1<<SPCB_RSHIFT,0};
+
+#ifdef ENABLE_USB
+/* mapping from our keyboard layout to USB HID scan codes */
+/* 
+   The last row are the special keys which are scanned key by key, beginning with
+   scancode 7,1. Please note that the order of keys in the last row needs to 
+   match the order in "kbinputspecials".
+
+   scan codes 0x47-0x49,0x68-0x7F are unused
+
+   KEY_HASHTILDE 0x32 	Keyboard Int' # and ~ 	Intended for key next to vertical Return key. Keyboard Backslash (0x31) is used instead
+   \ KEY_BACKSLASH needs update
+*/
+#include "usb_keys.h"
+const unsigned char usbkbmap[(OCOUNT+OCOUNT_SPC)*ICOUNT] PROGMEM = {
+/* help      F10       F9      F8      F7      KP/          F6      KP]   F5     F4     F3     F2     F1      KP[   ESC  */
+ KEY_HELP, KEY_F10,  KEY_F9, KEY_F8, KEY_F7, KEY_KPSLASH, KEY_F6, KEY_SCROLLLOCK, KEY_F5,KEY_F4,KEY_F3,KEY_F2,KEY_F1, KEY_NUMLOCK,  KEY_ESC, 
+/*   KEY_HELP, KEY_F10,  KEY_F9, KEY_F8, KEY_F7, KEY_KPSLASH, KEY_F6, KEY_KPRBRACE,   KEY_F5,KEY_F4,KEY_F3,KEY_F2,KEY_F1, KEY_KPLBRACE, KEY_ESC,*/
+/*cu        \             +-         -_         0     9     8     7     6     5     4     3     2     1     '~          */
+  KEY_UP,   KEY_BACKSLASH,KEY_EQUAL, KEY_MINUS, KEY_0,KEY_9,KEY_8,KEY_7,KEY_6,KEY_5,KEY_4,KEY_3,KEY_2,KEY_1,KEY_GRAVE,
+/*cl        Ret       ]}              [{             P     O     I     U     Y     T     R     E     W     Q     Tab  */
+  KEY_LEFT, KEY_ENTER,KEY_RIGHTBRACE, KEY_LEFTBRACE, KEY_P,KEY_O,KEY_I,KEY_U,KEY_Y,KEY_T,KEY_R,KEY_E,KEY_W,KEY_Q,KEY_TAB,
+/*cr        Del        #              '"              ;:             L     K     J     H     G     F     D     S     A     Caps */
+  KEY_RIGHT,KEY_DELETE,KEY_HASHTILDE, KEY_APOSTROPHE, KEY_SEMICOLON, KEY_L,KEY_K,KEY_J,KEY_H,KEY_G,KEY_F,KEY_D,KEY_S,KEY_A,KEY_CAPSLOCK,
+/*cd        BKSpC         SPC        N/A      /?         .>       ,<         M     N     B     V     C     X     Z     <>   */
+  KEY_DOWN, KEY_BACKSPACE,KEY_SPACE, KEY_DOT, KEY_SLASH, KEY_DOT, KEY_COMMA, KEY_M,KEY_N,KEY_B,KEY_V,KEY_C,KEY_X,KEY_Z,KEY_102ND, /* 102ND is between Shift and Z */
+/*Num-      Num0  Num1  Num4  Num7  KPENT Num2  Num5  Num8  Num.  Num3  Num6  Num9  Num+  Num* */
+KEY_KPMINUS,KEY_KP0, KEY_KP1, KEY_KP4, KEY_KP7, KEY_KPENTER, KEY_KP2, KEY_KP5, KEY_KP8, KEY_KPDOT, KEY_KP3, KEY_KP6, KEY_KP9, KEY_KPPLUS, KEY_KPASTERISK,
+/* separate row, handled differently (part of the modifiers, not the sent keys */
+/* LA  LALT LSH  CTRL RA   RALT RSHIFT                                       */
+  KEY_MOD_LMETA,KEY_MOD_LALT,KEY_MOD_LSHIFT,KEY_MOD_LCTRL,KEY_MOD_RMETA,KEY_MOD_RALT,KEY_MOD_RSHIFT
+};
+#endif /* ENABLE_USB */
+
 #define COMM_ACK   0x73
 #define COMM_ACK1  0x7B
 #define COMM_NACK  0x77
@@ -214,24 +256,6 @@ const char debuglist[(OCOUNT+OCOUNT_SPC)*ICOUNT] PROGMEM = {
   '-', '0', '1', '4', '7', 10, '2', '5', '8', '.', '3', '6', '9', '+', '*',
 /* LA  LALT LSH  CTRL RA   RALT RSHIFT                                       */
   'A', 'a', 's', 'c', 'A', 'a', 's'
-#if 0
-/*       ESC F1  F2  F3  F4  F5  F6  F7  F8  F9  F10     */
- '~','1','E','1','2','3','4','5','6','7','8','9','0',
-/*                                                BKSPC  */
- '2','3','4','5','6','7','8','9','0','?','`','\\','B',
-/*TAB                                         ü          */
- 'T','q','w','e','r','t','z','u','i','o','p','U','+',
-/*CTRL CAPSLOCK                               Ö   Ä      */
- 'C','L','a','s','d','f','g','h','j','k','l','O','A',
-/*SHIFT                                            SHIFT */
- 'S','<','y','x','c','v','b','n','m',',','.','-','S',
-/*ALT AMIGA             SPACE        Amiga Alt   Return  */
- 'A','M','!','!','!','!',' ','!','!','M','A','#',10,
-/* KP,                       cd  cl  cr  cu  help del    */
- '.','0','!','1','2','3',10 ,'D','L','R','U','H','D',
-/* KP */
- ']','[','/','4','5','6','!','+','-','*','9','8','7',
-#endif
 };
 #endif
 
@@ -261,6 +285,226 @@ void twi_callback(uint8_t adr, uint8_t *data)
 
 unsigned char caps_on; /* for LED controller */
 
+#ifdef ENABLE_USB
+/*
+  entering here only makes sense once get_usb_config_status() returns something >0
+
+  TODO: scancode translation, usb_send()
+
+*/
+void mainloop_usb(void)
+{
+  unsigned char i,j,pos; // ledstat
+  volatile unsigned char cur;
+  unsigned char mods,actct;
+  unsigned char mod1,act0,kbled,trig;
+  unsigned char *recb;
+  uint8_t st;
+
+  kbled   = 0x7F;	/* illegal, so we force an update on CapsLock */
+//  caps_on = 0;          /* getting into USB mode: assume caps off */
+//  show_caps( caps_on ); /* set caps off once we have USB sync     */
+
+  recb = recv_buffer;
+  /* power */
+  *recb++ = LEDCMD_COLOR + 3; /* power 0 */
+  *recb++ = 0; /* idle */
+  *recb++ = 0x20;
+  *recb++ = 0x00;
+  *recb++ = 0x00;
+  *recb++ = LEDCMD_COLOR + 4;
+  *recb++ = 0;
+  *recb++ = 0x00;
+  *recb++ = 0x20;
+  *recb++ = 0x00;
+  *recb++ = LEDCMD_COLOR + 5;
+  *recb++ = 0;
+  *recb++ = 0x00;
+  *recb++ = 0x00;
+  *recb++ = 0x20;
+ 
+  *recb++ = LEDCMD_COLOR + 0; /* floppy 0 */
+  *recb++ = 0; /* idle */
+  *recb++ = 0x00;
+  *recb++ = 0x00;
+  *recb++ = 0x00;
+  *recb++ = LEDCMD_COLOR + 1; /* floppy 1 */
+  *recb++ = 0;
+  *recb++ = 0x00;
+  *recb++ = 0x00;
+  *recb++ = 0x00;
+  *recb++ = LEDCMD_COLOR + 2;
+  *recb++ = 0;
+  *recb++ = 0x00;
+  *recb++ = 0x00;
+  *recb++ = 0x00;
+
+  led_putcommands( recv_buffer, recb - recv_buffer );
+  recb = recv_buffer;
+
+  *recb++ = LEDCMD_COLOR + 0; /* floppy 0 */
+  *recb++ = 1; /* active */
+  *recb++ = 0x00;
+  *recb++ = 0x50;
+  *recb++ = 0x20;
+  *recb++ = LEDCMD_COLOR + 1; /* floppy 1 */
+  *recb++ = 1;
+  *recb++ = 0x00;
+  *recb++ = 0x45;
+  *recb++ = 0x25;
+  *recb++ = LEDCMD_COLOR + 2;
+  *recb++ = 1;
+  *recb++ = 0x00;
+  *recb++ = 0x40;
+  *recb++ = 0x30;
+   
+  /* configure sources for Power,Power,Power,Floppy,In3,In4 */
+  *recb++ = LEDCMD_SOURCE + 3;
+  *recb++ = LEDF_SRC_POWER; 
+  *recb++ = LEDCMD_SOURCE + 4;
+  *recb++ = LEDF_SRC_POWER; 
+  *recb++ = LEDCMD_SOURCE + 5;
+  *recb++ = LEDF_SRC_POWER; 
+  *recb++ = LEDCMD_SOURCE + 0;
+  *recb++ = LEDF_SRC_FLOPPY;
+  *recb++ = LEDCMD_SOURCE + 1;
+  *recb++ = LEDF_SRC_IN3; 
+  *recb++ = LEDCMD_SOURCE + 2;
+  *recb++ = LEDF_SRC_IN4;
+
+  led_putcommands( recv_buffer, recb - recv_buffer );
+  recb = recv_buffer;
+
+  *recb++ = LEDCMD_SETMODE + 3;
+  *recb++ = 0;
+  *recb++ = LEDCMD_SETMODE + 4;
+  *recb++ = 0;
+  *recb++ = LEDCMD_SETMODE + 5;
+  *recb++ = 0;
+
+  led_putcommands( recv_buffer, recb - recv_buffer );
+  recb = recv_buffer;
+
+
+  /* default: all off */
+  led_setinputstate( LEDF_SRC_POWER,  0 );
+  led_setinputstate( LEDF_SRC_FLOPPY, 0 );
+  led_setinputstate( LEDF_SRC_IN3,    0 );
+  led_setinputstate( LEDF_SRC_CAPS,   0 );
+  st = led_setinputstate( LEDF_SRC_IN4,    0 );
+  led_updatecontroller(st|LED_FORCE_UPDATE); /* */
+
+  mod1=0;
+  act0=0;
+  while( get_usb_config_status() != 0 )
+  {
+	/* loop through kbd output bits and collect input bits */
+	pos = 0; /* first key in list */
+	actct = 0;
+	trig  = 0; /* trigger for USB interrupt to send something */
+
+	for( j=OSTART; j != 0 ; j <<= 1 )
+	{
+	  if( !(j & OMASK ) )	/* oport bit inactive ? */
+	 	continue;
+
+	  OPORT =  (OPORT|(OMASK)) ^ j; /* make current low, set rest to high */
+
+	  /* this delay could be a bit higher considering impedances/capacitance across the keyboard */
+	  /* e.g. 10-20 us delay + check if KBClock is low from the other end */
+	  /* also: differentiate between KBWAIT and idle or include a short loop */
+	  _delay_us(5); /* wait a little (200 kHz @ 5us) */
+	  /*--------------------------------------------------------*/ 
+
+	  /* -------------------------------------------------------*/
+	  /* loop through input ports, put new detected keys into   */
+	  /* ringbuffer                                             */
+	  /*                                                        */
+	  for( i=0 ;  (kbinputlist[i] != 0) ; i++ )
+	  {
+		/* get port state and compare with kbtable */
+		cur = *(&PIND + kbinputports[i] ) & kbinputlist[i]; /* */
+		cur = (cur) ? KEYIDLE : KEYDOWN; /* low active */
+
+		/* include in sent list, if down (after debounce) */
+		if( (cur == KEYDOWN) && (actct < USB_KB_NKEYS ) )
+		{
+			keyboard_pressed_keys[actct] = pgm_read_byte(&usbkbmap[pos]);
+			actct++;
+			trig = 1;
+			DBGOUT( pgm_read_byte(&debuglist[pos] )  )
+		}
+		pos++;	/* position in key list */
+	  }
+	  /*--------------------------------------------------------*/ 
+	}
+
+	/* handle extra keys, low active */
+	pos = SCANCODE(7,1);  /* LAMIGA is the first special key                   */
+	i = SPCPIN & SPCMASK; /* get special port reading (mask is redundant btw.) */
+	j = 0;
+	mods = 0;
+	while( kbinputspecials[j] != 0 )
+	{
+		if( !(i & kbinputspecials[j] )) /* low ?             */
+		{
+			/* we have a modifier key */
+			mods |= pgm_read_byte(&usbkbmap[pos]);
+			trig  = 1;
+			DBGOUT( pgm_read_byte(&debuglist[pos] )  )
+		}
+		pos++;
+		j++;
+	}
+	keyboard_modifier = mods; /* in usb.c */
+
+
+	if( act0 != actct )
+		trig = 1;
+	act0=actct;
+
+	if( mods != mod1 )
+		trig = 1;
+	mod1 = mods;
+
+	/* clear end of table */
+	while( actct < USB_KB_NKEYS )
+	{
+		keyboard_pressed_keys[actct] = 0;
+		actct++;
+	}
+
+	if( trig ) /* keys are down or went up */
+	{
+		usb_send();
+		_delay_ms(10); /* wait a little */
+	}
+
+	/* LED update */
+	if( kbled != keyboard_leds )
+	{
+	
+		kbled = keyboard_leds;
+
+		caps_on = (kbled & (1<<SET_LED_CAPS_B)) ? 1 : 0;
+		show_caps( caps_on );
+		led_setinputstate( LEDF_SRC_FLOPPY, caps_on );
+		led_setinputstate( LEDF_SRC_CAPS, caps_on );
+
+		st = (kbled & (1<<SET_LED_NUM_B)) ? 1 : 0;
+		led_setinputstate( LEDF_SRC_IN3, st );
+		st = (kbled & (1<<SET_LED_SCR_B))? 1 : 0;
+		st = led_setinputstate( LEDF_SRC_IN4, st );
+
+                led_updatecontroller(st); /* */
+
+	}
+  }
+ 
+}
+#endif /* ENABLE_USB */
+
+
 
 int main(void)
 {
@@ -280,6 +524,8 @@ int main(void)
      but when that step is omitted, the device would run at 2 MHz instead of 16 */
   CLKPR = 0x80; /* enable prescaler change */
   CLKPR = 0x00; /* prescaler 1 */
+
+//  cli();
 
   /* initialize computer communication ports (D2/D3 regular, F2/F3 in debug) */
   KBDSEND_SENDD &= ~(1<<KBDSEND_SENDB); /* send data port to input */
@@ -347,14 +593,20 @@ int main(void)
   	kbtable[i] = KEYIDLE;
   }
 
+  /* init USB */
+#ifdef ENABLE_USB
+  usb_init();
+#endif /* ENABLE_USB */
+
   /* init UART for serial communication to PC */
 #ifdef DEBUG
   uart1_init(UART_BAUD_SELECT(9600UL,F_CPU));
-  sei();
   uart1_puts("AMIGA 500 KEYBOARD BY BAX\r\n");
 #endif
 
-  led_init(); /* start up LED controller */
+  led_init(); /* start up LED controller (and enable interrupts) */
+
+//  sei(); /* needed for TWI, USB (and UART in debug mode) */
 
 /*
   Gamma table
@@ -392,10 +644,25 @@ int main(void)
   /* */
   init_ring();	/* prepare ringbuffer */
   state = STATE_POWERUP; /* synchronize with Amiga, perform power-up procedure */
-  while(1)
+  while( 1 ) 
   {
 	inputstate = led_getinputstate(); /* get current inputs state */
 	keyb_idle++;
+
+#ifdef ENABLE_USB
+	/* jump to USB main loop when USB connection was established */
+	if( get_usb_config_status() != 0 )
+	{
+#ifdef DEBUG
+  		uart1_puts("Entering USB mode\r\n");
+#endif
+		mainloop_usb();
+#ifdef DEBUG
+  		uart1_puts("Left USB mode\r\n");
+#endif
+		continue;
+	}	
+#endif /* ENABLE_USB */
 
 	while( state & (STATE_POWERUP|STATE_RESYNC) )
 	{
@@ -408,6 +675,21 @@ int main(void)
 		if( amiga_kbsync() > 0 )
 #endif
 			break;
+
+#ifdef ENABLE_USB
+		/* jump to USB main loop when USB connection was established */
+		if( get_usb_config_status() != 0 )
+		{
+#ifdef DEBUG
+	  		uart1_puts("Entering USB mode\r\n");
+#endif
+			mainloop_usb();
+#ifdef DEBUG
+  			uart1_puts("Left USB mode\r\n");
+#endif
+			continue;
+		}	
+#endif /* ENABLE_USB */
 
 		/* CTRL-A-A while waiting for sync? */
 		if( !(SPCPIN & ( (1<<SPCB_CTRL)+(1<<SPCB_LAMIGA)+(1<<SPCB_RAMIGA) ) ))
@@ -975,6 +1257,13 @@ char amiga_kbsync( void )
  		_delay_us(10);
  	if( !(KBDSEND_ACKPIN & (1<<KBDSEND_ACKB)) )
  		break;
+#ifdef ENABLE_USB
+	if( get_usb_config_status() )
+	{
+		count = SYNC_WAIT;
+		break;
+	}
+#endif
  }
 
  if( count == SYNC_WAIT )
@@ -1093,8 +1382,6 @@ void show_caps( unsigned char state )
 
 */
 /* ----------------------------------------------------------------------- */
-#define RECVBUFSIZE 32 
-unsigned char recv_buffer[RECVBUFSIZE];
 unsigned char *recv_commands(unsigned char *nrecv)
 {
  unsigned char bitcount,recbits,cur,*p,loops;
