@@ -1,9 +1,11 @@
 # A500KB
 This project contains the material related to a custom Commodore Amiga Mechanical Keyboard. While the initial development target was the iconic Amiga 500, the keyboard also fits in A3000/A4000 (maybe also A2000) external keyboard enclosures. It features the ability to mount Mitsumi or Cherry switches. The Power, Drive and Caps-Lock LEDs are implemented as 7 individually configurable RGB LEDs. LED configuration is provided by an AmigaOS program that talks to the Keyboard over the regular connection. Headers for two additional low active input sources (e.g. HDD, Network) are also present.
 
-The keyboard may be populated with tactile Mitsumi mechanical switches (E25-33-137) and original A2000/3000/4000 keycaps or A1200.net replica keycaps. It has also been tested with Cherry and KailH switches. The author has not reached out to Keycap manufacturers for a fully Amiga compatible keycap set, though.
+The keyboard may be populated with two options of Switches and associated Keycaps. The first option are the tactile Mitsumi mechanical switches (E25-33-137) and original A2000/3000/4000 keycaps or A1200.net replica keycaps. Please note that the Mitsumi mechanical switches are quite rare. The second option for switches and keycaps is standard Cherry MX or compatibles. In that latter case, the keycaps for the original Amiga layout are hard to obtain. Recently, the user steveed on [Amibay](https://www.amibay.com/threads/amiga-mx-style-keycaps-pcbs.2446001/) has managed to get replica Amiga compatible keycaps ordered from SignaturePlastics.
 
 If building the full keyboard is not an option, a sub-project of A500KB might be of interest. The controller part of A500KB is also usable as standalone controller for classic Mitsumi keyboards (A500KB Mini). While that A500KB Mini approach won't give the benefit of mechanical switches, it'll offer the custom LED functionality of A500KB.
+
+Please have a look at the README.md in PCB/ for ordering/building notes.
 
 ## Requirements
 
