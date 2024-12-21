@@ -1,0 +1,8823 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "14d2be24-e894-4dc3-9020-12862a44e771")
+	(paper "A2")
+	(title_block
+		(title "A500 Keyboard")
+		(date "2021-12-04")
+		(rev "0.0")
+		(company "Henryk Richter")
+	)
+	(lib_symbols
+		(symbol "Graphic:Logo_Open_Hardware_Small"
+			(pin_numbers hide)
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "baxlogo1"
+				(at 1.27 8.255 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Baxlogo"
+				(at 1.27 -4.445 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Bax:baxlogo"
+				(at 1.27 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 1.27 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Open Hardware logo, small"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "Logo"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Logo_Open_Hardware_Small_0_0"
+				(text ""
+					(at 1.27 5.08 0)
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(symbol "Logo_Open_Hardware_Small_0_1"
+				(rectangle
+					(start -10.16 -7.62)
+					(end -6.35 -11.43)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start -10.16 8.89)
+					(end -6.35 2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start -6.35 -3.81)
+					(end -2.54 -11.43)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start -6.35 2.54)
+					(end 7.62 -1.27)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start -3.81 -1.27)
+					(end 0 -3.81)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start -3.81 12.7)
+					(end 7.62 5.08)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0 -1.27)
+					(end 3.81 -11.43)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0 5.08)
+					(end 3.81 2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 1.27 6.35)
+					(end 1.27 6.35)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 1.27 6.35)
+					(end 1.27 6.35)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 -7.62)
+					(end 7.62 -13.97)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 7.62 -1.27)
+					(end 11.43 -7.62)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+		)
+		(symbol "LED_Cutout_LIB:LED_Cutout"
+			(pin_numbers hide)
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "LEDC"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "LED_Cutout_0_1"
+				(rectangle
+					(start -2.54 2.54)
+					(end 2.54 -2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+		)
+		(symbol "MX_Hybrid:MX-NoLED"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "MX"
+				(at -0.635 3.81 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+				)
+			)
+			(property "Value" "MX-NoLED"
+				(at -0.635 1.27 0)
+				(effects
+					(font
+						(size 0.508 0.508)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -15.875 -0.635 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at -15.875 -0.635 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MX-NoLED_0_0"
+				(rectangle
+					(start -2.54 2.54)
+					(end 1.27 -1.27)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy -1.27 1.27)
+					)
+					(stroke
+						(width 0.127)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 1.27) (xy 0 1.27) (xy -1.27 1.905)
+					)
+					(stroke
+						(width 0.127)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "COL"
+					(at 3.175 0 0)
+					(effects
+						(font
+							(size 0.762 0.762)
+						)
+					)
+				)
+				(text "ROW"
+					(at 0 -1.905 900)
+					(effects
+						(font
+							(size 0.762 0.762)
+						)
+						(justify right)
+					)
+				)
+			)
+			(symbol "MX-NoLED_1_1"
+				(pin passive line
+					(at 3.81 1.27 180)
+					(length 2.54)
+					(name "COL"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -1.27 -3.81 90)
+					(length 2.54)
+					(name "ROW"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "Mechanical:MountingHole"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim yes)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "H"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "MountingHole"
+				(at 0 3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Mounting Hole without connection"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "mounting hole"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "MountingHole*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MountingHole_0_1"
+				(circle
+					(center 0 0)
+					(radius 1.27)
+					(stroke
+						(width 1.27)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 124.46 346.075) (xy 123.19 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "00326733-5f89-4fde-8cb3-3c162b7c547a")
+	)
+	(wire
+		(pts
+			(xy 77.47 300.355) (xy 79.375 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "057c22ec-4a6a-491e-a587-ac283b42db51")
+	)
+	(wire
+		(pts
+			(xy 139.7 346.075) (xy 138.43 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "083c6d11-7307-41bb-82dc-bb64bcfb52ae")
+	)
+	(wire
+		(pts
+			(xy 93.98 300.355) (xy 92.71 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "08b2b7e9-ac40-48f1-8ecb-535611d59f54")
+	)
+	(wire
+		(pts
+			(xy 243.84 323.215) (xy 242.57 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0b680f72-708c-4086-8ccc-249b218e6e29")
+	)
+	(wire
+		(pts
+			(xy 85.09 389.255) (xy 86.36 389.255)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1885bdb1-a4fb-417f-a7e0-13dca3a2190c")
+	)
+	(wire
+		(pts
+			(xy 200.66 300.355) (xy 199.39 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "190c7190-7819-4530-8ef4-4ac17953e65e")
+	)
+	(wire
+		(pts
+			(xy 215.9 368.935) (xy 214.63 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1e192c2c-9df3-4be1-a6f5-ed373e8579b6")
+	)
+	(wire
+		(pts
+			(xy 243.84 300.355) (xy 242.57 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23906f16-3886-4f04-933b-d46811c89d55")
+	)
+	(wire
+		(pts
+			(xy 154.94 323.215) (xy 153.67 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2b6a5022-b013-4bb5-82aa-b2f13482c751")
+	)
+	(wire
+		(pts
+			(xy 154.94 300.355) (xy 153.67 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3312c5f7-1378-496d-b5ef-30fbc3572af6")
+	)
+	(wire
+		(pts
+			(xy 92.71 277.495) (xy 93.98 277.495)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a5e401e-97d2-4718-8f04-db3d2ec156c1")
+	)
+	(wire
+		(pts
+			(xy 228.6 323.215) (xy 227.33 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3d4c324e-9812-4c9c-a853-9b242089733b")
+	)
+	(wire
+		(pts
+			(xy 185.42 346.075) (xy 184.15 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4df7bf65-4224-4fe4-9b72-c7abd746744a")
+	)
+	(wire
+		(pts
+			(xy 109.22 300.355) (xy 107.95 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4fe68ef2-3042-4a2a-868a-b41b69d1ced1")
+	)
+	(wire
+		(pts
+			(xy 227.33 368.935) (xy 228.6 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "51011ee6-9cc4-4ae9-a1df-a9fde8d06f0f")
+	)
+	(wire
+		(pts
+			(xy 185.42 323.215) (xy 184.15 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "546ea576-6eeb-44ac-98a7-802ebba373c5")
+	)
+	(wire
+		(pts
+			(xy 377.19 391.795) (xy 377.19 392.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "54d78460-56ce-45d4-9c71-4f22ce16cf0d")
+	)
+	(wire
+		(pts
+			(xy 139.7 300.355) (xy 138.43 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "59ab7a24-3807-4742-942b-e5c4a9d8c52b")
+	)
+	(wire
+		(pts
+			(xy 77.47 323.215) (xy 79.375 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5d27f995-3269-472d-bb93-05793e910d01")
+	)
+	(wire
+		(pts
+			(xy 93.98 323.215) (xy 92.71 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "65ea745a-49e2-46bc-84e2-8d777a1318cc")
+	)
+	(wire
+		(pts
+			(xy 185.42 300.355) (xy 184.15 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "66d1ea6a-4295-4794-a704-90f9f6388036")
+	)
+	(wire
+		(pts
+			(xy 397.51 392.43) (xy 397.51 391.795)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "67732015-9472-42a5-9f2b-e9b9b25538e1")
+	)
+	(wire
+		(pts
+			(xy 154.94 368.935) (xy 153.67 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6e0146dd-e2a0-48e4-b590-37fd6b886e30")
+	)
+	(wire
+		(pts
+			(xy 109.22 277.495) (xy 107.95 277.495)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "73ee2bc3-8739-4f3e-8b80-aa1039a136e0")
+	)
+	(wire
+		(pts
+			(xy 139.7 323.215) (xy 138.43 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "749c668a-d043-4ec4-b45c-da083b636269")
+	)
+	(wire
+		(pts
+			(xy 124.46 323.215) (xy 123.19 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "779b6483-d1f1-49ae-9725-fd3b31faa97a")
+	)
+	(wire
+		(pts
+			(xy 153.67 277.495) (xy 157.48 277.495)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7e83cf56-5517-4f13-9dc0-d641a6a6c655")
+	)
+	(wire
+		(pts
+			(xy 124.46 277.495) (xy 123.19 277.495)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8152d107-70da-42ac-9427-81ae7e1c7102")
+	)
+	(wire
+		(pts
+			(xy 152.4 389.255) (xy 151.13 389.255)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8214b8a7-a85e-49aa-9d9d-4435b5863c0b")
+	)
+	(wire
+		(pts
+			(xy 228.6 346.075) (xy 227.33 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85ec3fd8-5e09-4716-86f5-8a3deeb8bdcd")
+	)
+	(wire
+		(pts
+			(xy 138.43 277.495) (xy 139.7 277.495)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "893cf177-8090-474c-9322-18db93230e69")
+	)
+	(wire
+		(pts
+			(xy 200.66 323.215) (xy 199.39 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89a32534-7f8b-4c7a-a1c7-762373fbf1b9")
+	)
+	(wire
+		(pts
+			(xy 168.91 323.215) (xy 170.18 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8b446106-71fa-45b3-a7ce-80ab09622882")
+	)
+	(wire
+		(pts
+			(xy 185.42 368.935) (xy 184.15 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8fd24962-44e8-4e65-97b5-c76cb12b29b7")
+	)
+	(wire
+		(pts
+			(xy 259.08 300.355) (xy 257.81 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9050e185-fc74-457b-bed1-f853e84082f7")
+	)
+	(wire
+		(pts
+			(xy 228.6 300.355) (xy 227.33 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "94b587b5-6829-49d9-a0ac-4a66beabb316")
+	)
+	(wire
+		(pts
+			(xy 217.17 328.295) (xy 215.9 328.295)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "95d0ff75-5ae0-4549-b7f9-d615fd933461")
+	)
+	(wire
+		(pts
+			(xy 200.66 368.935) (xy 199.39 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "975bac93-c4c5-4077-8b52-fd6ebf8aa6c9")
+	)
+	(wire
+		(pts
+			(xy 223.52 389.255) (xy 222.25 389.255)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b086cd4-5ff1-4b7d-a99d-e937b01b748b")
+	)
+	(wire
+		(pts
+			(xy 215.9 346.075) (xy 214.63 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a22a6438-222b-40cc-a888-32832ded4950")
+	)
+	(wire
+		(pts
+			(xy 215.9 323.215) (xy 214.63 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a8326d3d-ca36-4a5f-b03a-78da1847b6fd")
+	)
+	(wire
+		(pts
+			(xy 62.23 368.935) (xy 63.5 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aaae9883-82a1-4baa-966f-f99ec2752d55")
+	)
+	(wire
+		(pts
+			(xy 139.7 368.935) (xy 138.43 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aac9dd9e-0704-4c3b-a68d-f458415f5174")
+	)
+	(wire
+		(pts
+			(xy 69.85 389.255) (xy 72.39 389.255)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "abdf5824-32c1-445d-a549-da8ee03be931")
+	)
+	(wire
+		(pts
+			(xy 274.32 300.355) (xy 273.05 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "af06ab48-19b6-4248-b973-e5f7476cabc7")
+	)
+	(wire
+		(pts
+			(xy 62.23 346.075) (xy 63.5 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b0cc5083-9086-4a57-8785-21ca0705ae6e")
+	)
+	(wire
+		(pts
+			(xy 170.18 346.075) (xy 168.91 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bd8864e0-c548-43e0-a1d1-b3a3f0564637")
+	)
+	(wire
+		(pts
+			(xy 77.47 277.495) (xy 78.74 277.495)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "be70c8f9-a130-4b9b-a86a-2df64d3df4ed")
+	)
+	(wire
+		(pts
+			(xy 170.18 277.495) (xy 168.91 277.495)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf296387-c604-4cff-92b0-17a35427577e")
+	)
+	(wire
+		(pts
+			(xy 109.22 368.935) (xy 107.95 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf7f88ea-6e2c-4544-8da8-e6d21b787b54")
+	)
+	(wire
+		(pts
+			(xy 109.22 346.075) (xy 107.95 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c21b4a10-8415-4743-81cd-d71d555a73bb")
+	)
+	(wire
+		(pts
+			(xy 109.22 323.215) (xy 107.95 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c3697c2a-6c15-476a-ab48-85c66bdbb8a4")
+	)
+	(wire
+		(pts
+			(xy 170.18 368.935) (xy 168.91 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c710bf6f-0a9f-43ad-a12f-f851cd83ea09")
+	)
+	(wire
+		(pts
+			(xy 124.46 300.355) (xy 123.19 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cf1331b5-a798-4ab5-984b-bdbdb46cf0f6")
+	)
+	(wire
+		(pts
+			(xy 154.94 346.075) (xy 153.67 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d1c8394f-354b-48d8-b205-009566ce2c6c")
+	)
+	(wire
+		(pts
+			(xy 57.15 351.155) (xy 57.15 352.425)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d5a3633f-c013-4495-b1b3-836cfa44e0b9")
+	)
+	(wire
+		(pts
+			(xy 215.9 328.295) (xy 215.9 323.215)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "daf6dda2-312c-47a3-b49c-59589dee65b5")
+	)
+	(wire
+		(pts
+			(xy 200.66 346.075) (xy 199.39 346.075)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e199577b-4c8b-475f-82a8-9c520cc11373")
+	)
+	(wire
+		(pts
+			(xy 214.63 300.355) (xy 215.9 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f1479be3-4af8-4f7f-972e-bd48d4919160")
+	)
+	(wire
+		(pts
+			(xy 124.46 368.935) (xy 123.19 368.935)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f4482202-76d7-46b3-98bf-77299b16b41d")
+	)
+	(wire
+		(pts
+			(xy 168.91 300.355) (xy 172.085 300.355)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f569c8fd-49cf-435f-967c-896584271ed9")
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 58.42 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b2455c")
+		(property "Reference" "MX1"
+			(at 59.2582 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "ESC"
+			(at 59.2582 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 42.545 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 42.545 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 58.42 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "244816bf-84c9-42f1-906e-290c831cbdac")
+		)
+		(pin "2"
+			(uuid "1f779e19-f0b9-41b7-98c7-32554eb4e2b1")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 73.66 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b80b8d")
+		(property "Reference" "MX7"
+			(at 74.4982 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F1"
+			(at 74.4982 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 57.785 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.785 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 73.66 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "26f0e26b-c3ce-42b3-bfcf-22dad1964c20")
+		)
+		(pin "2"
+			(uuid "ab710da1-b8e5-4848-a953-81e8bce4405c")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 88.9 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b82198")
+		(property "Reference" "MX13"
+			(at 89.7382 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F2"
+			(at 89.7382 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 73.025 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.025 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 88.9 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "5c4d3274-1137-48ea-964c-1151a1455e54")
+		)
+		(pin "1"
+			(uuid "aafd0419-80b9-49ff-ad6b-57ab06737698")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 104.14 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b8285b")
+		(property "Reference" "MX18"
+			(at 104.9782 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F3"
+			(at 104.9782 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 88.265 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.265 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 104.14 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5aaaaf13-ae1b-4371-8ff5-b5a411b13869")
+		)
+		(pin "2"
+			(uuid "d2e82e51-ac09-4af4-a50b-eb67e34944dc")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 119.38 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b83144")
+		(property "Reference" "MX23"
+			(at 120.2182 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F4"
+			(at 120.2182 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 103.505 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 103.505 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 119.38 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "500c3c93-91aa-4260-9930-72c404ab9bc5")
+		)
+		(pin "1"
+			(uuid "5f12e209-5876-4d2a-acc2-4f2b4c64d76d")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 134.62 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b8370d")
+		(property "Reference" "MX28"
+			(at 135.4582 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F5"
+			(at 135.4582 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 118.745 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 118.745 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 134.62 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "71f8c8a7-ec8e-4da8-9738-f71719e2b9ae")
+		)
+		(pin "1"
+			(uuid "be3f1f68-c953-4326-9ecb-73a46493e337")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 149.86 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b8c3a5")
+		(property "Reference" "MX34"
+			(at 150.6982 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F6"
+			(at 150.6982 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 133.985 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.985 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 149.86 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "2ff0452a-5587-496f-8c44-58d16bd91fd0")
+		)
+		(pin "1"
+			(uuid "bc1f0a01-b421-4d09-b252-0bd9a4292ea2")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX34")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 165.1 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b8c3ab")
+		(property "Reference" "MX39"
+			(at 165.9382 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F7"
+			(at 165.9382 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 149.225 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.225 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a42c2ee7-52dc-4b50-ac2d-8c881fd09bfe")
+		)
+		(pin "2"
+			(uuid "22eee9e5-8dca-443d-9cc7-c87b317bc2f3")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX39")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 180.34 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b8c3b1")
+		(property "Reference" "MX44"
+			(at 181.1782 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F8"
+			(at 181.1782 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 164.465 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 164.465 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 180.34 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ecc867fe-6640-4f01-b743-a33e8a52d2ad")
+		)
+		(pin "2"
+			(uuid "47656478-1903-4e77-882e-f58008291f8b")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX44")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 195.58 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b8c3b7")
+		(property "Reference" "MX49"
+			(at 196.4182 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F9"
+			(at 196.4182 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 179.705 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.705 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 195.58 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e3a28922-deb9-4eb5-b852-9adf1c823af6")
+		)
+		(pin "2"
+			(uuid "efc8bc01-9327-4e00-ae88-692483c7a1a3")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX49")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 210.82 278.765 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b8c3bd")
+		(property "Reference" "MX54"
+			(at 211.6582 273.1008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F10"
+			(at 211.6582 274.9804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 194.945 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 194.945 279.4 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 278.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2f81d14b-7048-4b59-86d7-d086cbf12a33")
+		)
+		(pin "2"
+			(uuid "b3c32d18-1cdc-454f-9705-540d0f50305c")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX54")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 58.42 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b995e2")
+		(property "Reference" "MX2"
+			(at 59.2582 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "tilde"
+			(at 59.2582 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.5U-PlateCutout"
+			(at 42.545 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 42.545 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 58.42 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0261e096-62d9-4e09-9811-80144d2926bc")
+		)
+		(pin "2"
+			(uuid "b753dfe0-862b-452e-a2c1-b03193021794")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 73.66 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b995e8")
+		(property "Reference" "MX8"
+			(at 74.4982 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "1"
+			(at 74.4982 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 57.785 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.785 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 73.66 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "550a0f98-477a-45fc-89b1-b988a636ff1c")
+		)
+		(pin "1"
+			(uuid "8b0e847f-7a62-413e-b9f9-a6d3b708fb63")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 88.9 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b995ee")
+		(property "Reference" "MX14"
+			(at 89.7382 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "2"
+			(at 89.7382 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 73.025 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.025 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 88.9 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "72e9b437-5eb9-4076-b1c0-bb4c9b2ef5a8")
+		)
+		(pin "1"
+			(uuid "e6da82e2-a3b5-4a8b-8266-629ae1953485")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 104.14 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b995f4")
+		(property "Reference" "MX19"
+			(at 104.9782 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "3"
+			(at 104.9782 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 88.265 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.265 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 104.14 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "28d367ea-65f3-4f5c-971d-374df865b4e7")
+		)
+		(pin "1"
+			(uuid "c29620c4-b1d5-4a35-9619-fe09b29e5252")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 119.38 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b995fa")
+		(property "Reference" "MX24"
+			(at 120.2182 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "4"
+			(at 120.2182 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 103.505 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 103.505 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 119.38 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "868bfd52-493b-45e3-8771-3cf4450950be")
+		)
+		(pin "1"
+			(uuid "d0fb8d83-60d3-4087-bd39-b05ee94b7ea0")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 134.62 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b99600")
+		(property "Reference" "MX29"
+			(at 135.4582 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "5"
+			(at 135.4582 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 118.745 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 118.745 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 134.62 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3e27d8d0-4a81-4e74-a7f5-90c6d83ebd11")
+		)
+		(pin "2"
+			(uuid "1b8f5818-8b91-4638-812e-b31109fca2ed")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX29")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 149.86 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b99606")
+		(property "Reference" "MX35"
+			(at 150.6982 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "6"
+			(at 150.6982 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 133.985 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.985 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 149.86 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "16c2f367-ebf7-4844-9d11-87cbad291cf2")
+		)
+		(pin "2"
+			(uuid "04a1aaf0-e92f-4c2a-9eed-046cd08eb4ec")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX35")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 165.1 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b9960c")
+		(property "Reference" "MX40"
+			(at 165.9382 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "7"
+			(at 165.9382 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 149.225 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.225 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "95a2bb0d-75f4-46f5-ad13-1b5a09c36338")
+		)
+		(pin "2"
+			(uuid "a66ae9ba-75f5-48a9-8728-e4d7e1adeec2")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX40")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 180.34 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b99612")
+		(property "Reference" "MX45"
+			(at 181.1782 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "8"
+			(at 181.1782 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 164.465 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 164.465 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 180.34 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "9aee9cb8-8dbc-4222-bc35-4ebf3c4b7d90")
+		)
+		(pin "1"
+			(uuid "8606a2d2-3561-469f-a947-8e29e1698ef7")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX45")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 195.58 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b99618")
+		(property "Reference" "MX50"
+			(at 196.4182 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "9"
+			(at 196.4182 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 179.705 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.705 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 195.58 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "29756211-f0b0-43f8-9cda-b9bf26dea2cf")
+		)
+		(pin "1"
+			(uuid "b2d919f2-e717-445c-8a24-593372406fdb")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX50")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 210.82 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b9961e")
+		(property "Reference" "MX55"
+			(at 211.6582 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 211.6582 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 194.945 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 194.945 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d2add0a0-edbf-46d0-b4e1-bbd957ae9430")
+		)
+		(pin "2"
+			(uuid "7074e309-c162-4a42-860a-f0a83c4254f4")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX55")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 223.52 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b9b6d8")
+		(property "Reference" "MX60"
+			(at 224.3582 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "-"
+			(at 224.3582 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 207.645 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.645 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7a9ace61-9694-427f-a4fc-a9874d62393c")
+		)
+		(pin "2"
+			(uuid "86c8fee5-7a33-4b40-8bfa-1a996c9e9e24")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX60")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 238.76 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b9b6de")
+		(property "Reference" "MX65"
+			(at 239.5982 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "+"
+			(at 239.5982 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 222.885 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 222.885 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 238.76 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "987a0874-2cab-4823-9af8-f7209c968fcc")
+		)
+		(pin "2"
+			(uuid "d4de55dd-6215-4d97-9c0d-618906ce3b3b")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX65")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 254 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b9b6e4")
+		(property "Reference" "MX69"
+			(at 254.8382 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "\\"
+			(at 254.8382 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 238.125 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 238.125 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 254 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "d961432c-77f9-4817-a80f-3957c9581b52")
+		)
+		(pin "1"
+			(uuid "8b6e5002-2f23-49a9-8a7b-2686c4d9ee82")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX69")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 269.24 301.625 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061b9b6ea")
+		(property "Reference" "MX72"
+			(at 270.0782 295.9608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "BkSpace"
+			(at 270.0782 297.8404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 253.365 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 253.365 302.26 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 269.24 301.625 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "769b84fe-193e-4eaa-9965-6381e4b42300")
+		)
+		(pin "2"
+			(uuid "0095403c-0a27-4c30-b02a-56f41ce7b8a3")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX72")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 58.42 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e27")
+		(property "Reference" "MX3"
+			(at 59.2582 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Tab"
+			(at 59.2582 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-2U-PlateCutout_Cherry"
+			(at 42.545 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 42.545 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 58.42 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "0f773b11-7c36-4cf1-a092-a2fdb1463cbe")
+		)
+		(pin "1"
+			(uuid "c92f4ea9-3fbc-47f4-9894-ef848cfc6b8b")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 73.66 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e2d")
+		(property "Reference" "MX9"
+			(at 74.4982 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Q"
+			(at 74.4982 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 57.785 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.785 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 73.66 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4854867b-c081-400e-ae8d-04370226d6d4")
+		)
+		(pin "2"
+			(uuid "7a9fabea-f189-4f1a-b4c2-954232257f45")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 88.9 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e33")
+		(property "Reference" "MX15"
+			(at 89.7382 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "W"
+			(at 89.7382 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 73.025 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.025 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 88.9 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a52203a8-88bc-43e0-aaf4-fe475daf29e2")
+		)
+		(pin "2"
+			(uuid "e7453b13-2b36-4521-8042-8a76023365b8")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 104.14 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e39")
+		(property "Reference" "MX20"
+			(at 104.9782 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "E"
+			(at 104.9782 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 88.265 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.265 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 104.14 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e636d125-88d2-42c7-a040-4ae0600b8127")
+		)
+		(pin "1"
+			(uuid "2647d207-3805-4696-88e1-b9528e6df065")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 119.38 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e3f")
+		(property "Reference" "MX25"
+			(at 120.2182 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "R"
+			(at 120.2182 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 103.505 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 103.505 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 119.38 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "25be55f5-246d-416d-b65e-bc3aa163bc1b")
+		)
+		(pin "2"
+			(uuid "cbd57861-fefb-444d-ab16-2f5f6d5a6352")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX25")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 134.62 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e45")
+		(property "Reference" "MX30"
+			(at 135.4582 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "T"
+			(at 135.4582 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 118.745 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 118.745 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 134.62 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c2992872-489e-4d69-88f3-22e94ac6b8b1")
+		)
+		(pin "2"
+			(uuid "4f711512-accb-4484-92fa-3cd2f202de41")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX30")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 149.86 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e4b")
+		(property "Reference" "MX36"
+			(at 150.6982 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Y"
+			(at 150.6982 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 133.985 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.985 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 149.86 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2dac5e26-0cdb-485e-9fa5-f6c0663914ca")
+		)
+		(pin "2"
+			(uuid "29947bc6-42cd-44b9-9c05-61c51208574a")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX36")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 165.1 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e51")
+		(property "Reference" "MX41"
+			(at 165.9382 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "U"
+			(at 165.9382 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 149.225 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.225 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4314e903-0ee4-46c7-945e-9dad8980ffaf")
+		)
+		(pin "2"
+			(uuid "c3aad6d5-1329-4751-ba3b-fba5766b5025")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX41")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 180.34 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e57")
+		(property "Reference" "MX46"
+			(at 181.1782 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "I"
+			(at 181.1782 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 164.465 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 164.465 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 180.34 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "37c779df-36f6-41f9-82a6-2f51179a816b")
+		)
+		(pin "1"
+			(uuid "e0b86de0-0e74-420a-a950-124fd3b45067")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX46")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 195.58 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e5d")
+		(property "Reference" "MX51"
+			(at 196.4182 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "O"
+			(at 196.4182 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 179.705 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.705 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 195.58 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ae13caac-b91e-4298-9a97-c82fd074b20f")
+		)
+		(pin "2"
+			(uuid "b8b4ec40-879b-4871-8f44-d53d01f91412")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX51")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 210.82 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e63")
+		(property "Reference" "MX56"
+			(at 211.6582 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "P"
+			(at 211.6582 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 194.945 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 194.945 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "c50ad6c2-6407-4320-96b6-f3917a9d3141")
+		)
+		(pin "1"
+			(uuid "d1fe000e-bbf4-48b9-9cc9-1076d12e8335")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX56")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 223.52 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e69")
+		(property "Reference" "MX61"
+			(at 224.3582 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "[{"
+			(at 224.3582 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 207.645 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.645 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f79f7f74-0c83-43ef-9a05-b963c66c00ab")
+		)
+		(pin "2"
+			(uuid "7dc26f6d-a37b-44a7-80e7-1ea98e82b525")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX61")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 238.76 324.485 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061ba3e6f")
+		(property "Reference" "MX66"
+			(at 239.5982 318.8208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "]}"
+			(at 239.5982 320.7004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 222.885 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 222.885 325.12 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 238.76 324.485 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e9cac64f-71da-44b6-beb3-78c66e2672b9")
+		)
+		(pin "1"
+			(uuid "1e7d7de2-2dff-4eec-b6cc-dc91a96a5499")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX66")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 58.42 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2de5")
+		(property "Reference" "MX4"
+			(at 59.2582 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "CTRL"
+			(at 59.2582 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 42.545 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 42.545 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 58.42 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6ce03194-36cc-4160-b062-117fea701bc0")
+		)
+		(pin "2"
+			(uuid "798c33a3-1e18-4adb-8ca1-dc43360c6729")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 73.66 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2deb")
+		(property "Reference" "MX10"
+			(at 74.4982 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "CAPS"
+			(at 74.4982 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 57.785 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.785 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 73.66 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "01768b60-57d0-4754-9669-897d1a6a6b19")
+		)
+		(pin "2"
+			(uuid "fea44940-27ef-45d9-a304-2e209e01ceda")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 88.9 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2df1")
+		(property "Reference" "MX16"
+			(at 89.7382 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "A"
+			(at 89.7382 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 73.025 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.025 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 88.9 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "29f671b2-2233-4c26-86ff-97806d78451c")
+		)
+		(pin "2"
+			(uuid "3d3c5076-f62a-4f65-aaaf-5408cf8106ab")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 104.14 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2df7")
+		(property "Reference" "MX21"
+			(at 104.9782 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "S"
+			(at 104.9782 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 88.265 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.265 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 104.14 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "dbe53a0c-de7d-4887-adde-60c80f313dc3")
+		)
+		(pin "1"
+			(uuid "e4113ce7-6429-49cd-8410-5a80272a31db")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 119.38 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2dfd")
+		(property "Reference" "MX26"
+			(at 120.2182 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "D"
+			(at 120.2182 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 103.505 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 103.505 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 119.38 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3f1bfba8-4de4-42b9-ba62-b6ba4cba7854")
+		)
+		(pin "2"
+			(uuid "57a6465f-9e0c-4548-a5dd-792c7ef8d777")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX26")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 134.62 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e03")
+		(property "Reference" "MX31"
+			(at 135.4582 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "F"
+			(at 135.4582 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 118.745 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 118.745 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 134.62 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4612e0fc-2e6e-4845-af3d-0e44830255e3")
+		)
+		(pin "2"
+			(uuid "64b958bd-2b12-4ab9-b0c3-241ba1bb3b97")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX31")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 149.86 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e09")
+		(property "Reference" "MX37"
+			(at 150.6982 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "G"
+			(at 150.6982 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 133.985 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.985 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 149.86 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b4795bc4-5fe5-419d-868b-359d8d4d5226")
+		)
+		(pin "2"
+			(uuid "b87f2c9b-a395-4dc8-ae40-90d68ae81d1d")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX37")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 165.1 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e0f")
+		(property "Reference" "MX42"
+			(at 165.9382 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "H"
+			(at 165.9382 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 149.225 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.225 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "04a011e9-fa3a-4a06-bbb8-bc8f9bea73e6")
+		)
+		(pin "1"
+			(uuid "26e0a0fc-2dad-4408-9ded-3494a7e3b1d7")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX42")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 180.34 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e15")
+		(property "Reference" "MX47"
+			(at 181.1782 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "J"
+			(at 181.1782 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 164.465 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 164.465 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 180.34 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "af76f9ec-ce13-48a3-9ec6-d3649651eaf6")
+		)
+		(pin "2"
+			(uuid "6ea7e236-6734-4539-8fe7-ba2b99284543")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX47")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 195.58 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e1b")
+		(property "Reference" "MX52"
+			(at 196.4182 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "K"
+			(at 196.4182 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 179.705 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.705 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 195.58 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7e13c305-a7ee-436b-bd1b-d2d1113c53a2")
+		)
+		(pin "2"
+			(uuid "43a3a185-f958-4937-bc19-8710d057a017")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX52")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 210.82 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e21")
+		(property "Reference" "MX57"
+			(at 211.6582 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "L"
+			(at 211.6582 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 194.945 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 194.945 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "ee4caf6f-b768-48f5-acca-a1e4a8d8637a")
+		)
+		(pin "1"
+			(uuid "d04f8d51-b527-47ff-8848-a5bcafa53311")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX57")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 223.52 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e27")
+		(property "Reference" "MX62"
+			(at 224.3582 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "COLON"
+			(at 224.3582 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 207.645 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.645 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "6c81c985-b15c-48e0-bbf0-a0c80d3a6bd2")
+		)
+		(pin "1"
+			(uuid "9310dd58-da7b-4c7c-ac8d-1c9db72071e7")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX62")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 238.76 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e2d")
+		(property "Reference" "MX67"
+			(at 239.5982 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "\""
+			(at 239.5982 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 222.885 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 222.885 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 238.76 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "34f86d30-e1f4-48c1-864d-81371e4bf006")
+		)
+		(pin "1"
+			(uuid "9f2c88cb-3e70-4825-b6fd-4e6863b849df")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX67")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 254 347.345 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bb2e33")
+		(property "Reference" "MX70"
+			(at 254.8382 341.6808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "#"
+			(at 254.8382 343.5604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 238.125 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 238.125 347.98 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 254 347.345 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "07f942c2-f664-4df3-b44d-9cb5f9d630c9")
+		)
+		(pin "1"
+			(uuid "b26c2f97-d786-4efc-bc01-4a506d4ac8b4")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX70")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 58.42 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb892")
+		(property "Reference" "MX5"
+			(at 59.2582 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "LShift"
+			(at 59.2582 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.75U-PlateCutout"
+			(at 42.545 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 42.545 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 58.42 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a11499d4-fdb5-4588-a2a9-cecab060bba2")
+		)
+		(pin "2"
+			(uuid "bf6f61cc-6f71-4211-9d32-03476521b5c2")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 73.66 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb898")
+		(property "Reference" "MX11"
+			(at 74.4982 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "<>"
+			(at 74.4982 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 57.785 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.785 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 73.66 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b5c116a2-3413-46b9-8f4b-5839e1d0cbf4")
+		)
+		(pin "2"
+			(uuid "e68c1845-dc1b-45da-bccf-dac4c8bd01f9")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 88.9 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb89e")
+		(property "Reference" "MX17"
+			(at 89.7382 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Z"
+			(at 89.7382 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 73.025 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.025 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 88.9 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b2cb3e9c-8542-443c-a456-697ea1fcd8a7")
+		)
+		(pin "2"
+			(uuid "746b99fb-07a4-4772-8279-64c45e65cc7f")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 104.14 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8a4")
+		(property "Reference" "MX22"
+			(at 104.9782 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "X"
+			(at 104.9782 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 88.265 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.265 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 104.14 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "509ab8b6-424d-4abf-ad7b-6923cd75bba1")
+		)
+		(pin "2"
+			(uuid "10245aa8-f1f4-463c-ade4-362521d459a8")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 119.38 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8aa")
+		(property "Reference" "MX27"
+			(at 120.2182 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "C"
+			(at 120.2182 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 103.505 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 103.505 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 119.38 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f9bddfab-2381-4db9-a861-3e77863809ea")
+		)
+		(pin "2"
+			(uuid "c4d2841d-8f8d-4b1a-b183-77382bdd79f7")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 134.62 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8b0")
+		(property "Reference" "MX32"
+			(at 135.4582 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "V"
+			(at 135.4582 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 118.745 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 118.745 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 134.62 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "ee87b902-f890-436f-a7a1-c7f0864395d8")
+		)
+		(pin "1"
+			(uuid "c45f2a46-7013-41f5-a306-33d34dc309da")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX32")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 149.86 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8b6")
+		(property "Reference" "MX38"
+			(at 150.6982 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "B"
+			(at 150.6982 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 133.985 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.985 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 149.86 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "41c47c3a-7267-461c-bbc2-8f2be41ffcfa")
+		)
+		(pin "2"
+			(uuid "eef6b900-dcc5-4dd6-aa38-bb8f21ab7f65")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX38")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 165.1 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8bc")
+		(property "Reference" "MX43"
+			(at 165.9382 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "N"
+			(at 165.9382 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 149.225 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.225 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5e230a78-a526-4b76-bd37-52ceeb039658")
+		)
+		(pin "2"
+			(uuid "50450c75-42e0-40bb-8d04-781912d7a90f")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX43")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 180.34 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8c2")
+		(property "Reference" "MX48"
+			(at 181.1782 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "M"
+			(at 181.1782 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 164.465 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 164.465 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 180.34 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "cfa1cc6b-4af6-4483-a727-41c6b913fad7")
+		)
+		(pin "1"
+			(uuid "10b107c3-80e0-4fb7-a616-e0accfdbba20")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX48")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 195.58 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8c8")
+		(property "Reference" "MX53"
+			(at 196.4182 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" ","
+			(at 196.4182 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 179.705 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.705 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 195.58 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7f9129a7-38ab-4d79-b124-6972fa801f62")
+		)
+		(pin "2"
+			(uuid "8d5419b0-7a9c-4649-913b-9e919b598347")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX53")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 210.82 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8ce")
+		(property "Reference" "MX58"
+			(at 211.6582 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "."
+			(at 211.6582 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 194.945 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 194.945 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "6c187916-439b-4974-a8d7-e9105669da15")
+		)
+		(pin "1"
+			(uuid "838ee17e-bbe3-42ca-a5ff-7f41bd944ad5")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX58")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 223.52 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8d4")
+		(property "Reference" "MX63"
+			(at 224.3582 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Question"
+			(at 224.3582 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 207.645 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.645 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8d1dc316-a312-4725-b0b0-ca9b423c11ed")
+		)
+		(pin "2"
+			(uuid "d285aefa-008d-44d4-b6d2-075c5f5566f5")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX63")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 238.76 370.205 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bbb8da")
+		(property "Reference" "MX68"
+			(at 239.5982 364.5408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "RShift"
+			(at 239.5982 366.4204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-2.75U-PlateCutout_Cherry"
+			(at 222.885 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 222.885 370.84 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 238.76 370.205 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e54339a8-5a41-4738-855f-fb5e9f76a288")
+		)
+		(pin "2"
+			(uuid "fa288374-b0ef-4679-9476-791737669962")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX68")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 66.04 390.525 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bcaf67")
+		(property "Reference" "MX6"
+			(at 66.8782 384.8608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Lalt"
+			(at 66.8782 386.7404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 50.165 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.165 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 66.04 390.525 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7d4a719b-df8e-4aab-b619-5a713a78764e")
+		)
+		(pin "2"
+			(uuid "4c9381c8-ea4d-47f2-8de8-23f919032012")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 81.28 390.525 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bcaf6d")
+		(property "Reference" "MX12"
+			(at 82.1182 384.8608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Lamiga"
+			(at 82.1182 386.7404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 65.405 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 65.405 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 81.28 390.525 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d2799281-95ff-4e31-95fa-6436a9f85dd3")
+		)
+		(pin "2"
+			(uuid "48d985b1-433a-481c-9547-44ab9b886979")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 147.32 390.525 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bcaf73")
+		(property "Reference" "MX33"
+			(at 148.1582 384.8608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Space"
+			(at 148.1582 386.7404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-9U-PlateCutout_Cherry"
+			(at 131.445 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 131.445 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 147.32 390.525 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "375d5923-1344-46b5-a99d-32b58de6ba7d")
+		)
+		(pin "1"
+			(uuid "244b17b4-7ff0-410a-8f5b-4b2c2d29069c")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX33")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 218.44 390.525 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bcaf79")
+		(property "Reference" "MX59"
+			(at 219.2782 384.8608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Ramiga"
+			(at 219.2782 386.7404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 202.565 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 202.565 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 218.44 390.525 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a81594e9-68b5-4de1-968b-823efcfd66f5")
+		)
+		(pin "2"
+			(uuid "16d62386-818e-4bec-8fd1-7360d2c522d5")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX59")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 233.68 390.525 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bcaf7f")
+		(property "Reference" "MX64"
+			(at 234.5182 384.8608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Ralt"
+			(at 234.5182 386.7404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.25U-PlateCutout_Square"
+			(at 217.805 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 217.805 391.16 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 233.68 390.525 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d2ddc7c8-9b83-45c4-b7dd-86f58b6e0880")
+		)
+		(pin "2"
+			(uuid "6a62c699-32c2-4642-9671-cb12642ed228")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX64")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 264.16 327.025 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bcf710")
+		(property "Reference" "MX71"
+			(at 264.9982 321.3608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "Return"
+			(at 264.9982 323.2404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-ISO-PlateCutout_Cherry"
+			(at 248.285 327.66 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 248.285 327.66 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 264.16 327.025 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3340b71d-3775-4f07-8fad-53f2f2e241d3")
+		)
+		(pin "1"
+			(uuid "8cc7c7ac-e6d3-4570-88d8-ff0531f38a7f")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX71")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 309.245 299.085 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bd23e5")
+		(property "Reference" "MX73"
+			(at 310.0832 293.4208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "DEL"
+			(at 310.0832 295.3004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.5U-PlateCutout"
+			(at 293.37 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 293.37 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 309.245 299.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "d447b059-cdf8-4404-9274-557530774e54")
+		)
+		(pin "1"
+			(uuid "884810a4-93bf-4b0c-b849-52e0cdf64d31")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX73")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 339.725 299.085 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bd23f1")
+		(property "Reference" "MX77"
+			(at 340.5632 293.4208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "HELP"
+			(at 340.5632 295.3004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1.5U-PlateCutout"
+			(at 323.85 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 323.85 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 339.725 299.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e936ef44-432b-4951-9ac9-9dcad6247af7")
+		)
+		(pin "1"
+			(uuid "8e1602de-ac1d-43d9-bbb9-d07908547787")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX77")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 309.88 367.665 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bd444b")
+		(property "Reference" "MX74"
+			(at 310.7182 362.0008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "left"
+			(at 310.7182 363.8804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 294.005 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 294.005 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 309.88 367.665 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4f63ec89-72d6-4cba-aba0-86dead6d383a")
+		)
+		(pin "2"
+			(uuid "44625800-bbe0-4c01-9622-7253e30b6637")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX74")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 325.12 367.665 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bd4451")
+		(property "Reference" "MX76"
+			(at 325.9582 362.0008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "down"
+			(at 325.9582 363.8804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 309.245 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 309.245 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 325.12 367.665 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "766febfd-df43-4a50-8813-11b0014f535e")
+		)
+		(pin "1"
+			(uuid "a7889dee-b154-465a-8721-e4c37359e302")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX76")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 340.36 367.665 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bd4457")
+		(property "Reference" "MX78"
+			(at 341.1982 362.0008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "right"
+			(at 341.1982 363.8804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 324.485 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 324.485 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 340.36 367.665 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b52a23c7-a19e-4ced-be86-d88fe36466b9")
+		)
+		(pin "1"
+			(uuid "0e613aff-3896-4d56-948c-520e41f7b3a4")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX78")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 325.12 352.425 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bd4d8d")
+		(property "Reference" "MX75"
+			(at 325.9582 346.7608 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "up"
+			(at 325.9582 348.6404 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 309.245 353.06 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 309.245 353.06 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 325.12 352.425 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "be93158b-a1df-44ea-96d1-f5da314bb669")
+		)
+		(pin "2"
+			(uuid "4bc4bbf0-f184-41fb-859a-9310b198296e")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX75")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 368.3 299.085 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf4094")
+		(property "Reference" "MX79"
+			(at 369.1382 293.4208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_("
+			(at 369.1382 295.3004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 352.425 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 352.425 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 368.3 299.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "69c2db45-d4b4-4c66-a2a2-013149247e81")
+		)
+		(pin "1"
+			(uuid "83496dc6-a2ff-48f9-bf18-5bdb1fea37f7")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX79")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 383.54 299.085 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf409a")
+		(property "Reference" "MX84"
+			(at 384.3782 293.4208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_)"
+			(at 384.3782 295.3004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 367.665 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 367.665 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 383.54 299.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "81773df9-3d8c-4af4-9737-f1bd00daae16")
+		)
+		(pin "2"
+			(uuid "fbb9d1fe-5816-453e-bedc-1caa8c6aaea3")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX84")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 398.78 299.085 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40a0")
+		(property "Reference" "MX88"
+			(at 399.6182 293.4208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_/"
+			(at 399.6182 295.3004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 382.905 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 382.905 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 398.78 299.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "92ba91d2-20f7-4fd9-8cf0-36b0f958b24e")
+		)
+		(pin "2"
+			(uuid "f3cf9dff-f5e2-4fc0-8127-bc6a95a9aedf")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX88")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 414.02 299.085 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40a6")
+		(property "Reference" "MX93"
+			(at 414.8582 293.4208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_*"
+			(at 414.8582 295.3004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 398.145 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 398.145 299.72 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 414.02 299.085 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "4a87f17f-a102-43bf-ba30-45f8610e4c0c")
+		)
+		(pin "1"
+			(uuid "5fd67804-2307-4c41-82ed-9cba44a86d68")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX93")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 368.3 321.945 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40ac")
+		(property "Reference" "MX80"
+			(at 369.1382 316.2808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_7"
+			(at 369.1382 318.1604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 352.425 322.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 352.425 322.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 368.3 321.945 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "807d46d8-4490-45b2-b187-49f9a66575bc")
+		)
+		(pin "1"
+			(uuid "fbdd1fad-aa60-4e2c-8383-17bd9df8a3b7")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX80")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 383.54 321.945 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40b2")
+		(property "Reference" "MX85"
+			(at 384.3782 316.2808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_8"
+			(at 384.3782 318.1604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 367.665 322.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 367.665 322.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 383.54 321.945 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "fb02774c-b33a-4472-af40-68e1499657c9")
+		)
+		(pin "1"
+			(uuid "7a3ae92e-85d5-478e-b083-cb76bc20d04b")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX85")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 398.78 321.945 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40b8")
+		(property "Reference" "MX89"
+			(at 399.6182 316.2808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_9"
+			(at 399.6182 318.1604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 382.905 322.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 382.905 322.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 398.78 321.945 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "1d1ffb06-4724-4863-b2e8-f21c044c3045")
+		)
+		(pin "1"
+			(uuid "a4e7ca02-1dcc-4d90-9e72-72632ae54960")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX89")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 414.02 321.945 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40be")
+		(property "Reference" "MX94"
+			(at 414.8582 316.2808 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_-"
+			(at 414.8582 318.1604 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 398.145 322.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 398.145 322.58 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 414.02 321.945 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "db6b4298-0bfe-460e-abe6-b11d74c51b5a")
+		)
+		(pin "1"
+			(uuid "612308de-6f00-4e27-8343-a5e37a2982d5")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX94")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 368.3 344.805 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40c4")
+		(property "Reference" "MX81"
+			(at 369.1382 339.1408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_4"
+			(at 369.1382 341.0204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 352.425 345.44 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 352.425 345.44 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 368.3 344.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "18ba07a7-20f7-41d7-9da0-d1d8e4f9e3f6")
+		)
+		(pin "2"
+			(uuid "656e8455-6a09-4b39-a955-5c895d869301")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX81")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 383.54 344.805 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40ca")
+		(property "Reference" "MX86"
+			(at 384.3782 339.1408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_5"
+			(at 384.3782 341.0204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 367.665 345.44 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 367.665 345.44 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 383.54 344.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "96c4d6c4-f580-4bd4-9695-8c9f53ba98d7")
+		)
+		(pin "2"
+			(uuid "30ae7999-c1c5-4156-aa04-52be149cbce9")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX86")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 398.78 344.805 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40d0")
+		(property "Reference" "MX90"
+			(at 399.6182 339.1408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_6"
+			(at 399.6182 341.0204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 382.905 345.44 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 382.905 345.44 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 398.78 344.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b6e7513d-b27e-4318-a097-2a82eb89c233")
+		)
+		(pin "1"
+			(uuid "c465ae83-e526-4b66-ba1d-8cb5f15ac7d9")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX90")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 414.02 344.805 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40d6")
+		(property "Reference" "MX95"
+			(at 414.8582 339.1408 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_+"
+			(at 414.8582 341.0204 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 398.145 345.44 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 398.145 345.44 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 414.02 344.805 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "a1b3e564-9e56-4c97-8872-850eb2a29a4c")
+		)
+		(pin "1"
+			(uuid "bbd35492-76f7-49a9-a5e2-d0ec4dd06bf9")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX95")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 368.3 367.665 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40dc")
+		(property "Reference" "MX82"
+			(at 369.1382 362.0008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_1"
+			(at 369.1382 363.8804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 352.425 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 352.425 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 368.3 367.665 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "83776abd-95ba-4556-baf9-449d5553205b")
+		)
+		(pin "2"
+			(uuid "77c700f7-da63-4c54-a5d7-eac67e88358f")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX82")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 383.54 367.665 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40e2")
+		(property "Reference" "MX87"
+			(at 384.3782 362.0008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_2"
+			(at 384.3782 363.8804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 367.665 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 367.665 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 383.54 367.665 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "603bcf91-f669-47a0-8bd1-1afbec30fbd5")
+		)
+		(pin "2"
+			(uuid "cbfcac78-6a78-418f-9657-1ac083c56a14")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX87")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 398.78 367.665 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40e8")
+		(property "Reference" "MX91"
+			(at 399.6182 362.0008 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_3"
+			(at 399.6182 363.8804 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 382.905 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 382.905 368.3 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 398.78 367.665 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "9641f6c3-7b50-442c-b846-8fce26776365")
+		)
+		(pin "1"
+			(uuid "ac0dc03b-e543-4ef7-937f-9440090314db")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX91")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 414.02 375.285 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061bf40ee")
+		(property "Reference" "MX96"
+			(at 414.8582 369.6208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_ENTER"
+			(at 414.8582 371.5004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-2U-VerticalStabilizers-PlateCutout_Cherry"
+			(at 398.145 375.92 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 398.145 375.92 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 414.02 375.285 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b1f94adc-8c4c-4e4d-a706-871d7e7cf2fc")
+		)
+		(pin "1"
+			(uuid "276820ec-06aa-43f4-92b2-78734ae5097a")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX96")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 378.46 387.985 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061c2c3d8")
+		(property "Reference" "MX83"
+			(at 379.2982 382.3208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_0"
+			(at 379.2982 384.2004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-2U-PlateCutout_Cherry"
+			(at 362.585 388.62 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 362.585 388.62 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 378.46 387.985 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "8861701c-563d-4fae-a3d7-64e6bcc30eb4")
+		)
+		(pin "1"
+			(uuid "a87c671b-8d9d-4af2-aa4f-813387b0a02e")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX83")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-NoLED")
+		(at 398.78 387.985 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061c2c3de")
+		(property "Reference" "MX92"
+			(at 399.6182 382.3208 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "NUM_."
+			(at 399.6182 384.2004 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
+			(at 382.905 388.62 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 382.905 388.62 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 398.78 387.985 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6968a51b-4f7d-4d98-a163-9d146bb031c6")
+		)
+		(pin "2"
+			(uuid "0d57879e-375e-43a0-a8eb-86dcd5390d56")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX92")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 57.15 244.475 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061f162c4")
+		(property "Reference" "H1"
+			(at 59.69 243.3066 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 59.69 245.618 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_2.5mm"
+			(at 57.15 244.475 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 57.15 244.475 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 57.15 244.475 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "H1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 57.15 250.825 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-000061f166f9")
+		(property "Reference" "H2"
+			(at 59.69 249.6566 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 59.69 251.968 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_2.5mm"
+			(at 57.15 250.825 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 57.15 250.825 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 57.15 250.825 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "H2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 57.15 238.125 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-0000620f0795")
+		(property "Reference" "H3"
+			(at 59.69 236.9566 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 59.69 239.268 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 57.15 238.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 57.15 238.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 57.15 238.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "H3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole")
+		(at 75.565 238.125 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "00000000-0000-0000-0000-0000620f0a65")
+		(property "Reference" "H4"
+			(at 78.105 236.9566 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 78.105 239.268 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+			(at 75.565 238.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 75.565 238.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 75.565 238.125 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "H4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 165.1 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "10e1fe15-2b6b-4f54-aaf1-3cfb24dc32aa")
+		(property "Reference" "LEDC15"
+			(at 162.0523 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 168.91 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 165.1 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 165.1 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 104.14 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "1eb2e21b-e4e0-4c5c-a898-d37413efe111")
+		(property "Reference" "LEDC7"
+			(at 101.0923 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 107.95 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 104.14 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 104.14 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 111.76 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "3b3cc617-556e-4196-8f6c-4a025d9cb5e8")
+		(property "Reference" "LEDC8"
+			(at 108.7123 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 115.57 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 111.76 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 111.76 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 88.9 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "5af5a991-9bab-41ff-9ce2-22f98fa055e4")
+		(property "Reference" "LEDC5"
+			(at 85.8523 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 92.71 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 88.9 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.9 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 88.9 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 96.52 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "6d2b0313-5b3f-4882-830c-184e1229da81")
+		(property "Reference" "LEDC6"
+			(at 93.4723 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 100.33 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 96.52 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 96.52 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 96.52 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 127 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "727146d1-d80c-48c4-a6bb-b0d2f0e1aa22")
+		(property "Reference" "LEDC10"
+			(at 123.9523 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 130.81 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 127 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 127 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 81.28 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "79c3931e-91aa-431c-8a39-70915bc18dc3")
+		(property "Reference" "LEDC4"
+			(at 78.2323 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 85.09 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 81.28 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 81.28 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 142.24 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "86b62e86-cc9c-4705-a1ee-8623b07b23b8")
+		(property "Reference" "LEDC12"
+			(at 139.1923 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 146.05 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 142.24 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 142.24 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 66.04 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "929714de-277c-4940-abcb-590ed02dd7a6")
+		(property "Reference" "LEDC2"
+			(at 62.9923 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 69.85 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 66.04 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 66.04 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 66.04 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 157.48 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "a9766c24-8eb8-4590-a3a3-30e3e00f9b60")
+		(property "Reference" "LEDC14"
+			(at 154.4323 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 161.29 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 157.48 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 157.48 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 134.62 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "b2709021-977c-46ca-91dd-cde27e64faa2")
+		(property "Reference" "LEDC11"
+			(at 131.5723 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 138.43 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 134.62 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 134.62 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 134.62 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 73.66 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "b6ac2a13-c0df-4f0f-8f37-f47a0a1c8509")
+		(property "Reference" "LEDC3"
+			(at 70.6123 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 77.47 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 73.66 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.66 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 73.66 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 149.86 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "c68724ec-0f2a-4256-96e8-db4d4730ba23")
+		(property "Reference" "LEDC13"
+			(at 146.8123 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 153.67 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 149.86 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.86 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 149.86 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 119.38 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "d474f541-53d1-48d5-bfdf-51eea6cfcbee")
+		(property "Reference" "LEDC9"
+			(at 116.3323 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 123.19 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 119.38 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 119.38 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED_Cutout_LIB:LED_Cutout")
+		(at 58.42 222.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "e49c3659-0190-4c5e-9597-f88e22be4154")
+		(property "Reference" "LEDC1"
+			(at 55.3723 218.4637 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 62.23 223.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "LED_Cutout_Lib:LED_Cutout"
+			(at 58.42 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 58.42 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 58.42 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "LEDC1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Graphic:Logo_Open_Hardware_Small")
+		(at 242.57 252.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp yes)
+		(uuid "e5919b58-4561-488d-8c43-56de86f76fa3")
+		(property "Reference" "baxlogo1"
+			(at 242.57 237.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Baxlogo"
+			(at 242.57 269.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Bax:baxlogo"
+			(at 243.84 251.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 243.84 251.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 242.57 252.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "A500KBPlate"
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "baxlogo1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+)

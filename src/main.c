@@ -25,6 +25,8 @@
 #include "baxtypes.h"
 #include "twi.h"
 #include "led.h"
+#include "spi.h"
+#include "led_digital.h"
 #ifdef ENABLE_USB
 #include "usb.h"
 #endif /* ENABLE_USB */
@@ -160,6 +162,55 @@ const unsigned char kbmap[(OCOUNT+OCOUNT_SPC)*ICOUNT] PROGMEM = {
 };
 unsigned char kbinputspecials[8]  = { 1<<SPCB_LAMIGA, 1<<SPCB_LALT,1<<SPCB_LSHIFT,1<<SPCB_CTRL,
                                       1<<SPCB_RAMIGA, 1<<SPCB_RALT,1<<SPCB_RSHIFT,0};
+
+#define D70 0x00
+#define D71 0x01
+#define D72 0x02
+#define D73 0x03
+#define D74 0x04
+#define D75 0x05
+#define D76 0x06
+#define D77 0x07
+#define D78 0x08
+#define D79 0x09
+#define D80 0x0A
+#define D81 0x0B
+#define D82 0x0C
+#define D83 0x0D
+#define D84 0x0E
+#define D8INVAL 0x0f
+/*
+ map denoting how far left/right a pressed key is in the layout
+
+ 15 LEDs, where D70-D81 are more or less in a row (left-to-right), while 
+ D82,D83,D84 are below them and go leftward
+
+ 0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09 0x0a 0x0b 0x0c 0x0d 0x0e 
+ D70  D71  D72  D73  D74  D75  D76  D77  D78  D79  D80  D81  D82  D83  D84 
+
+ L-R are indices 0-9, i.e ESC-F10
+
+ right now, all keys are marked with something, see D8INVAL if necessary
+ to denote an invalid key
+
+*/
+const unsigned char kbleftright[(OCOUNT+OCOUNT_SPC)*ICOUNT] PROGMEM = {
+/*help F10  F9   F8   F7   KP/  F6   KP]  F5   F4   F3   F2   F1   KP[  ESC  */
+   D81, D78, D77, D76, D76, D81, D75, D81, D74, D73, D72, D72, D71, D81, D70,
+/*cu   \    +-   -_   0    9    8    7    6    5    4    3    2    1    '    */
+   D80, D78, D77, D77, D76, D76, D75, D75, D74, D73, D73, D72, D72, D71, D70,
+/*cl   Ret  ]}   [{   P    O    I    U    Y    T    R    E    W    Q    Tab  */
+   D84, D79, D78, D77, D77, D76, D75, D75, D74, D74, D73, D72, D72, D71, D70,
+/*cr   Del  #    .,   ;:   L    K    J    H    G    F    D    S    A    Caps */
+   D82, D79, D78, D77, D77, D76, D76, D75, D74, D74, D73, D73, D72, D71, D70,
+/*cd   BKSpC SPC N/A  /?   .>   ,<   M    N    B    V    C    X    Z    <>   */
+   D83, D79, D74, D84, D77, D77, D77, D75, D75, D74, D74, D73, D72, D72, D71,
+/*Num- Num0 Num1 Num4 Num7 KPENTNum2 Num5 Num8 Num. Num3 Num6 Num9 Num+ Num* */
+   D81, D82, D82, D82, D81, D82, D82, D82, D81, D82, D82, D82, D81, D82, D81,
+/* LA  LALT LSH  CTRL RA   RALT RSHIFT                                       */
+   D70, D71, D70, D70, D78, D78, D84
+};
+
 
 #ifdef ENABLE_USB
 /* mapping from our keyboard layout to USB HID scan codes */
@@ -586,6 +637,9 @@ int main(void)
   KBD_SPARE2DDR  &= ~(1<<KBD_SPARE2B);
   KBD_SPARE2PORT |=  (1<<KBD_SPARE2B); /* in, with pull-up */
 
+  /* init SPI pins (CLK,DAT) for extra LED chain (V4 Keyboards) */
+  /* TODO: check KBD_SPARE2PIN & (1<<KBD_SPARE2B) for mounted resistor */
+  LCD_SPI_Start(); /* spi.c */
 
   /* initialize keyboard states */
   for( i=0 ; i < OCOUNT*ICOUNT ; i++ )
@@ -602,9 +656,15 @@ int main(void)
 #ifdef DEBUG
   uart1_init(UART_BAUD_SELECT(9600UL,F_CPU));
   uart1_puts("AMIGA 500 KEYBOARD BY BAX\r\n");
+
 #endif
 
   led_init(); /* start up LED controller (and enable interrupts) */
+  TCCR2A = 0; /* normal mode, OC0A disconnected, OC0B disconnected,   */
+  TCCR2B = (1<<CS20) | (1<<CS21) | (1<<CS22); /* prescaler 1024 -> 16 MHz/1024 = 15625 Hz counter -> 16.3 ms before overflow */
+  TCNT2  = 0x00; /* start timer with 0 */
+  TIFR2  = 0x01; /* clear TOV0 overflow flag (write 1 to set flag to 0) */
+// while( (TIFR2 & 0x01) == 0  ) /* break waiting loop after 4ms */
 
 //  sei(); /* needed for TWI, USB (and UART in debug mode) */
 
@@ -641,6 +701,30 @@ int main(void)
   twi_wait();
   led_updatecontroller(inputstate);
 
+  /* print HSV2RGB conversion */
+#if 0
+//#ifdef DEBUG
+  if(1)
+  {
+	uint8_t rgb[3];
+
+	DBGOUT(13);
+	DBGOUT(10);
+	for( i=0 ; i<255; i++ )
+	{
+		HSV2RGB( rgb, ((int16_t)i)<<2, 255,255 );
+		uart_puthexuchar( rgb[0] );
+
+	DBGOUT(32);
+		uart_puthexuchar( rgb[1] );
+	DBGOUT(32);
+		uart_puthexuchar( rgb[2] );
+	    DBGOUT(13);
+	    DBGOUT(10);
+	}
+  }
+#endif
+
   /* */
   init_ring();	/* prepare ringbuffer */
   state = STATE_POWERUP; /* synchronize with Amiga, perform power-up procedure */
@@ -663,6 +747,16 @@ int main(void)
 		continue;
 	}	
 #endif /* ENABLE_USB */
+
+	/* Digital LED strip update -> make sure not to miss KB ACK */
+	if( !(state & STATE_KBWAIT) )
+	{
+	 if( TIFR2 & 0x01 ) /* timer overflow (16.3ms) */
+	 {
+		TIFR2  = 0x01; /* clear TOV0 overflow flag (write 1 to set flag to 0) */
+		led_digital_step();
+	 }
+	}
 
 	while( state & (STATE_POWERUP|STATE_RESYNC) )
 	{
@@ -690,7 +784,6 @@ int main(void)
 			continue;
 		}	
 #endif /* ENABLE_USB */
-
 		/* CTRL-A-A while waiting for sync? */
 		if( !(SPCPIN & ( (1<<SPCB_CTRL)+(1<<SPCB_LAMIGA)+(1<<SPCB_RAMIGA) ) ))
 		{
@@ -1252,9 +1345,17 @@ char amiga_kbsync( void )
 	{
 		unsigned char inputstate = led_getinputstate(); /* get current inputs state */
 		led_updatecontroller(inputstate); /* */
+
 	}
 	else
  		_delay_us(10);
+
+	if( TIFR2 & 0x01 ) /* timer overflow (16.3ms) ? */
+	{
+		TIFR2  = 0x01; /* clear TOV0 overflow flag (write 1 to set flag to 0) */
+		led_digital_step();
+	}
+
  	if( !(KBDSEND_ACKPIN & (1<<KBDSEND_ACKB)) )
  		break;
 #ifdef ENABLE_USB
@@ -1279,6 +1380,13 @@ char amiga_kbsync( void )
 	}
 	else
 		_delay_us(10);
+
+	if( TIFR2 & 0x01 ) /* timer overflow (16.3ms) ? */
+	{
+		TIFR2  = 0x01; /* clear TOV0 overflow flag (write 1 to set flag to 0) */
+		led_digital_step();
+	}
+
 	if( (KBDSEND_ACKPIN & (1<<KBDSEND_ACKB)) )
 		break;
  }

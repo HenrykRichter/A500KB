@@ -25,6 +25,16 @@
 #include <intuition/imageclass.h>
 #include <intuition/classusr.h>
 #include <intuition/intuition.h>
+#include <exec/memory.h>
+
+/* V40 include compat kludge */
+#ifndef IA_Screen
+#define IA_Screen  (IA_Dummy + 0x1f)
+#endif
+#ifndef GA_TextAttr
+#define GA_TextAttr	(GA_Dummy+40)
+#endif
+
 
 #define MAXPENS 3
 

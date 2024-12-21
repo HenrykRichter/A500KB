@@ -21,17 +21,17 @@
 
 
 /* current state */
-unsigned short LED_SRCMAP[N_LED][LED_STATES]; /* flag bits (not flags) applying to this LED (state 0 is bogus) */
-unsigned char  LED_RGB[N_LED][LED_STATES][3]; /* RGB config for LEDs */
-unsigned char  LED_MODES[N_LED];  /* static,cycle, rainbow, knight rider etc. */
+unsigned short LED_SRCMAP[N_LED+N_DIGITAL_LED][LED_STATES]; /* flag bits (not flags) applying to this LED (state 0 is bogus) */
+unsigned char  LED_RGB[N_LED+N_DIGITAL_LED][LED_STATES][3]; /* RGB config for LEDs */
+unsigned char  LED_MODES[N_LED+N_DIGITAL_LED];  /* static,cycle, rainbow, knight rider etc. */
 
 /* last sent state / default / loaded from Keyboard  */
-unsigned short LED_lastSRCMAP[N_LED][LED_STATES];
-unsigned char  LED_lastRGB[N_LED][LED_STATES][3]; /* RGB config for LEDs */
-unsigned char  LED_lastMODES[N_LED];  /* static,cycle, rainbow, knight rider etc. */
+unsigned short LED_lastSRCMAP[N_LED+N_DIGITAL_LED][LED_STATES];
+unsigned char  LED_lastRGB[N_LED+N_DIGITAL_LED][LED_STATES][3]; /* RGB config for LEDs */
+unsigned char  LED_lastMODES[N_LED+N_DIGITAL_LED];  /* static,cycle, rainbow, knight rider etc. */
 #define MAXMODE 3 /* static,cycle1,cycle2,cycle3 */
 
-UBYTE cmdstream[48]; /* 2 bytes preamble, 1 CMD SOURCE (2 bytes), 3 CMDs RGB (5 bytes each) */
+UBYTE cmdstream[54]; /* 2 bytes preamble, 1 CMD SOURCE (2 bytes), 3 CMDs RGB (5 bytes each) */
 SHORT lastchange;    /* index of last LED that was changed in config tool */
 SHORT lastsent;
 SHORT retries;       /* we try to re-send data a couple of times */
@@ -41,7 +41,7 @@ SHORT needcfg;       /* we need to save current config in EEPROM */
 #define LEMCF_CHK 1
 
 /* private proto */
-void led_defaults();
+void led_defaults(void);
 LONG ledmanager_copy_last( LONG led, LONG flags ); /* copy LED settings to last sent location */
 LONG ledmanager_sendcommands( LONG led ); /* generate command stream and send data */
 
@@ -124,13 +124,13 @@ LONG ledmanager_sendConfig( LONG tosendled )
 			tosendled = LEDIDX_SAVEEEPROM;
 		else
 		{
-			for( tosendled=0 ; tosendled < N_LED ; tosendled++ )
+			for( tosendled=0 ; tosendled < (N_LED+N_DIGITAL_LED) ; tosendled++ )
 			{
 				/* any LED that has changes ? */
 				if( 0 != ledmanager_copy_last( tosendled, LEMCF_CHK ) )
 					break;
 			}
-			if( tosendled == N_LED )
+			if( tosendled == (N_LED+N_DIGITAL_LED) )
 				tosendled = -1;
 		}
 	}
@@ -155,7 +155,7 @@ LONG ledmanager_sendConfig( LONG tosendled )
 LONG ledmanager_sendcommands( LONG led )
 {
 	UBYTE *cmd = cmdstream;
-	LONG  ncmd = 0;
+	LONG  ncmd;// = 0;
 	LONG  act,sec,res,i;
 
 	/* preamble */
@@ -282,7 +282,7 @@ LONG ledmanager_loadconfigentry( LONG led, UBYTE *recvbuf, LONG nbytes, ULONG fl
 {
 	SHORT i;
 
-	if( (ULONG)led >= N_LED )
+	if( (ULONG)led >= (N_LED+N_DIGITAL_LED) )
 		return -1;
  /* format:
      LED_SRCMAP (1 byte)
@@ -327,7 +327,7 @@ LONG ledmanager_getColor(LONG led,LONG state,LONG rgb)
 {
 	LONG ret = 0;
 
-	if( (ULONG)led >= N_LED )
+	if( (ULONG)led >= (N_LED+N_DIGITAL_LED) )
 		return ret;
 	if( (ULONG)state >= LED_STATES )
 		return ret;
@@ -342,9 +342,9 @@ LONG ledmanager_getColor(LONG led,LONG state,LONG rgb)
 
 LONG ledmanager_getSrc(LONG led, LONG state)
 {
-	LONG ret = 0;
+	LONG ret;// = 0;
 
-	if( (ULONG)led >= N_LED )
+	if( (ULONG)led >= (N_LED+N_DIGITAL_LED) )
 		return LEDB_SRC_INACTIVE;
 	if( state == LED_IDLE )
 		return LEDB_SRC_INACTIVE;
@@ -359,7 +359,7 @@ LONG ledmanager_getMode(LONG led)
 {
 	long ret = 0;
 
-	if( (ULONG)led >= N_LED )
+	if( (ULONG)led >= (N_LED+N_DIGITAL_LED) )
 		return ret;
 
 	ret = LED_MODES[led];
@@ -370,7 +370,7 @@ LONG ledmanager_getMode(LONG led)
 
 void ledmanager_setColor(LONG led,LONG state,LONG rgb,LONG col)
 {
-	if( (ULONG)led >= N_LED )
+	if( (ULONG)led >= (N_LED+N_DIGITAL_LED) )
 		return;
 	if( (ULONG)state >= LED_STATES )
 		return;
@@ -385,7 +385,7 @@ void ledmanager_setColor(LONG led,LONG state,LONG rgb,LONG col)
 
 void ledmanager_setSrc( LONG led, LONG state, LONG src)
 {
-	if( (ULONG)led >= N_LED )
+	if( (ULONG)led >= (N_LED+N_DIGITAL_LED) )
 		return;
 	if( (ULONG)state >= LED_STATES )
 		return;
@@ -398,7 +398,7 @@ void ledmanager_setSrc( LONG led, LONG state, LONG src)
 
 void ledmanager_setMode(LONG led, LONG mode)
 {
-	if( (ULONG)led >= N_LED )
+	if( (ULONG)led >= (N_LED+N_DIGITAL_LED) )
 		return;
 
 	lastchange = led;
@@ -486,10 +486,20 @@ void led_defaults()
         LED_RGB[i][LED_ACTIVE][1] = 0x60; /* green-ish */
         LED_RGB[i][LED_ACTIVE][2] = 0x10;
 
+        /* Strip (if present) */
+        i=7;
+        LED_RGB[i][LED_IDLE][0] = 0x01;	  /* cyan, medium */
+        LED_RGB[i][LED_IDLE][1] = 0x84;
+        LED_RGB[i][LED_IDLE][2] = 0x84;
+        LED_RGB[i][LED_ACTIVE][0] = 0x00;
+        LED_RGB[i][LED_ACTIVE][1] = 0xa0; /* cyan, strong */
+        LED_RGB[i][LED_ACTIVE][2] = 0xa0;
+
+
 	/* don't assign "changed" status that would cause to send
 	   the default configuration to the keyboard at startup:
 	   bring both arrays in sync */
-	for( i=0 ; i < N_LED ; i++ )
+	for( i=0 ; i < N_LED+N_DIGITAL_LED ; i++ )
 		ledmanager_copy_last( i, 0 );
 
 }
@@ -506,7 +516,7 @@ LONG ledmanager_copy_last( LONG led, LONG flags )
 {
 	LONG i;
 
-	if( (ULONG)led >= N_LED )
+	if( (ULONG)led >= (N_LED+N_DIGITAL_LED) )
 		return 0;
 
 	/* check for changes */

@@ -1,4 +1,4 @@
-(module MXMitsumi-1U-PlateCutout (layer F.Cu) (tedit 61AD08CB)
+(module MXMitsumi-1U-PlateCutout_Square (layer F.Cu) (tedit 61AD08CB)
   (fp_text reference REF** (at 0 8) (layer Dwgs.User)
     (effects (font (size 1 1) (thickness 0.15)))
   )

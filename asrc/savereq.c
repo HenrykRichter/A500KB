@@ -21,9 +21,9 @@
 #define SR_LOADCONFIG 4
 
 #define LCS_NLEDs    N_LED
-
+#define LCS_NLEDsDIGI N_DIGITAL_LED
 LONG keyboard_type;
-LONG keyboard_version;
+LONG keyboard_version = 0;
 
 struct EasyStruct SavingES = {
 	    sizeof (struct EasyStruct),
@@ -131,9 +131,12 @@ void LoadConfig_Req( struct myWindow *win )
 {
 	LONG res = do_Req( win, &LoadConfigES, SR_LOADCONFIG );	
 
-	if( (res != LCS_NLEDs) && (res >= 0) )
+	if( (res != LCS_NLEDs) && (res != (LCS_NLEDs+LCS_NLEDsDIGI) ))
 	{
+	 if( res >= 0 )
+	 {
 		do_Req( win, &ErrLoadES, 0 );
+	 }
 	}
 }
 
@@ -220,8 +223,16 @@ LONG LoadConfig_Func( struct myWindow *win, ULONG *state )
 
 			/* next LED or "done" */
 			idx++;
-			if( idx >= LCS_NLEDs )
+			if( (keyboard_version > 4) && (keyboard_version&1) )
+			{
+			 if( idx >= (LCS_NLEDs+LCS_NLEDsDIGI) )
 				return idx;		/* done */
+			}
+			else
+			{
+			 if( idx >= LCS_NLEDs )
+				return idx;		/* done */
+			}
 			idx++; /* "-1" in the beginning of the file */
 			*state = (*state & ~(LCS_LEDs) ) | idx;
 			return -1; /* next LED in next run */

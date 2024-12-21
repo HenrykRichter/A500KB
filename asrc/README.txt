@@ -2,7 +2,7 @@ Short:        Configuration tool for A500KB
 Author:       Henryk Richter
 Uploader:     henryk.richter@gmx.net (Henryk Richter)
 Type:         util/misc
-Version:      1.7
+Version:      1.8
 Architecture: m68k-amigaos >= 3.0.0
 Distribution: NoCD
 
@@ -90,4 +90,12 @@ Distribution: NoCD
  There are two menu options "Load Preset" and "Save Preset"
  that can be used to load/save a full color scheme.
 
+
+ History
+ -------
+
+ 1.8 - added support for LED strip on board revision
+       3b (and 4) including base color and effect
+       control
+ 1.7 - added optional color changing modes to LEDs
 

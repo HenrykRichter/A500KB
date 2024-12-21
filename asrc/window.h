@@ -16,9 +16,9 @@ struct configvars;
 #define FLG_WIN_REOPEN 1
 
 /* number of exclusive pens */
-#define nPENS 7+2
+#define nPENS 7+2+3
 #define nPENS_GRAD 2
-#define PENIDX_GRAD 7
+#define PENIDX_GRAD 8
 
 #ifdef _WINDOWPRIVATE_
 struct PenList {
@@ -100,6 +100,9 @@ struct myWindow {
 	struct Gadget *CapsLED;        /* generic Gadget + CapsImage */
 
 	struct Gadget *ActiveText;     /* TEXT_KIND showing active gadget */
+
+	struct Gadget *StripLED1;      /* V5+ */
+	struct Gadget *CycleDFX;       /* V5+ */
 
 	ULONG	active_state;		/* current state 0-2 */
 	ULONG	active_led;             /* LED index */

@@ -89,11 +89,22 @@ LONG win_FreeMenus( struct configvars *conf,struct myWindow *win);
 #define ID_SaveEEPROM 11
 #define ID_ActiveLED 12 /* show active LED as text */
 #define ID_ModeCycle 13
+#define ID_StripLED 14
+#define ID_StripDFX 15
 
 #define WIN_W 265
 #define WIN_H 164
+#define WIN_H_EXTRA 32 /* V5/V6: room for strip image */
 
 #define MX_FORCE_NEW 0x8000
+
+/* V40 include compat kludge */
+#ifndef IA_Screen
+#define IA_Screen  (IA_Dummy + 0x1f)
+#endif
+#ifndef GA_TextAttr
+#define GA_TextAttr	(GA_Dummy+40)
+#endif
 
 /* strings */
 const char levfmt[]= " %2lx "; /* level format for sliders */
@@ -115,7 +126,7 @@ STRPTR MXstateStrings[4] = {   /* MX state */
  NULL
 };
 
-STRPTR ActiveStateStrings[8] = {   /* Text active */
+STRPTR ActiveStateStrings[9] = {   /* Text active */
  (STRPTR)"Floppy 0",
  (STRPTR)"Floppy 1",
  (STRPTR)"Floppy 2",
@@ -123,6 +134,7 @@ STRPTR ActiveStateStrings[8] = {   /* Text active */
  (STRPTR)"Power 1",
  (STRPTR)"Power 2",
  (STRPTR)"Caps",
+ (STRPTR)"LEDStrip",
  NULL
 };
 
@@ -133,6 +145,18 @@ STRPTR ModeStrings[5] = {
  (STRPTR)"CycleS",
  NULL
 };
+
+STRPTR StripModeStrings[8] = {   /* Text active */
+ (STRPTR)"Static Color",
+ (STRPTR)"Moving Dot",
+ (STRPTR)"Rainbow slow",
+ (STRPTR)"Rainbow fast",
+ (STRPTR)"Saturation",
+ (STRPTR)"KITT",
+ (STRPTR)"unimplemented",
+ NULL
+};
+
 
 
 struct myGadProto Wheeltmp = {88,16,80,80,(STRPTR)"W",ID_Wheel,WHEELGRAD_KIND,0,0,0,NULL};
@@ -145,14 +169,18 @@ struct myGadProto MXstate =   {16+26, 125, 10, 10, (STRPTR)"State",ID_StateMX,MX
 struct myGadProto LEDPower  = {17, 18, 48, 6, (STRPTR)"Power",  ID_LEDPower,PLEDIMAGE_KIND,3,4,5,NULL};
 struct myGadProto LEDFloppy = {17, 40, 48, 6, (STRPTR)"Floppy", ID_LEDFloppy,PLEDIMAGE_KIND,0,1,2,NULL};
 struct myGadProto LEDCaps   = {37, 64,  8, 8, (STRPTR)"Capslock", ID_LEDCaps,CAPSIMAGE_KIND,6,0,0,NULL};
-struct myGadProto ButtonSave ={148,144, 92,14,(STRPTR)"Save EEPROM",ID_SaveEEPROM,BUTTON_KIND,0,0,0,NULL};
+struct myGadProto ButtonSave ={148,144, 94,14,(STRPTR)"Save EEPROM",ID_SaveEEPROM,BUTTON_KIND,0,0,0,NULL};
 struct myGadProto TextActive ={80,4, 94,10, NULL,ID_ActiveLED,TEXT_KIND,0,0,0,NULL};
 struct myGadProto cycleMode  ={5,88,72,14,(STRPTR)"Mode",ID_ModeCycle,CYCLE_KIND,1,0,0,ModeStrings};
+
+struct myGadProto LEDStrip1 = {26,176, 8, 8, (STRPTR)"Strip", ID_StripLED,CAPSIMAGE_KIND,7,0,0,NULL};
+struct myGadProto cycleStrip= {60,177,182,14,(STRPTR)"LED Strip FX",ID_SourceCycle,CYCLE_KIND,1,0,0,StripModeStrings};
 
 #define FRAME_UP     0
 #define FRAME_DOWN   1
 #define FRAME_DOUBLE 2
 #define FRAME_END    3
+#define FRAME_V5PLUS 0x4000
 struct {
  USHORT x;
  USHORT y;
@@ -163,6 +191,7 @@ struct {
  { 2,2,79,107, FRAME_DOWN },
  { 80,2,184,107, FRAME_DOWN },
  { 2,109,262,53, FRAME_DOWN },
+ { 2,162,262,33, FRAME_DOWN|FRAME_V5PLUS },
  { 0,0,0,0,FRAME_END }
 };
 
@@ -203,7 +232,7 @@ struct NewMenu defmenus[DEF_ITEMS] = {
 STATIC const ULONG tricky=0x16c04e75;
 VOID mysprintf(char *ostring, char *fmt,...)
 {
-  STRPTR *arg = (STRPTR *)(&fmt+1);
+  STRPTR *arg = (STRPTR *)( (&fmt)+1);
   RawDoFmt( (STRPTR) fmt, arg, (void (*)())&tricky, ostring );
 }
 
@@ -238,7 +267,7 @@ struct myWindow *Window_Open( struct configvars *conf )
 				   ,
 		           	   (STRPTR)"Quit",
 		                };
-			        EasyRequest( NULL, &libnotfoundES, &iflags );
+			        EasyRequest( NULL, (struct EasyStruct*)&libnotfoundES, &iflags );
 				break;
 			}
 		}
@@ -250,7 +279,11 @@ struct myWindow *Window_Open( struct configvars *conf )
 
 		ScaleXY( win, &scalex, &scaley, &denom );
 		w     = UDivMod32( (USHORT)scalex * (USHORT)WIN_W, denom );
-		h     = UDivMod32( (USHORT)scaley * (USHORT)WIN_H, denom );
+
+		h = WIN_H;
+		if( (keyboard_version > 4) && (keyboard_version&1) )
+			h += WIN_H_EXTRA;
+		h     = UDivMod32( (USHORT)scaley * (USHORT)h, denom );
 
 		h    += win->screen->WBorTop + (win->screen->Font->ta_YSize + 1) + win->screen->WBorBottom;
 		w    += win->screen->WBorLeft + win->screen->WBorRight;
@@ -262,13 +295,13 @@ struct myWindow *Window_Open( struct configvars *conf )
 			y = *conf->win_y;
 
 		{
-		 char *titlestr = name500;
+		 char *titlestr = (char*)name500;
 		 if( keyboard_type == LEDGV_TYPE_A3000)
-		 	titlestr = name3000;
+		 	titlestr = (char*)name3000;
 		 if( keyboard_type == LEDGV_TYPE_A500MINI )
-		 	titlestr = name500mini;
+		 	titlestr = (char*)name500mini;
 
-		 mysprintf( namebuffer, titlestr, keyboard_version );
+		 mysprintf( namebuffer, titlestr, (LONG)keyboard_version );
 		}
 
                 if( !(win->window = OpenWindowTags(NULL,WA_Height,h,
@@ -298,7 +331,7 @@ struct myWindow *Window_Open( struct configvars *conf )
 				   ,
 		           	   (STRPTR)"Quit",
 		                   };
-			EasyRequest( NULL, &libnotfoundES, &iflags );
+			EasyRequest( NULL, (struct EasyStruct*)&libnotfoundES, &iflags );
 			break;
 		}
 		win_AddMenus( conf, win );
@@ -381,7 +414,7 @@ void ScaleXY( struct myWindow *win, USHORT *x, USHORT *y, USHORT *denom )
 
 void DrawFrames( struct myWindow *win )
 {
- SHORT i;
+ SHORT i,dofrm;
  USHORT scalex=1,scaley=1,denom=8; /* scaling in relation to Topaz 8 */
  USHORT top,left;//,x,y,w,h;
 
@@ -395,6 +428,16 @@ void DrawFrames( struct myWindow *win )
 	i=0;
 	while( frames[i].type != FRAME_END )
 	{
+		dofrm = 1;
+		if( frames[i].type & FRAME_V5PLUS )
+		{
+		 dofrm = 0;
+		 if( (keyboard_version > 4) && (keyboard_version&1) )
+		  dofrm = 1;
+		}
+		if( dofrm )
+		{
+
 		//x = left + UDivMod32( frames[i].x * scalex, denom );
 		//y = top  + UDivMod32( frames[i].y * scaley, denom );
 		//w =       UDivMod32( frames[i].w * scalex, denom );
@@ -409,6 +452,7 @@ void DrawFrames( struct myWindow *win )
 				GTBB_FrameType, BBFT_RIDGE,
 				GT_VisualInfo, (ULONG)win->VisualInfo,
 				TAG_DONE );
+		}
 		i++;
 	}
 
@@ -417,7 +461,7 @@ void DrawFrames( struct myWindow *win )
 
 void UpdateLEDButton( struct myWindow *win, ULONG code, struct Gadget *gad, struct myGadProto *prot )
 {
-	ULONG ledidx,color24,map;
+	ULONG ledidx,color24,map,state;
 
 	/* get LED index */
 	if( code == 0 )
@@ -428,19 +472,38 @@ void UpdateLEDButton( struct myWindow *win, ULONG code, struct Gadget *gad, stru
 	     	ledidx = prot->arg3;
 	
 	win->active_led = ledidx;
+	state = win->active_state;
 
-	 map = ledmanager_getSrc( win->active_led, win->active_state ); /* get source configuration by state (code) */
-	 if( map == LEDB_SRC_INACTIVE )
+	 map = ledmanager_getSrc( win->active_led, state ); /* get source configuration by state (code) */
+	 if( (map == LEDB_SRC_INACTIVE) || (gad == win->StripLED1) )
 	 	map = 0;
 	 else   map++;   /* cycle is sorted by LEDB_ definitions */
 	 GT_SetGadgetAttrs( win->CycleSrc, win->window, NULL, GTCY_Active,map,TAG_DONE);
 
+	if( (gad == win->StripLED1) && (gad) )
+	{
+	 state = LED_ACTIVE;
+	 GT_SetGadgetAttrs( win->CycleSrc, win->window, NULL, GA_Disabled,TRUE,TAG_DONE);
+	 GT_SetGadgetAttrs( win->CycleMode, win->window, NULL,GA_Disabled,TRUE,TAG_DONE);
+	 GT_SetGadgetAttrs( win->SrcState,win->window,NULL,GA_Disabled,TRUE,TAG_DONE);
+
+	 map = ledmanager_getMode( win->active_led );
+	 GT_SetGadgetAttrs( win->CycleDFX, win->window, NULL, GTCY_Active,map,TAG_DONE);
+	}
+	else
+	{
+	 if( map != 0 )
+	 	GT_SetGadgetAttrs( win->CycleSrc, win->window, NULL, GA_Disabled,FALSE,TAG_DONE);
+	 GT_SetGadgetAttrs( win->CycleMode, win->window, NULL,GA_Disabled,FALSE,TAG_DONE);
+	 GT_SetGadgetAttrs( win->SrcState,win->window,NULL,GA_Disabled,FALSE,TAG_DONE);
+	}
+
 	map = ledmanager_getMode( win->active_led ); /* get source configuration by state (code) */
 	GT_SetGadgetAttrs( win->CycleMode, win->window, NULL, GTCY_Active,map,TAG_DONE);
 
-	color24  = ledmanager_getColor( ledidx, win->active_state, 0 )<<16;
-	color24 |= ledmanager_getColor( ledidx, win->active_state, 1 )<<8;
-	color24 |= ledmanager_getColor( ledidx, win->active_state, 2 );
+	color24  = ledmanager_getColor( ledidx, state, 0 )<<16;
+	color24 |= ledmanager_getColor( ledidx, state, 1 )<<8;
+	color24 |= ledmanager_getColor( ledidx, state, 2 );
 	UpdateSliders(win,0,NULL,NULL,color24);
 	
 	GT_SetGadgetAttrs( win->ActiveText,win->window,NULL,GTTX_Text,(ULONG)ActiveStateStrings[ledidx],TAG_DONE);
@@ -462,7 +525,11 @@ void UpdateCycleSrc( struct myWindow *win, ULONG code, struct Gadget *gad  )
 
 void UpdateCycleMode( struct myWindow *win, ULONG code, struct Gadget *gad )
 {
-	ledmanager_setMode( win->active_led, code );
+	LONG idx = win->active_led;
+
+	if( gad == win->CycleDFX )
+		idx = 7;
+	ledmanager_setMode( idx, code );
 }
 
 /*
@@ -491,7 +558,7 @@ void UpdateSrcState( struct myWindow *win, ULONG code, struct Gadget *gad  )
 			GT_SetGadgetAttrs( win->CycleSrc, win->window, NULL, GTCY_Active,0,TAG_DONE);
 		else
 			val = FALSE;
-					
+				
 		GT_SetGadgetAttrs( win->CycleSrc, win->window, NULL, GA_Disabled,val,TAG_DONE);
 		RefreshGads(win,win->CycleSrc,0);
 	}
@@ -502,11 +569,16 @@ void UpdateSrcState( struct myWindow *win, ULONG code, struct Gadget *gad  )
 	 LONG  r,g,b;
 	 ULONG rgb24=0;
 	 LONG  map;
-	 for( i=0; i < N_LED ; i++ )
+	 for( i=0; i < N_LED+N_DIGITAL_LED ; i++ )
 	 {
-		r   = UMult32( ledmanager_getColor( i, code, 0 ), 0x01010101 );
-		g   = UMult32( ledmanager_getColor( i, code, 1 ), 0x01010101 );
-		b   = UMult32( ledmanager_getColor( i, code, 2 ), 0x01010101 );
+	 	map = code;
+		if( i==N_LED ) /* DIGITAL_LED */
+		{
+			map = LED_ACTIVE;
+		}
+		r   = UMult32( ledmanager_getColor( i, map, 0 ), 0x01010101 );
+		g   = UMult32( ledmanager_getColor( i, map, 1 ), 0x01010101 );
+		b   = UMult32( ledmanager_getColor( i, map, 2 ), 0x01010101 );
 		SetRGB32(&win->screen->ViewPort,
 		         win->Pens[i],r,g,b);
 		if( i == win->active_led )
@@ -526,7 +598,7 @@ void UpdateSrcState( struct myWindow *win, ULONG code, struct Gadget *gad  )
 
 	 win->refreshlist |= ( (1<<ID_sliderR)|(1<<ID_sliderG)|(1<<ID_sliderB)|
 	                       (1<<ID_sliderGrad)|(1<<ID_Wheel)|
-	                       (1<<ID_LEDPower)|(1<<ID_LEDFloppy)|(1<<ID_LEDCaps)
+	                       (1<<ID_LEDPower)|(1<<ID_LEDFloppy)|(1<<ID_LEDCaps)|(1<<ID_StripLED)
 	                     );
 	 RefreshGads(win, NULL, 0 ); 
 	}
@@ -636,9 +708,16 @@ void UpdateSliders( struct myWindow *win, ULONG code, struct Gadget *gad, struct
  	GT_SetGadgetAttrs( win->sliderB, win->window, NULL, GTSL_Level, rgb.cw_Blue>>24, TAG_DONE );
 
  /* save to LEDManager */
- ledmanager_setColor( win->active_led , win->active_state, 0, (rgb.cw_Red>>24)&0xff  );
- ledmanager_setColor( win->active_led , win->active_state, 1, (rgb.cw_Green>>24)&0xff);
- ledmanager_setColor( win->active_led , win->active_state, 2, (rgb.cw_Blue>>24)&0xff );
+ {
+  LONG state = win->active_state;
+
+  if( win->active_led == 7 )
+  	state = LED_ACTIVE; 
+
+  ledmanager_setColor( win->active_led , state, 0, (rgb.cw_Red>>24)&0xff  );
+  ledmanager_setColor( win->active_led , state, 1, (rgb.cw_Green>>24)&0xff);
+  ledmanager_setColor( win->active_led , state, 2, (rgb.cw_Blue>>24)&0xff );
+ }
 
  if( win->active_led < 3 )
  	win->refreshlist |= (1<<ID_LEDFloppy);
@@ -647,7 +726,12 @@ void UpdateSliders( struct myWindow *win, ULONG code, struct Gadget *gad, struct
  	if( win->active_led == 6 )
 	 	win->refreshlist |= (1<<ID_LEDCaps);
 	else
+	{
+	 if( win->active_led == 7 )
+	 	win->refreshlist |= (1<<ID_StripLED);
+	 else
 	 	win->refreshlist |= (1<<ID_LEDPower);
+	}
  }
  
  /* update active LED displays by updating pens */
@@ -732,7 +816,7 @@ LONG Window_Event(struct configvars *conf, struct myWindow *win )
 				win->IdleTickCount = 0;
 				if( gad == win->CycleSrc )
 					UpdateCycleSrc( win, code, gad );
-				if( gad == win->CycleMode )
+				if( (gad == win->CycleMode) || (gad==win->CycleDFX) )
 					UpdateCycleMode( win, code, gad );
 				if( gad == win->PowerLED )
 					UpdateLEDButton( win, code, gad, &LEDPower ); 
@@ -740,6 +824,8 @@ LONG Window_Event(struct configvars *conf, struct myWindow *win )
 					UpdateLEDButton( win, code, gad, &LEDFloppy );
 				if( gad == win->CapsLED )
 					UpdateLEDButton( win, code, gad, &LEDCaps );
+				if( gad == win->StripLED1 )
+					UpdateLEDButton( win, code, gad, &LEDStrip1 );
 				if( (gad == win->sliderR)||(gad == win->sliderG)||(gad== win->sliderB)||(gad==win->GradSlider))
 					UpdateSliders( win, code, gad, NULL, -1 );
 				if( gad == win->ButtonSave )
@@ -903,7 +989,9 @@ void RefreshGads( struct myWindow *win, struct Gadget *gad, ULONG flags )
 		RefreshGList(win->FloppyLED,win->window,NULL,1);
 	if( win->refreshlist & (1<<ID_LEDCaps) )
 		RefreshGList(win->CapsLED,win->window,NULL,1);
-		
+	if( (win->refreshlist & (1<<ID_StripLED)) && (win->StripLED1 != NULL) )
+		RefreshGList(win->StripLED1,win->window,NULL,1);
+
 	win->refreshlist = 0;
 
 	/* TODO: exclude wheel and/or gradslider from refresh */
@@ -950,6 +1038,15 @@ void DeleteGads( struct myWindow *win )
 			DisposeObject(img);
 		DisposeObject( win->CapsLED );
 		win->CapsLED = NULL;
+	}
+	if( win->StripLED1 )
+	{
+		APTR img;
+		GetAttr(GA_Image,win->StripLED1,(ULONG *)&img);
+		if( img )
+			DisposeObject(img);
+		DisposeObject( win->StripLED1 );
+		win->StripLED1 = NULL;
 	}
 }
 
@@ -1048,7 +1145,7 @@ struct Gadget *MakeGad( struct myWindow *win, struct Gadget *glist, struct myGad
 
 	if( prot->type == PLEDIMAGE_KIND )
 	{
-		struct Image *img = NULL;
+		struct Image *img;// = NULL;
 		SHORT pens[4]; /* 3 LED setup */
 
 		pens[0] = win->Pens[prot->arg1];
@@ -1081,7 +1178,7 @@ struct Gadget *MakeGad( struct myWindow *win, struct Gadget *glist, struct myGad
 	}
 	if( prot->type == CAPSIMAGE_KIND )
 	{
-		struct Image *img = NULL;
+		struct Image *img;// = NULL;
 		SHORT pens[2]; /* 1 LED setup */
 
 		pens[0] = win->Pens[prot->arg1];
@@ -1174,9 +1271,16 @@ struct Gadget *CreateGads( struct myWindow *win )
 			break;
 		if( !(win->CapsLED    = glist = MakeGad( win, glist, &LEDCaps)) )
 			break;
+		/* only with LED_Digital */
+		if( (keyboard_version > 4) && (keyboard_version&1) )
+		{
+		  if( !(win->StripLED1 = glist= MakeGad( win, glist, &LEDStrip1)) )
+		  	break;
+		}
 
 		/* gadtools gadgets need the context */
 		glist->NextGadget = gtprev;
+		/* only with LED_Digital */
 		if( !(win->sliderB = glist = MakeGad( win, gtprev, &sliderBtmp )) )
 			break;
 		if( !(win->sliderG = glist = MakeGad( win, glist, &sliderGtmp )) )
@@ -1193,6 +1297,12 @@ struct Gadget *CreateGads( struct myWindow *win )
 			break;
 		if( !(win->ActiveText =glist= MakeGad( win, glist, &TextActive)) )
 			break;
+		if( (keyboard_version > 4) && (keyboard_version&1) )
+		{
+		  if( !(win->CycleDFX = glist= MakeGad( win, glist, &cycleStrip)) )
+		  	break;
+		}
+
 		//success = 1;
 	}
 	while(0);
@@ -1282,7 +1392,7 @@ struct Screen *GetScreen(struct configvars *conf, struct myWindow *win )
 	ULONG id = INVALID_ID;
 	ULONG w,h,d,use_topaz,font_y;
 	ULONG wh,ww;
-	const UWORD penarr[2] = { ~0,0 };
+	const UWORD penarr[2] = { (UWORD)~0,(UWORD)0 };
 	struct DimensionInfo DimensionInfo;
 
 	struct Screen *def = LockPubScreen(NULL);
@@ -1326,14 +1436,19 @@ struct Screen *GetScreen(struct configvars *conf, struct myWindow *win )
 	{
 		ULONG tw = (DimensionInfo.Nominal.MaxX - DimensionInfo.Nominal.MinX + 1);
 		ULONG th = (DimensionInfo.Nominal.MaxY - DimensionInfo.Nominal.MinY + 1);
+		ULONG want_h;
+
+		want_h = WIN_H;
+		if( (keyboard_version > 4) && (keyboard_version&1) )
+			want_h += WIN_H_EXTRA;
 
 		if( tw >= WIN_W )
 			w = tw;
-		if( th >= WIN_H )
+		if( th >= want_h )
 			h = th;
 
 		ww = UMult32( WIN_W, font_y ) >> 3;
-		wh = UMult32( WIN_H, font_y ) >> 3; /* /8 because of default for Topaz8 */
+		wh = UMult32( want_h, font_y ) >> 3; /* /8 because of default for Topaz8 */
 		if( (wh <= h ) && (ww <= w ) )
 			use_topaz = 0;
 	

@@ -1,6 +1,8 @@
 (fp_lib_table
-  (lib (name MX)(type KiCad)(uri ${KIPRJMOD}/MX_Alps_Hybrid/MX_Only.pretty)(options "")(descr ""))
-  (lib (name MXMitsumi)(type KiCad)(uri ${KIPRJMOD}/MX_Mitsumi_Hybrid.pretty)(options "")(descr ""))
-  (lib (name FFC)(type KiCad)(uri ${KIPRJMOD}/FFC.pretty)(options "")(descr ""))
-  (lib (name Bax)(type KiCad)(uri ${KIPRJMOD}/Bax.pretty)(options "")(descr ""))
+  (version 7)
+  (lib (name "MX")(type "KiCad")(uri "${KIPRJMOD}/MX_Alps_Hybrid/MX_Only.pretty")(options "")(descr ""))
+  (lib (name "MXMitsumi")(type "KiCad")(uri "${KIPRJMOD}/MX_Mitsumi_Hybrid.pretty")(options "")(descr ""))
+  (lib (name "FFC")(type "KiCad")(uri "${KIPRJMOD}/FFC.pretty")(options "")(descr ""))
+  (lib (name "Bax")(type "KiCad")(uri "${KIPRJMOD}/Bax.pretty")(options "")(descr ""))
+  (lib (name "LED_Cutout_Lib")(type "KiCad")(uri "${KIPRJMOD}/Partlibs/LED_Cutout_Lib.pretty")(options "")(descr ""))
 )

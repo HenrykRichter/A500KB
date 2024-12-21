@@ -27,6 +27,13 @@ void led_saveconfig( char );
 */
 char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 
+void HSV2RGB( uint8_t *rgb, int16_t h, int16_t s, int16_t v );
+void RGB2HSV( int16_t *hsv, uint8_t r, uint8_t g, uint8_t b );
+
+
+unsigned char *led_getcolor( uint8_t ledidx, uint8_t state );
+unsigned char led_getmode( uint8_t ledidx );
+
 /* force flag for led_updatecontroller() */
 #define LED_FORCE_UPDATE 0x80
 
@@ -61,7 +68,10 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 #define LEDGV_TYPE_A500  0x01 /* 7 LEDs */
 #define LEDGV_TYPE_A3000 0x02 /* 1 LED only */
 #define LEDGV_TYPE_A500Mini 0x03 /* 6 LEDs, no CAPS */
-#define LEDGV_VERSION    0x04 /* software version (1=initial, 2=with mode support, 3=mini added, 4=USB added) */
+#define LEDGV_VERSION    0x06 /* software version (1=initial, 2=with mode support, 3=mini added, 4=USB added) */
+                              /* 5=DigitalLED added, also: even numbers > 4 = no digi LED, odd numbers = digi LED
+			         6=DigitalLED capable but not enabled
+			      */
 
 /* LED MODES */
 #define LEDM_STATIC  0
@@ -84,8 +94,20 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv );
 #define LEDB_MAP_SWAP	7
 #define LEDF_MAP_SWAP	(1<<LEDB_MAP_SWAP)
 
+#define LED_HAVE_DIGILED  !(KBD_SPARE2PIN & (1<<KBD_SPARE2B))
+
+/* current state */
+#define LED_IDLE      0 /* idle             */
+#define LED_ACTIVE    1 /* primary   active */
+#define LED_SECONDARY 2 /* secondary active */
+#define LED_STATES    3 
+
+
 /* number of LEDs */
 #define N_LED         7
+#define IDX_LED_DIGI  7
+#define N_LED_DIGI_CONF 1 /* 1 configured color supported as of V5 */
+
 
 
 #endif

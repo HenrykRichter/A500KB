@@ -20,11 +20,12 @@
 DEVICE     = at90usb1287
 CLOCK      = 16000000
 PROGRAMMER = -c usbasp
-OBJECTS    = uart.o twi.o main.o usb.o
+OBJECTS    = uart.o twi.o main.o usb.o spi.o led_digital.o
 OBJECTS3000 = led3000.o $(OBJECTS)
 OBJECTS500  = led500.o $(OBJECTS)
 OBJECTS500M = led500M.o $(OBJECTS)
 
+DEFS       =
 #DEFS       = -DDEBUG
 HEADERS	   = kbdefs.h 
 FUSES      = -U hfuse:w:0x91:m -U lfuse:w:0xdf:m

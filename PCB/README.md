@@ -37,14 +37,15 @@ Also of relevance for Mitsumi builds is Keyboard\_CapsLockLED to be printed in t
 - Choose between D1 and D69, depending on switches and keycaps. For CherryMX switches (with SMD LED provision), D69 would be a good choice. D1 is better suited for Mitsumi switches and associated keycaps.
 - C15/C16 are not needed.
 - The 1x31 flat cable connector (J1) is not needed and stays unpopulated
-- R11 stays unpopulated (as of Rev. 0.3b)
 - Screw-In PCB mounted stabilizers are needed for Cherry MX and compatible
+- see below for a description in which cases R6/R10/R11 need to be installed
 
 ### Building
 
 - Solder the SMD components first. 
 - Populate either D1 or D69 for CapsLock LED, not both. D2 as classic CapsLock LED is optional. D2 can also be disabled in firmware, if desired (i.e. populate R10 to disable D2).
 - Install R6 with 390R for use of RGB LEDs at the positions of Power LED and Floppy LED. Leave R6 open when placing classic Commodore A500 Green/Orange or Red/Green LEDs.
+- V3b/V4: install R11 when digital LEDs (SK9822 or APA102) are mounted to D70-D84. Leave R11 open, otherwise
 
 After placing the SMD components, flash the ATMega firmware and verify that the keyboard PCB works.
 - Option A) connect by USB to some PC and shorten the pins of the individual keys

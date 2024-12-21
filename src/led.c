@@ -85,22 +85,24 @@ const unsigned char ledinitlist[] PROGMEM = {
 /* end of command list */
 #define TCMD_END 0xff
 
+#if 0
 /* current state */
 #define LED_IDLE      0 /* idle             */
 #define LED_ACTIVE    1 /* primary   active */
 #define LED_SECONDARY 2 /* secondary active */
 #define LED_STATES    3 
+#endif
 
 unsigned char get_secmap( unsigned char srcmap );
 
 unsigned char led_currentstate; /* current input source state    */
 unsigned char src_active;       /* source state as sent to LEDs  */
 
-unsigned char LED_SRCMAP[N_LED]; /* flags applying to this LED      */
-unsigned char LED_SECMAP[N_LED]; /* bit combinations (including SWAP flag) for secondary function */
-unsigned char LED_RGB[N_LED][LED_STATES][3]; /* RGB config for LEDs */
-unsigned char LED_MODES[N_LED];  /* static,cycle, rainbow, knight rider etc. */
-unsigned char LED_MODESTATE[N_LED]; /* mode-private storage for current state */
+unsigned char LED_SRCMAP[N_LED+N_LED_DIGI_CONF];    /* flags applying to this LED      */
+unsigned char LED_SECMAP[N_LED+N_LED_DIGI_CONF];    /* bit combinations (including SWAP flag) for secondary function */
+unsigned char LED_RGB[N_LED+N_LED_DIGI_CONF][LED_STATES][3]; /* RGB config for LEDs */
+unsigned char LED_MODES[N_LED+N_LED_DIGI_CONF];     /* static,cycle, rainbow, knight rider etc. */
+unsigned char LED_MODESTATE[N_LED+N_LED_DIGI_CONF]; /* mode-private storage for current state */
 
 /* 
   TWI command list: 
@@ -138,6 +140,30 @@ unsigned char update_bit( unsigned char old_state, unsigned char decision, unsig
 
  return ret;
 }
+
+
+
+/* get RGB for a given LED and state */
+unsigned char *led_getcolor( uint8_t ledidx, uint8_t state )
+{
+  unsigned char *ret = &LED_RGB[N_LED][LED_IDLE][0]; /* def: first digi LED */
+
+  if( (ledidx < (N_LED+N_LED_DIGI_CONF)) && (state < LED_STATES) )
+  	ret = &LED_RGB[ledidx][state][0];
+
+  return ret;
+}
+
+unsigned char led_getmode( uint8_t ledidx )
+{
+  unsigned char ret = LED_MODES[N_LED];
+
+  if( ledidx < (N_LED+N_LED_DIGI_CONF) ) 
+  	ret = LED_MODES[ledidx];
+ 
+  return ret;
+}
+
 
 /*
   set LED state outside of regular polling in led_getinputstate() 
@@ -212,6 +238,162 @@ unsigned char led_getinputstate()
 
 	return led_currentstate;
 }
+
+/* TODO: vector for rgb */
+void RGB2HSV( int16_t *hsv, uint8_t r, uint8_t g, uint8_t b )
+{
+//	uint8_t r,g,b;
+	uint8_t rmax,rmin; /* channel index */
+	uint8_t delta;
+	int16_t h,s,v;
+	uint8_t rgb[3];
+
+	rgb[0] = r;
+	rgb[1] = g;
+	rgb[2] = b;
+
+	/* RGB 2 HSV conversion */
+/*	r = rgb[0];
+	g = rgb[1];
+	b = rgb[2];*/
+
+	/* sort channel indices by level */
+	rmin = 2;
+	rmax = 0;
+	if( g > r )
+	{ /* r < g */
+		rmax = 1;
+		if( b > g )
+		{
+			rmax = 2;
+			rmin = 0;
+		}
+		else
+		 if( r < b )
+		 	rmin = 0;
+	}
+	else
+	{ /* r >= g */
+	 if( b > r )
+	 {
+		rmax = 2;
+		rmin = 1;
+	 }
+	 else
+	  if( g < b )
+		 rmin = 1;
+	}
+
+//	PRINT(("rmin %d rmax %d\n",rmin,rmax));
+
+	delta = rgb[rmax]-rgb[rmin];
+	v = rgb[rmax];
+	if( delta < 128 )
+		s = (v) ? (((uint16_t)delta)*255)/v : 0;
+	else	s = (v) ? (((uint16_t)delta)<<7)/((v+1)>>1) : 0;
+	if( s > 255 )
+		s=255;
+	// v is in Levels 0...255
+	// s is Saturation * 256
+	// H is in degrees * 1023/360 
+
+	if( !delta )
+		h=0;
+	else
+	{
+		switch( rmax )
+		{
+			case 0: /* R is max */
+			/* 60° * ( (G-B)/delta mod 6 ) */ 
+				h = 171*((int16_t)g-(int16_t)b)/delta;
+				break;
+			case 1: /* G is max */
+			/* 60° * ( (B-R)/delta + 2 )   */
+				h = (171*((int16_t)b-(int16_t)r))/delta + 342;
+				break;
+			default: /* B is max */
+			/* 60° * ( (R-G)/delta + 4 )   */
+				h = 171*((int16_t)r-(int16_t)g)/delta + 683;
+				break;
+		}
+	}
+#if 1
+	h &= 0x3ff;
+#else
+	if( h < 0 )
+		h=h+1024;
+	if( h > 1023 )
+		h=h-1024;
+#endif
+//	PRINT(("%d %d %d -> hsv %d %d %d \n",r,g,b,h,s,v));
+
+	hsv[0] = h;
+	hsv[1] = s;
+	hsv[2] = v;
+}
+
+/* TODO: vector for hsv 
+// v is in Levels 0...255
+// s is Saturation 0...255 
+// H is in degrees * 1024/360 (0...1023)
+
+ rgb   is a 3 entry array (R,G,B) uint8_t
+ h,s,v are in 16 bit
+*/
+void HSV2RGB( uint8_t *rgb, int16_t h, int16_t s, int16_t v )
+{
+	uint8_t r,g,b;
+
+	/* transform back */
+	r = v;
+	g = v;
+	b = v;
+	if( s )
+	{
+	 int16_t region,remainder,p,q,t;
+
+	 region = h/171;
+	 remainder=((h - (region * 171)) * 6)>>2;
+
+	 /* a little shift-fu to keep numbers in 16 bit range */
+	 p = (v * ((255 - s)>>2)) >> 6;
+	 q = (v * ((255 - ( (s * (remainder>>1))>>7))>>2) ) >> 6;
+	 t = (v * ((255 - ( (s * ((255 - remainder)>>1))>>7))>>2) ) >> 6;
+	 if( q < 0 ) q=0;
+	 if( t < 0 ) t=0;
+	 if( p < 0 ) p=0;
+
+#if 0
+	 if(1)// if( (p>255) || (q>255) || (t>255) )
+	 {
+		PRINT(("hsv %d %d %d -> p %d q %d t%d v%d rem %d\n",h,s,v,p,q,t,v,remainder));
+//		printf("%d %d %d -> hsv %d %d %d \n",r,g,b,h,s,v);
+	 }
+#endif
+
+	 switch(region)
+	 {
+	  case 0:
+	  	r = v; g = t; b = p; break;
+	  case 1:
+	        r = q; g = v; b = p; break;
+	  case 2:
+	  	r = p; g = v; b = t; break;
+	  case 3:
+	        r = p; g = q; b = v; break;
+	  case 4:
+	        r = t; g = p; b = v; break;
+	  default:
+	        r = v; g = p; b = q; break;
+	 }
+	}
+
+	/* store */
+	rgb[0] = r;
+	rgb[1] = g;
+	rgb[2] = b;
+}
+
 
 #define PRINT(a)
 void cycle_rainbow( uint8_t *rgb, uint8_t increment )
@@ -301,6 +483,10 @@ void cycle_rainbow( uint8_t *rgb, uint8_t increment )
 	h += ((int)increment)<<2;
 	h &= 0x3ff; /* periodicity with 1024 */
 #endif
+
+#if 1
+	HSV2RGB( rgb, h, s, v );
+#else
 	/* transform back */
 	r = v;
 	g = v;
@@ -348,6 +534,7 @@ void cycle_rainbow( uint8_t *rgb, uint8_t increment )
 	rgb[0] = r;
 	rgb[1] = g;
 	rgb[2] = b;
+#endif
 
 }
 
@@ -463,7 +650,7 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 					break;
 				nrecv--;
 				recvcmd++;	/* skip argument byte (unused for now) */
-				if( index >= N_LED )
+				if( index >= (N_LED+N_LED_DIGI_CONF) )
 					break;
 				confget = index; /* trigger: this LED's config is needed */
 				/* FIXME: only one config per call, for now -> also: size limitation of command and ring buffers */
@@ -473,7 +660,7 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 					break;
 				nrecv--;
 				r = *recvcmd++;
-				if( index >= N_LED )
+				if( index >= (N_LED+N_LED_DIGI_CONF) )
 					break;
 				LED_SRCMAP[index] = r;
 				LED_SECMAP[index] = get_secmap(r); /* bit combinations (including SWAP flag) for secondary function */
@@ -483,7 +670,7 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 					break;
 				nrecv--;
 				r = *recvcmd++;
-				if( index >= N_LED )
+				if( index >= (N_LED+N_LED_DIGI_CONF) )
 					break;
 				LED_MODES[index] = r;
 				LED_MODESTATE[index] = 0;
@@ -500,7 +687,7 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 				g  = *recvcmd++;
 				b  = *recvcmd++;
 
-				if( (st < LED_STATES) && (index < N_LED) )
+				if( (st < LED_STATES) && (index < (N_LED+N_LED_DIGI_CONF) ) )
 				{
 					LED_RGB[index][st][0] = r;
 					LED_RGB[index][st][1] = g;
@@ -529,7 +716,10 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 #else
 			*sendbuf++ = LEDGV_TYPE_A500; /* LEDGV_TYPE_A3000,LEDGV_TYPE_A500 */
 #endif
-			*sendbuf++ = LEDGV_VERSION;   /* */
+			if( LED_HAVE_DIGILED )
+				*sendbuf++ = LEDGV_VERSION - 1;   /* 5,7,9,... = Digital LED enabled and present   */
+			else	*sendbuf++ = LEDGV_VERSION;       /* 6,8,... = Digital LED enabled but not present */
+
 			return 3;
 		}
 
@@ -678,14 +868,15 @@ unsigned char led_updatecontroller( unsigned char state )
 void led_saveconfig( char neededleds )
 {
 	unsigned char start = 0;
-	unsigned char last  = N_LED-1;
+	unsigned char last  = N_LED+N_LED_DIGI_CONF-1;
 	unsigned char i,k;
 	unsigned char *obuf;
 	unsigned char *adr = (unsigned char *)0x100;
 
 	/* 
 		header:
-		 0xBA, 0x58 = 0xBA 'X'
+		 0xBA, 0x58 = 0xBA 'X' (old config)
+		 0xBA, 0x59 = 0xBA 'Y' (V5/V6 config)
 
 		record per LED (2+11*LED_IDX):
 		 1 Byte SRCMAP
@@ -696,7 +887,7 @@ void led_saveconfig( char neededleds )
 	obuf = adr;
 	eeprom_write_byte( obuf, 0xBA );
 	obuf++;
-	eeprom_write_byte( obuf, 0x58 );
+	eeprom_write_byte( obuf, 0x59 );
 
 	for( i=start ; i <= last ; i++ )
 	{
@@ -714,7 +905,7 @@ void led_saveconfig( char neededleds )
 	obuf = adr;
 	eeprom_update_byte( obuf, 0xBA );
 	obuf++;
-	eeprom_update_byte( obuf, 0x58 );
+	eeprom_update_byte( obuf, 0x59 );
 
 #ifdef DEBUG
 	uart1_puts("Config Saved ");
@@ -753,8 +944,14 @@ void led_loadconfig( char neededleds )
 	obuf = adr;
 	if( eeprom_read_byte( obuf++ ) != 0xBA )
 		nf = 1;
-	if( eeprom_read_byte( obuf++ ) != 0x58 )
-		nf = 1;
+	i = eeprom_read_byte( obuf++ );
+	if( i != 0x58 )
+	{
+		if( i != 0x59 )
+			nf = 1;
+		else	
+			last = N_LED+N_LED_DIGI_CONF-1;
+	}
 	if( nf == 1 )
 	{
 #ifdef DEBUG
@@ -788,7 +985,6 @@ void led_loadconfig( char neededleds )
 
 		LED_MODES[i]  = eeprom_read_byte( obuf++ );
 	}
-
 }
 
 
@@ -875,6 +1071,15 @@ void led_defaults()
 	LED_RGB[i][LED_ACTIVE][1] = 0x00;
 	LED_RGB[i][LED_ACTIVE][2] = 0xC9;
 
+	/* digital LEDs (V5/V6) */
+	i=IDX_LED_DIGI; /* N_LED with V5 */
+	LED_RGB[i][LED_IDLE][0] = 0x01; /* R */
+	LED_RGB[i][LED_IDLE][1] = 0x50; /* G */
+	LED_RGB[i][LED_IDLE][2] = 0xA0; /* B */
+	LED_RGB[i][LED_ACTIVE][0] = 0x30; /* violet */
+	LED_RGB[i][LED_ACTIVE][1] = 0x30;
+	LED_RGB[i][LED_ACTIVE][2] = 0xB0;
+	LED_MODES[i] = 0; /* LEDD_FX_STATIC */
 }
 
 void led_init()

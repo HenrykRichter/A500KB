@@ -16,9 +16,10 @@
 
 /* 7 RGB LEDs are on the prototype board */
 #define N_LED	7
+#define N_DIGITAL_LED 1 /* V5/V6: digital LED */
 
-/* virtual 8th LED for save config command */
-#define LEDIDX_SAVEEEPROM 7
+/* virtual 9th LED for save config command */
+#define LEDIDX_SAVEEEPROM (N_LED+N_DIGITAL_LED)
 
 /* possible LED states */
 #define LED_IDLE      0 /* idle             */
