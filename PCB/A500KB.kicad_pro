@@ -462,7 +462,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "A500KB-v3.kicad_pro",
+    "filename": "A500KB.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -502,7 +502,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "plot": "",
+      "plot": "A500KB_Gerber/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
