@@ -7710,7 +7710,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+		(property "Footprint" "MountingHole:MountingHole_4mm"
 			(at 57.15 238.125 0)
 			(effects
 				(font
@@ -7773,7 +7773,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "MountingHole:MountingHole_4.3mm_M4"
+		(property "Footprint" "MountingHole:MountingHole_4mm"
 			(at 75.565 238.125 0)
 			(effects
 				(font
