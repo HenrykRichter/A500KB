@@ -7540,6 +7540,12 @@
 		(uuid "060eff07-dc56-4a1d-a985-f7dac5bdfafe")
 	)
 	(junction
+		(at 252.73 26.035)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "073eed3b-7171-46bf-900c-3d7ec24d9076")
+	)
+	(junction
 		(at 132.08 354.33)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7786,6 +7792,12 @@
 		(uuid "35ad9a12-9789-4118-aab9-f6433a646ea3")
 	)
 	(junction
+		(at 257.81 26.035)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "35dd6ea7-0b28-4cc3-be35-e32315fd3ddc")
+	)
+	(junction
 		(at 261.62 333.375)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7868,6 +7880,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "43d8d312-1b1d-4e41-95e2-08df6ae08d33")
+	)
+	(junction
+		(at 250.19 26.035)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "43e2b726-ee0d-400c-8702-58d19ae8e54f")
 	)
 	(junction
 		(at 257.175 234.315)
@@ -8096,6 +8114,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "675e4ebf-d5b5-4519-b4c7-0b2e371581d3")
+	)
+	(junction
+		(at 255.27 26.035)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "676656a6-eab3-4974-9eb8-70e8672d602a")
 	)
 	(junction
 		(at 86.36 285.75)
@@ -10339,6 +10363,16 @@
 	)
 	(wire
 		(pts
+			(xy 255.27 26.035) (xy 255.27 34.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "24b732e6-a97a-4dc8-bb24-eeefdde15f73")
+	)
+	(wire
+		(pts
 			(xy 71.12 376.555) (xy 86.36 376.555)
 		)
 		(stroke
@@ -10519,7 +10553,7 @@
 	)
 	(wire
 		(pts
-			(xy 257.81 26.035) (xy 257.81 34.925)
+			(xy 250.19 25.4) (xy 250.19 26.035)
 		)
 		(stroke
 			(width 0)
@@ -10916,6 +10950,16 @@
 			(type default)
 		)
 		(uuid "32cc685c-3879-4f7f-9ca8-4f3c78eae0a1")
+	)
+	(wire
+		(pts
+			(xy 257.81 26.035) (xy 257.81 34.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "32f761b7-5301-4116-88dc-0b6413af3dbf")
 	)
 	(wire
 		(pts
@@ -11389,7 +11433,7 @@
 	)
 	(wire
 		(pts
-			(xy 255.27 26.035) (xy 255.27 34.925)
+			(xy 252.73 25.4) (xy 252.73 26.035)
 		)
 		(stroke
 			(width 0)
@@ -13889,7 +13933,7 @@
 	)
 	(wire
 		(pts
-			(xy 250.19 26.035) (xy 250.19 34.925)
+			(xy 257.81 25.4) (xy 257.81 26.035)
 		)
 		(stroke
 			(width 0)
@@ -15029,7 +15073,7 @@
 	)
 	(wire
 		(pts
-			(xy 252.73 26.035) (xy 252.73 34.925)
+			(xy 255.27 25.4) (xy 255.27 26.035)
 		)
 		(stroke
 			(width 0)
@@ -15906,6 +15950,16 @@
 			(type default)
 		)
 		(uuid "bf12f59e-beac-4b51-810f-31eac148da87")
+	)
+	(wire
+		(pts
+			(xy 250.19 26.035) (xy 250.19 34.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf57bd23-e913-4db0-9c74-f8cb31731f9e")
 	)
 	(wire
 		(pts
@@ -17859,6 +17913,16 @@
 	)
 	(wire
 		(pts
+			(xy 252.73 26.035) (xy 252.73 34.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f89ca60c-5e34-4a41-bd8a-eab5b4caf2b8")
+	)
+	(wire
+		(pts
 			(xy 199.39 295.275) (xy 199.39 316.23)
 		)
 		(stroke
@@ -18149,9 +18213,9 @@
 		)
 		(uuid "5eaa0648-3820-4600-9f53-4802251647d7")
 	)
-	(text "TODO:\n- shorten by 1mm on the right side of the PCB (DONE)\n- Pull-Down for DRVLED (1k) (DONE)\n- Pull-Up for IN_LED3, IN_LED4 (10k) (DONE)\n- Pull-Up for SCL,SDA (DONE)\n- R7: 3.9k Resistor for LED driver (was: 3.3k) (DONE)\n- Turn Diodes around (DONE)\n- Bax Logo :-) (done)\n- Spacebar retention update on Plate\n- Version 2 (done)\n- Micro USB (done)\n- V3:\n- adjust bottom for A1200.net cases (10x, done)\n- re-align LEDs with A500KB Mini (done)\n- I2C Header (done)\n- Plate updates for Cherry Stabilizers\n- Verification of PCB Cherry Stabilizers\n- 2 new Holes near spacebar for mounting adapter bracket (done)\n- larger plate (cover up on top)\nV4:\n- added additional (optional) LEDs to main PCB\n- note: populate R11 when digital LEDs are mounted"
+	(text "TODO:\n- shorten by 1mm on the right side of the PCB (DONE)\n- Pull-Down for DRVLED (1k) (DONE)\n- Pull-Up for IN_LED3, IN_LED4 (10k) (DONE)\n- Pull-Up for SCL,SDA (DONE)\n- R7: 3.9k Resistor for LED driver (was: 3.3k) (DONE)\n- Turn Diodes around (DONE)\n- Bax Logo :-) (done)\n- Spacebar retention update on Plate\n- Version 2 (done)\n- Micro USB (done)\n- V3:\n- adjust bottom for A1200.net cases (10x, done)\n- re-align LEDs with A500KB Mini (done)\n- I2C Header (done)\n- Plate updates for Cherry Stabilizers\n- Verification of PCB Cherry Stabilizers\n- 2 new Holes near spacebar for mounting adapter bracket (done)\n- larger plate (cover up on top)\nV4:\n- added additional (optional) LEDs to main PCB\n- note: populate R11 when digital LEDs are mounted\nV4b:\n- moved Ín3/In4 and A500 connector further down on the PCB\nV4c:\n- bugfix: JST EH connector for A2000-4000 Keyboard cables had pins mirrored"
 		(exclude_from_sim no)
-		(at 278.892 58.928 0)
+		(at 276.098 68.326 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -18513,7 +18577,7 @@
 		(uuid "2c84684f-b3b7-4ce2-a3e6-28e047581149")
 	)
 	(label "KCLK"
-		(at 252.73 33.655 90)
+		(at 255.27 33.02 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -18524,7 +18588,7 @@
 		(uuid "2cfd6123-f0b1-43b3-be5c-feac9ef91978")
 	)
 	(label "KDAT"
-		(at 250.19 33.655 90)
+		(at 257.81 33.02 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -19294,7 +19358,7 @@
 		(uuid "dcc5317d-bc2f-472b-bf29-3644eeaef09d")
 	)
 	(label "+5V"
-		(at 255.27 33.655 90)
+		(at 252.73 33.02 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -19349,7 +19413,7 @@
 		(uuid "e086c288-07a8-4f35-a0eb-cf3761f13900")
 	)
 	(label "GND"
-		(at 257.81 33.655 90)
+		(at 250.19 33.02 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -41302,7 +41366,7 @@
 	)
 	(symbol
 		(lib_id "Graphic:Logo_Open_Hardware_Small")
-		(at 298.45 78.105 0)
+		(at 220.98 55.88 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom no)
@@ -41310,7 +41374,7 @@
 		(dnp yes)
 		(uuid "d26032f1-e888-4b09-9f76-714f507628be")
 		(property "Reference" "baxlogo1"
-			(at 298.45 62.865 0)
+			(at 220.98 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -41318,7 +41382,7 @@
 			)
 		)
 		(property "Value" "Baxlogo"
-			(at 298.45 94.615 0)
+			(at 220.98 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -41326,7 +41390,7 @@
 			)
 		)
 		(property "Footprint" "Bax:baxlogo"
-			(at 299.72 76.835 0)
+			(at 222.25 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -41335,7 +41399,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 299.72 76.835 0)
+			(at 222.25 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -41344,7 +41408,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 298.45 78.105 0)
+			(at 220.98 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
