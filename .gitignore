@@ -1,3 +1,4 @@
+*.uaem
 # Prerequisites
 *.d
 .DS_Store

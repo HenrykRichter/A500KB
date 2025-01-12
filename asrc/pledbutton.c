@@ -227,7 +227,7 @@ ULONG  pledb_get(Class *cls, struct Gadget *o, struct opGet *msg )
 
 ULONG  pledb_new(Class *cls, Object *o,struct opSet *msg)
 {
-	struct Gadget *ret = NULL;
+	struct Gadget *ret;// = NULL;
 
 	if( (ret = (struct Gadget *)DoSuperMethodA( cls, (Object *)o, (Msg)msg ) ))
 	{
@@ -365,7 +365,7 @@ ULONG pledb_hittest( Class *cls, struct Gadget *o, struct gpHitTest *msg )
 
 	data->current_button = pledb_checkbuttonsegment( msg->gpht_Mouse.X, data->w ); 
 
-	return (data->current_button != -1) ? GMR_GADGETHIT : 0;
+	return (ULONG)( (data->current_button != -1) ? GMR_GADGETHIT : 0 );
 }
 
 
@@ -411,7 +411,7 @@ ASM ULONG pledb_dispatch( ASMR(a0) Class *cls ASMREG(a0),
 STDARGS ULONG pledb_dispatch(Class *cls,Object *o,Msg msg )
 #endif
 {
-	ULONG ret = 0;
+	ULONG ret;// = 0;
 
 //	Printf("dispatch %lx cls %lx o %lx msg %lx\n",msg->MethodID,(ULONG)cls,(ULONG)o,(ULONG)msg );
 

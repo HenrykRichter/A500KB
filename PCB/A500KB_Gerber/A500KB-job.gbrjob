@@ -5,13 +5,13 @@
       "Application": "Pcbnew",
       "Version": "8.0.5"
     },
-    "CreationDate": "2025-01-08T19:28:40+01:00"
+    "CreationDate": "2025-01-12T19:48:16+01:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
       "Name": "A500KB",
       "GUID": "41353030-4b42-42e6-9b69-6361645f7063",
-      "Revision": "rev?"
+      "Revision": "4d"
     },
     "Size": {
       "X": 447.85,

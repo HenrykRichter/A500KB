@@ -108,7 +108,7 @@ LONG do_Req( struct myWindow *win, struct EasyStruct *template, ULONG flags )
    
     if( flags & SR_WAITBUSY )
     {
-    	cmdres = CIAKB_Wait();
+    	/* cmdres = */ CIAKB_Wait();
     }
 
     return retval;

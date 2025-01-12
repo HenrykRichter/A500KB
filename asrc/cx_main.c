@@ -346,7 +346,7 @@ LONG openLibs( void )
 			   (STRPTR)"colorwheel.gadget V39 not found. Quitting.",
 		           (STRPTR)"OK",
 		       };
-		       EasyRequest( NULL, &libnotfoundES, &iflags );
+		       EasyRequest( NULL, (struct EasyStruct*)&libnotfoundES, &iflags );
 		       res = 1;
 		}
 		else if( !(GradientSliderBase ) )
@@ -359,7 +359,7 @@ LONG openLibs( void )
 			   (STRPTR)"gradientslider.gadget V39 not found. Quitting.",
 		           (STRPTR)"OK",
 		       };
-		       EasyRequest( NULL, &libnotfoundES, &iflags );
+		       EasyRequest( NULL, (struct EasyStruct*)&libnotfoundES, &iflags );
 		       res = 1;
 		}
 	}

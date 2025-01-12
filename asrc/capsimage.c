@@ -133,7 +133,7 @@ ULONG caps_set(Class *cls, struct Image *o,struct opSet *msg, BOOL initial)
 		 case IA_Pens:	/* 1 pen in Caps mode */
 		 	{
 			 SHORT *ipens = (SHORT*)ti->ti_Data;
-		 	 data->Pens[0] = *ipens++;
+		 	 data->Pens[0] = *ipens; /* ++ */
 			 //nscreen = 1;
 			}
 		 	break;
@@ -188,7 +188,7 @@ ULONG caps_get(Class *cls, struct Image *o,struct opGet *msg )
 
 ULONG caps_new(Class *cls, struct Image *o,struct opSet *msg)
 {
-	struct Image *ret = NULL;
+	struct Image *ret;/* = NULL; */
 
 	if( (ret = (struct Image *)DoSuperMethodA( cls, (Object *)o, (Msg)msg ) ))
 	{
@@ -222,7 +222,7 @@ ASM ULONG caps_dispatch( ASMR(a0) Class *cls ASMREG(a0),
 STDARGS ULONG caps_dispatch(Class *cls,Object *o,Msg msg )
 #endif
 {
-	ULONG ret = 0;
+	ULONG ret;/* = 0; */
 
 	//Printf("dispatch %lx cls %lx o %lx msg %lx\n",msg->MethodID,(ULONG)cls,(ULONG)o,(ULONG)msg );
 

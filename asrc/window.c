@@ -90,7 +90,7 @@ LONG win_FreeMenus( struct configvars *conf,struct myWindow *win);
 #define ID_ActiveLED 12 /* show active LED as text */
 #define ID_ModeCycle 13
 #define ID_StripLED 14
-#define ID_StripDFX 15
+#define ID_StripFXCycle 15
 
 #define WIN_W 265
 #define WIN_H 164
@@ -153,7 +153,7 @@ STRPTR StripModeStrings[8] = {   /* Text active */
  (STRPTR)"Rainbow fast",
  (STRPTR)"Saturation",
  (STRPTR)"KITT",
- (STRPTR)"unimplemented",
+ (STRPTR)"Splash",
  NULL
 };
 
@@ -174,7 +174,7 @@ struct myGadProto TextActive ={80,4, 94,10, NULL,ID_ActiveLED,TEXT_KIND,0,0,0,NU
 struct myGadProto cycleMode  ={5,88,72,14,(STRPTR)"Mode",ID_ModeCycle,CYCLE_KIND,1,0,0,ModeStrings};
 
 struct myGadProto LEDStrip1 = {26,176, 8, 8, (STRPTR)"Strip", ID_StripLED,CAPSIMAGE_KIND,7,0,0,NULL};
-struct myGadProto cycleStrip= {60,177,182,14,(STRPTR)"LED Strip FX",ID_SourceCycle,CYCLE_KIND,1,0,0,StripModeStrings};
+struct myGadProto cycleStrip= {60,177,182,14,(STRPTR)"LED Strip FX",ID_StripFXCycle,CYCLE_KIND,1,0,0,StripModeStrings};
 
 #define FRAME_UP     0
 #define FRAME_DOWN   1

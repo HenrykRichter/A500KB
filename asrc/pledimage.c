@@ -397,7 +397,7 @@ ULONG pled_get(Class *cls, struct Image *o,struct opGet *msg )
 
 ULONG pled_new(Class *cls, struct Image *o,struct opSet *msg)
 {
-	struct Image *ret = NULL;
+	struct Image *ret;/* = NULL; */
 
 	if( (ret = (struct Image *)DoSuperMethodA( cls, (Object *)o, (Msg)msg ) ))
 	{
@@ -439,7 +439,7 @@ ASM ULONG pled_dispatch( ASMR(a0) Class *cls ASMREG(a0),
 STDARGS ULONG pled_dispatch(Class *cls,Object *o,Msg msg )
 #endif
 {
-	ULONG ret = 0;
+	ULONG ret;/* = 0; */
 
 	//Printf("dispatch %lx cls %lx o %lx msg %lx\n",msg->MethodID,(ULONG)cls,(ULONG)o,(ULONG)msg );
 
