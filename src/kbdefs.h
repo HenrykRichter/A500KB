@@ -80,7 +80,17 @@
 /* kbd reset output on PB1 (A500) */
 #define KBDSEND_RSTP   PORTD
 #define KBDSEND_RSTDDR DDRD
+#define KBDSEND_RSTPIN PIND
 #define KBDSEND_RSTB 4
+
+/* Reset pin handling: enable/disable pull-up */
+#undef PULL_RST /* if pullup is disabled, then we can detect whether the keyboard 
+                   is standalone or connected to an A500 */
+#ifdef PULL_RST
+#define RST_PORTIDLE   KBDSEND_RSTP   |=  (1<<KBDSEND_RSTB); /* pull-up RST */
+#else
+#define RST_PORTIDLE   KBDSEND_RSTP   &=  ~(1<<KBDSEND_RSTB); /* no pull-up on RST */
+#endif
 
 /* spare pads */
 #define KBD_SPARE1PORT PORTD

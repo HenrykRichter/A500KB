@@ -55,7 +55,14 @@ Without debug (default builds)
 just connect the keyboard in the same way as classic keyboards
 --
 
+--
 Software version tags:
+Beginning with V5, the presence of the LED strip is included
+in the version (Bit0). Therefore, versions come in pairs now.
+The indicator for LED strip presence is R11. If populated,
+then the strip is assumed to be present.
+
+5/6 = support for LED strip added to the firmware
 4 = USB mode added to firmware 
 3 = Added A500KB Mini to build variants
 2 = Supports (slowly) animated LED modes

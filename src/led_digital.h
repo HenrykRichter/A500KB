@@ -8,5 +8,6 @@
 #define N_DIGI_LED         15
 
 char led_digital_step();
+void led_digital_updown(unsigned char code, unsigned char leftright);
 
 #endif

@@ -53,6 +53,7 @@
 	asm volatile ( "bst %2,%3" "\n\t" \
 	               "bld %0,%1" : "+r" (_out_) : "I" (_obit_) , "r" (_in_) , "I" (_ibit_) );
 
+
 /* internal proto */
 char amiga_kbsend( unsigned char scan_internal, unsigned char updown );
 char amiga_kbsync( void );
@@ -614,7 +615,7 @@ int main(void)
   /* reset line available (A500) ? */
 #ifdef KBDSEND_RSTP
   KBDSEND_RSTDDR &= ~(1<<KBDSEND_RSTB); /* input */
-  KBDSEND_RSTP   |=  (1<<KBDSEND_RSTB); /* pull-up RST */
+  RST_PORTIDLE	//  KBDSEND_RSTP   |=  (1<<KBDSEND_RSTB); /* pull-up RST */
 #endif
 
   /* LED sources */
@@ -656,7 +657,6 @@ int main(void)
 #ifdef DEBUG
   uart1_init(UART_BAUD_SELECT(9600UL,F_CPU));
   uart1_puts("AMIGA 500 KEYBOARD BY BAX\r\n");
-
 #endif
 
   led_init(); /* start up LED controller (and enable interrupts) */
@@ -800,7 +800,7 @@ int main(void)
 			KBDSEND_CLKP  |=  (1<<KBDSEND_CLKB);  /* clock high (internal pullup) */
 #ifdef KBDSEND_RSTP
 			KBDSEND_RSTDDR &= ~(1<<KBDSEND_RSTB); /* input */
-			KBDSEND_RSTP   |=  (1<<KBDSEND_RSTB); /* pull-up RST */
+			RST_PORTIDLE  // KBDSEND_RSTP   |=  (1<<KBDSEND_RSTB); /* pull-up RST */
 #endif
 		}
 
@@ -931,13 +931,17 @@ int main(void)
 
 						if( !write_ring( pgm_read_byte(&kbmap[pos]) | ((caps^KEYDOWN)<<7) ) )
 							state |= STATE_OVERFLOW;
+						/* TODO: what do we do with CapsLock and digital LEDs ? */
 					}
 				}
 				else
-				{	/* all other keys */
+				{
+					/* all other keys */
+					unsigned char code = pgm_read_byte(&kbmap[pos]) | ((cur^KEYDOWN)<<7);
 					/* write to buffer sent "up" is 1, internal "up" is 0 (updown sent last) */
-					if( !write_ring( pgm_read_byte(&kbmap[pos]) | ((cur^KEYDOWN)<<7) ) )
+					if( !write_ring( code ) )
 						state |= STATE_OVERFLOW;
+					led_digital_updown( code, pgm_read_byte(&kbleftright[pos]) );
 				}
 				DBGOUT( pgm_read_byte(&debuglist[pos] )  )
 				kbtable[pos] = cur; /* store key, no timeout */
@@ -965,14 +969,16 @@ int main(void)
 		if( i & kbinputspecials[j] ) /* high?                */
 			cur = KEYIDLE;       /* then idle            */
 		else	cur = KEYDOWN;       /* if low, then keydown */
-
 		if( (kbtable[pos]&KEYDOWN) != cur )
 		{
+			unsigned char code = pgm_read_byte(&kbmap[pos]) | ((cur^KEYDOWN)<<7);
 			/* write to buffer sent "up" is 1, internal "up" is 0 (updown sent last) */
-			if( !write_ring( pgm_read_byte(&kbmap[pos]) | ((cur^KEYDOWN)<<7) ) )
+			if( !write_ring( code ) )
 				state |= STATE_OVERFLOW;
 			DBGOUT( pgm_read_byte(&debuglist[pos] )  )
 			kbtable[pos] = cur; /* store key, no timeout */
+
+			led_digital_updown( code, pgm_read_byte(&kbleftright[pos]) );
 		}
 		pos++;
 		j++;
@@ -1179,7 +1185,7 @@ int main(void)
 	{
 #ifdef KBDSEND_RSTP
 	  KBDSEND_RSTDDR &= ~(1<<KBDSEND_RSTB); /* input */
-	  KBDSEND_RSTP   |=  (1<<KBDSEND_RSTB); /* pull-up RST */
+	  RST_PORTIDLE  //  KBDSEND_RSTP   |=  (1<<KBDSEND_RSTB); /* pull-up RST */
 #endif
 	}
 

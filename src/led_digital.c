@@ -35,6 +35,12 @@
 
 #define LEDD_STATE LED_ACTIVE
 
+/* splash mode defines */
+#define LEDD_SPLASH_IDLE  0
+#define LEDD_SPLASH_INIT  1
+
+#define LEDD_SPLASH_STEPS 50 
+
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 //#include <avr/io.h>
@@ -46,10 +52,13 @@
 #include "led.h" /* HSV2RGB */
 #define GAMMATAB_EXT
 #include "gammatab.h"
+#include "led_digital_splash.h"
 
 #ifndef NULL
 #define NULL (0)
 #endif
+
+#define CLIP(_a_) ((_a_) < 0) ? 0 : ( (_a_)>255 ) ? 255 : (_a_)
 
 void LED_Start_Frame();
 void LED_Stop_Frame( unsigned char nled );
@@ -58,6 +67,7 @@ unsigned char LED_update_dot( unsigned char ledd_cur );
 unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd  );
 unsigned char LED_update_saturation( unsigned char pos, unsigned char spd  );
 unsigned char LED_update_kitt( unsigned char pos );
+unsigned char LED_update_splash( unsigned char ledd_cur );
 
 /* actual update rate */
 #define LED_DELAY 1
@@ -65,6 +75,32 @@ unsigned char LED_update_kitt( unsigned char pos );
 unsigned char ledd_cur = 0;
 unsigned char ledd_dly = LED_DELAY;
 unsigned char ledd_fxstate[N_DIGI_LED]; /* private to active fx */
+unsigned char ledd_fxkeycolstate[N_DIGI_LED]; /* counter for active keys per column */
+
+
+void led_digital_updown(unsigned char code, unsigned char leftright)
+{
+	/* restrict logic to relevant mode(s) */
+	if( led_getmode( IDX_LED_DIGI ) != LEDD_FX_SPLASH )
+		return;
+
+	if( leftright >= N_DIGI_LED )
+		return;
+
+	if( code & 128 ) /* code & ( (!KEYDOWN)<<7 ) */
+	{
+		/* KEYUP */
+		if( ledd_fxkeycolstate[leftright] > 0 )
+			ledd_fxkeycolstate[leftright] -= 1;
+	}
+	else
+	{
+		/* KEYDOWN */
+		ledd_fxkeycolstate[leftright] += 1;
+		ledd_fxstate[leftright] = LEDD_SPLASH_INIT;
+	}
+}
+
 
 /* call for a single time instance (~16ms) */
 char led_digital_step()
@@ -98,6 +134,8 @@ char led_digital_step()
 		ledd_cur = LED_update_saturation( ledd_cur, 1 );break;
 	case LEDD_FX_KITT:
 		ledd_cur = LED_update_kitt( ledd_cur ); break;
+	case LEDD_FX_SPLASH:
+		ledd_cur = LED_update_splash( ledd_cur ); break;
 
  	case LEDD_FX_STATIC:
 	default:
@@ -112,6 +150,7 @@ char led_digital_step()
 }
 
 #define N_KITT_LED 9
+
 
 unsigned char LED_update_kitt( unsigned char pos )
 {
@@ -172,6 +211,7 @@ unsigned char LED_update_kitt( unsigned char pos )
   return pos;
 }
 
+
 unsigned char LED_update_saturation( unsigned char pos, unsigned char spd  )
 {
   uint8_t rgb[3];
@@ -200,12 +240,19 @@ unsigned char LED_update_saturation( unsigned char pos, unsigned char spd  )
   return pos+spd;
 }
 
+
 unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd  )
 {
   /* pos: "H" in HSV model */
   uint16_t h = ((uint16_t)pos);
+  int16_t  v;
   uint8_t rgb[3];
   unsigned char idx;
+  unsigned char *rgb0 = led_getcolor( IDX_LED_DIGI, LEDD_STATE );
+
+  /* Y0 */
+  v = (int16_t)rgb0[0] + (int16_t)rgb0[1] + (int16_t)rgb0[1] + (int16_t)rgb0[2];
+  v >>= 2;
 
   if( spd > 1 )
   {
@@ -223,12 +270,23 @@ unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd  )
    }
   }
 
-  HSV2RGB( (uint8_t*)rgb, (int16_t)( (h<<2)+ledd_fxstate[0] ), (int16_t)255, (int16_t)255 );
+//  if( spd > 1 )
+	  HSV2RGB( (uint8_t*)rgb, (int16_t)( (h<<2)+ledd_fxstate[0] ), (int16_t)255, v );// (int16_t)255 );
 
+//  h = (h<<2) + ledd_fxstate[0]; 
   for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
   {
 	LCD_SPI( 0xE0 + 31 ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
 #if 1
+/*	if( spd == 1 )
+	{
+	  if( h < 1023-4 )
+	  {
+	   HSV2RGB( (uint8_t*)rgb, (int16_t)( h ), (int16_t)255, v );// (int16_t)255 );
+	   h = h+4;
+	  }
+	}
+*/
 	LCD_SPI( rgb[2] ); // B
 	LCD_SPI( rgb[1] ); // G
 	LCD_SPI( rgb[0] ); // R
@@ -259,8 +317,7 @@ unsigned char LED_update_dot( unsigned char ledd_cur )
 	LCD_SPI( 0xff ); // R
   }
   else
-  {	/* SK9822: GRB */
-  	/* APA102: BGR */
+  {	
 	LCD_SPI( rgb[2] ); // B
 	LCD_SPI( rgb[1] ); // G
 	LCD_SPI( rgb[0] ); // R
@@ -274,6 +331,89 @@ unsigned char LED_update_dot( unsigned char ledd_cur )
 
  return ledd_cur;
 }
+
+unsigned char LED_update_splash( unsigned char ledd_cur )
+{
+ unsigned char idx,cnt,i;
+ unsigned char *rgb = led_getcolor( IDX_LED_DIGI, LEDD_STATE );
+ int16_t ledadd[N_DIGI_LED];
+ int16_t rs;
+
+ //unsigned char ledd_fxkeycolstate[N_DIGI_LED]; /* counter for active keys per column */
+ //ledd_fxstate[leftright] = LEDD_SPLASH_INIT;
+
+ for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
+ {
+	ledadd[idx] = 0;
+ }
+
+ /* advance time step for animation */
+ for( idx = 0, cnt = 0 ; idx < N_DIGI_LED ; idx++ )
+ {
+  if( ledd_fxstate[idx] != LEDD_SPLASH_IDLE )
+  {
+   cnt++;
+   ledd_fxstate[idx] += 1;
+
+   if( ledd_fxstate[idx] >= SPLASH_ANIM_STEPS )
+   {
+   	ledd_fxstate[idx] = LEDD_SPLASH_IDLE;
+   }
+   else
+   {
+	const unsigned char *pos;
+
+	i = idx;
+	pos = &splash_offsets[ledd_fxstate[idx]][0];
+	while( i > 0 )
+	{
+		i--;
+		ledadd[i] += pgm_read_byte(pos++);
+	}
+	i = idx;
+	pos = &splash_offsets[ledd_fxstate[idx]][0];
+	while( i < N_DIGI_LED )
+	{
+		ledadd[i] += pgm_read_byte(pos++);
+		i++;
+	}
+   }
+  }
+ }
+
+ /* idle: don't waste more time */
+// if( !cnt )
+//	return LED_update_dot( N_DIGI_LED );
+
+ for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
+ {
+  LCD_SPI( 0xE0 + 31 ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
+  if( ledd_fxkeycolstate[idx] > 0 )
+  {
+  	/* active key column */
+	LCD_SPI( 0xf1 ); // B
+	LCD_SPI( 0xef ); // G
+	LCD_SPI( 0xff ); // R
+  }
+  else
+  {
+	rs = rgb[2] + ledadd[idx];
+	LCD_SPI( CLIP(rs) ); // B
+	rs = rgb[1] + ledadd[idx];
+	LCD_SPI( CLIP(rs) ); // G
+	rs = rgb[0] + ledadd[idx];
+	LCD_SPI( CLIP(rs) ); // R
+  }
+ }
+
+ /* 1 time step further */
+ ledd_cur++;
+
+
+ return ledd_cur;
+}
+
+
 
 /* reset (start frame) string to LCD row */
 void LED_Start_Frame()

@@ -714,7 +714,17 @@ char led_putcommands( unsigned char *recvcmd, unsigned char nrecv )
 #ifdef KEYBOARD_TYPE
 			*sendbuf++ = KEYBOARD_TYPE;   /* from Makefile */
 #else
+#ifndef PULL_RST
+			/* auto mode: check RESET line, 
+			              if up: A500 
+				      else:  no connection =  A3000 */
+			if( KBDSEND_RSTPIN & (1<<KBDSEND_RSTB) )
+				*sendbuf++ = LEDGV_TYPE_A500;
+			else
+				*sendbuf++ = LEDGV_TYPE_A3000;
+#else
 			*sendbuf++ = LEDGV_TYPE_A500; /* LEDGV_TYPE_A3000,LEDGV_TYPE_A500 */
+#endif
 #endif
 			if( LED_HAVE_DIGILED )
 				*sendbuf++ = LEDGV_VERSION - 1;   /* 5,7,9,... = Digital LED enabled and present   */

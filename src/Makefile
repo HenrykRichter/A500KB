@@ -84,7 +84,7 @@ COMPILEPP = avr-g++ -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) $(DEFS)
 
 
 # symbolic targets:
-all:	AtmegaBoard.hex A3000.hex A500.hex A500Mini.hex
+all:	AtmegaBoard.hex A3000.hex A500.hex A500Mini.hex A500A3000Uni.hex
 
 .c.o:	$(HEADERS) kbdefs.h
 	$(COMPILE) -c $< -o $@
@@ -160,6 +160,11 @@ A500Mini.hex:	main500M.elf
 	rm -f $@
 	avr-objcopy -j .text -j .data -O ihex main500M.elf $@
 #	avr-size --format=avr --mcu=$(DEVICE) main500M.elf
+
+A500A3000Uni.hex:	main.elf
+	rm -f $@
+	avr-objcopy -j .text -j .data -O ihex main.elf $@
+#	avr-size --format=avr --mcu=$(DEVICE) main.elf
 
 AtmegaBoard.hex: main.elf
 	rm -f AtmegaBoard.hex
