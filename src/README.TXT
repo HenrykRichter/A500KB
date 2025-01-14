@@ -23,7 +23,10 @@ The flashing of the AT90USB1287 is supposed to be done by an external programmer
 An affordable USBASP clone or some FTDI GPIO wiring would be sufficient to serve
 that purpose. The pinout of the 6 pin header is the common Atmel ISP.
 
-Three firmwares A500Mini.hex,A500.hex and A3000.hex are present in this folder. 
+Three firmwares A500Mini.hex,A500.hex and A3000.hex are present in this folder
+(up to version 3). In V4, the firmware A500A3000Uni.hex was added that will
+auto-detect the connection type at runtime and reports "A500" or "A3000",
+respectively. Please note that R17 is required on the PCB. 
 All of them are functionally identical and just carry different IDs that will
 be reflected in the Amiga configuration software.
 

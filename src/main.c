@@ -915,7 +915,7 @@ int main(void)
 			/* KEY CHANGED -> debounce */
 			deb = (((kbtable[pos])>>DEBOUNCE_SHIFT)&DEBOUNCE_MASK);
 			deb++;
-			if( deb >= DEBOUNCE_TIME )
+			if( (deb >= DEBOUNCE_TIME) || (state & STATE_POWERUP2) )
 			{
 				/* special treatment for CAPS-LOCK */
 				if( pos == SCANCODE_CAPSLOCK )
