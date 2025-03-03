@@ -32,6 +32,8 @@
 #define LEDD_FX_KITT       5
 
 #define LEDD_FX_SPLASH     6
+#define LEDD_FXMASK        0xF
+#define LEDD_FXRGB         0x20
 
 #define LEDD_STATE LED_ACTIVE
 
@@ -63,11 +65,11 @@
 void LED_Start_Frame();
 void LED_Stop_Frame( unsigned char nled );
 
-unsigned char LED_update_dot( unsigned char ledd_cur );
-unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd  );
-unsigned char LED_update_saturation( unsigned char pos, unsigned char spd  );
-unsigned char LED_update_kitt( unsigned char pos );
-unsigned char LED_update_splash( unsigned char ledd_cur );
+unsigned char LED_update_dot( unsigned char ledd_cur, unsigned char rgbmode );
+unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd, unsigned char rgbmode  );
+unsigned char LED_update_saturation( unsigned char pos, unsigned char spd, unsigned char rgbmode  );
+unsigned char LED_update_kitt( unsigned char pos, unsigned char rgbmode );
+unsigned char LED_update_splash( unsigned char ledd_cur, unsigned char rgbmode );
 
 /* actual update rate */
 #define LED_DELAY 1
@@ -81,7 +83,7 @@ unsigned char ledd_fxkeycolstate[N_DIGI_LED]; /* counter for active keys per col
 void led_digital_updown(unsigned char code, unsigned char leftright)
 {
 	/* restrict logic to relevant mode(s) */
-	if( led_getmode( IDX_LED_DIGI ) != LEDD_FX_SPLASH )
+	if( (led_getmode( IDX_LED_DIGI ) & LEDD_FXMASK) != LEDD_FX_SPLASH )
 		return;
 
 	if( leftright >= N_DIGI_LED )
@@ -106,8 +108,12 @@ void led_digital_updown(unsigned char code, unsigned char leftright)
 char led_digital_step()
 {
  unsigned char fx = LEDD_FX_RAINBOWSLW; //LEDD_FX_SATURATION;//LEDD_FX_KITT; //LEDD_FX_RAINBOWSLW; //LEDD_FX_DOT;
+ unsigned char rgbmode;
 
  fx = led_getmode( IDX_LED_DIGI );
+ rgbmode = (fx & LEDD_FXRGB) ? 1 : 0;
+ fx &= LEDD_FXMASK;
+
 // { unsigned char *rgb = led_getcolor( IDX_LED_DIGI, LEDD_STATE );
 
  /* global update interval ( 15.2ms*(1+LED_DELAY) ) */
@@ -125,21 +131,21 @@ char led_digital_step()
  switch( fx )
  {
 	case LEDD_FX_DOT:
-		ledd_cur = LED_update_dot( ledd_cur );break;
+		ledd_cur = LED_update_dot( ledd_cur, rgbmode );break;
 	case LEDD_FX_RAINBOWSLW:
-		ledd_cur = LED_update_rainbow( ledd_cur, 1 );break;
+		ledd_cur = LED_update_rainbow( ledd_cur, 1, rgbmode );break;
 	case LEDD_FX_RAINBOWFST:
-		ledd_cur = LED_update_rainbow( ledd_cur, 4 );break;
+		ledd_cur = LED_update_rainbow( ledd_cur, 4, rgbmode );break;
 	case LEDD_FX_SATURATION:
-		ledd_cur = LED_update_saturation( ledd_cur, 1 );break;
+		ledd_cur = LED_update_saturation( ledd_cur, 1, rgbmode );break;
 	case LEDD_FX_KITT:
-		ledd_cur = LED_update_kitt( ledd_cur ); break;
+		ledd_cur = LED_update_kitt( ledd_cur, rgbmode ); break;
 	case LEDD_FX_SPLASH:
-		ledd_cur = LED_update_splash( ledd_cur ); break;
+		ledd_cur = LED_update_splash( ledd_cur, rgbmode ); break;
 
  	case LEDD_FX_STATIC:
 	default:
-		ledd_cur = LED_update_dot( N_DIGI_LED );break;
+		ledd_cur = LED_update_dot( N_DIGI_LED, rgbmode );break;
  }
 
  
@@ -152,7 +158,7 @@ char led_digital_step()
 #define N_KITT_LED 9
 
 
-unsigned char LED_update_kitt( unsigned char pos )
+unsigned char LED_update_kitt( unsigned char pos, unsigned char rgbmode )
 {
   unsigned char idx,r,g,b;
 //  int16_t dst;
@@ -203,8 +209,16 @@ unsigned char LED_update_kitt( unsigned char pos )
    }
 
    LCD_SPI( b ); // B
-   LCD_SPI( g ); // G
-   LCD_SPI( r ); // R
+   if( rgbmode )
+   {
+    LCD_SPI( r ); // R
+    LCD_SPI( g ); // G
+   }
+   else
+   {
+    LCD_SPI( g ); // G
+    LCD_SPI( r ); // R
+   }
 
   }
 
@@ -212,9 +226,9 @@ unsigned char LED_update_kitt( unsigned char pos )
 }
 
 
-unsigned char LED_update_saturation( unsigned char pos, unsigned char spd  )
+unsigned char LED_update_saturation( unsigned char pos, unsigned char spd, unsigned char rgbmode  )
 {
-  uint8_t rgb[3];
+  uint8_t rgb[3],r,g,b;
   int16_t hsv[3];
   int16_t s;
   unsigned char idx;
@@ -229,19 +243,30 @@ unsigned char LED_update_saturation( unsigned char pos, unsigned char spd  )
 
   HSV2RGB( rgb, hsv[0], s , hsv[2] );
 
+  r = pgm_read_byte(&gamma24_tableLH[rgb[0]][GAMMATAB_H]);
+  g = pgm_read_byte(&gamma24_tableLH[rgb[1]][GAMMATAB_H]);
+  b = pgm_read_byte(&gamma24_tableLH[rgb[2]][GAMMATAB_H]);
+
+  if( rgbmode )
+  {
+    unsigned char t = r;
+    r = g;
+    g = t;
+  }
+
   for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
   {
 	LCD_SPI( 0xE0 + 31 ); /* preamble + brightness */
-	LCD_SPI( pgm_read_byte( &gamma24_tableLH[rgb[2]][GAMMATAB_H] )); // B
-	LCD_SPI( pgm_read_byte( &gamma24_tableLH[rgb[1]][GAMMATAB_H] )); // G
-	LCD_SPI( pgm_read_byte( &gamma24_tableLH[rgb[0]][GAMMATAB_H] )); // R
+	LCD_SPI( b );
+	LCD_SPI( g ); /* BGR or BRG */
+	LCD_SPI( r );
   }
 
   return pos+spd;
 }
 
 
-unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd  )
+unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd, unsigned char rgbmode  )
 {
   /* pos: "H" in HSV model */
   uint16_t h = ((uint16_t)pos);
@@ -302,10 +327,20 @@ unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd  )
 
 
 
-unsigned char LED_update_dot( unsigned char ledd_cur )
+unsigned char LED_update_dot( unsigned char ledd_cur, unsigned char rgbmode )
 {
  unsigned char idx;
  unsigned char *rgb = led_getcolor( IDX_LED_DIGI, LEDD_STATE );
+ unsigned char r,g,b;
+
+ r = rgb[0];
+ g = rgb[1];
+ b = rgb[2];
+ if( rgbmode )
+ {
+	g = rgb[0]; /* swap r,g for BRG mode */
+	r = rgb[1]; 
+ }
 
  for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
  {
@@ -313,14 +348,22 @@ unsigned char LED_update_dot( unsigned char ledd_cur )
   if( idx == ledd_cur )
   {
 	LCD_SPI( 0xf1 ); // B
-	LCD_SPI( 0xef ); // G
-	LCD_SPI( 0xff ); // R
+	if( rgbmode )
+	{
+	 LCD_SPI( 0xff ); // R
+	 LCD_SPI( 0xef ); // G
+	}
+	else
+	{
+	 LCD_SPI( 0xef ); // G
+	 LCD_SPI( 0xff ); // R
+	}
   }
   else
   {	
-	LCD_SPI( rgb[2] ); // B
-	LCD_SPI( rgb[1] ); // G
-	LCD_SPI( rgb[0] ); // R
+	LCD_SPI( b ); // B
+	LCD_SPI( g ); // G
+	LCD_SPI( r ); // R
   }
  }
 
@@ -332,7 +375,7 @@ unsigned char LED_update_dot( unsigned char ledd_cur )
  return ledd_cur;
 }
 
-unsigned char LED_update_splash( unsigned char ledd_cur )
+unsigned char LED_update_splash( unsigned char ledd_cur, unsigned char rgbmode )
 {
  unsigned char idx,cnt,i;
  unsigned char *rgb = led_getcolor( IDX_LED_DIGI, LEDD_STATE );
@@ -392,7 +435,7 @@ unsigned char LED_update_splash( unsigned char ledd_cur )
   {
   	/* active key column */
 	LCD_SPI( 0xf1 ); // B
-	LCD_SPI( 0xef ); // G
+	LCD_SPI( 0xff ); // G
 	LCD_SPI( 0xff ); // R
   }
   else

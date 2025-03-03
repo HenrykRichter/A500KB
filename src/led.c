@@ -1086,10 +1086,10 @@ void led_defaults()
 	LED_RGB[i][LED_IDLE][0] = 0x01; /* R */
 	LED_RGB[i][LED_IDLE][1] = 0x50; /* G */
 	LED_RGB[i][LED_IDLE][2] = 0xA0; /* B */
-	LED_RGB[i][LED_ACTIVE][0] = 0x30; /* violet */
-	LED_RGB[i][LED_ACTIVE][1] = 0x30;
-	LED_RGB[i][LED_ACTIVE][2] = 0xB0;
-	LED_MODES[i] = 0; /* LEDD_FX_STATIC */
+	LED_RGB[i][LED_ACTIVE][0] = 0x10; /* dark white */
+	LED_RGB[i][LED_ACTIVE][1] = 0x10;
+	LED_RGB[i][LED_ACTIVE][2] = 0x10;
+	LED_MODES[i] = 0; /* 0=LEDD_FX_STATIC, 6==LEDD_FX_SPLASH */
 }
 
 void led_init()

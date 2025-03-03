@@ -33,6 +33,9 @@
 #include <intuition/imageclass.h>
 #include <intuition/gadgetclass.h>
 
+//#ifdef __GNUC__
+//#include <stdarg.h>
+//#endif
 
 #include "capsimage.h"
 #include "pledimage.h"
@@ -40,6 +43,8 @@
 #include "ledmanager.h"
 #include "savereq.h"
 
+#define LEDIDX_DFX 7 /* TODO: into ledmanager.h */
+#define RGB_MODESTRIP 0x20 /* LEDD_FXRGB */
 
 /* external lib bases */
 #ifdef __SASC
@@ -70,6 +75,7 @@ LONG SetupScreen( struct configvars *conf, struct myWindow *win, ULONG flags );
 LONG ShutDownScreen( struct configvars *conf, struct myWindow *win );
 void UpdateSliders(struct myWindow *win, ULONG code, struct Gadget *gad, struct TagItem *tlist, LONG color );
 void UpdateSrcState( struct myWindow *win, ULONG code, struct Gadget *gad  );
+void UpdateCheckBox( struct myWindow *win, ULONG code, struct Gadget *gad );
 void ScaleXY( struct myWindow *win, USHORT *x, USHORT *y, USHORT *denom );
 void UpdateLEDButton( struct myWindow *win, ULONG code, struct Gadget *gad, struct myGadProto *prot );
 LONG win_AddMenus( struct configvars *conf,struct myWindow *win);
@@ -91,6 +97,7 @@ LONG win_FreeMenus( struct configvars *conf,struct myWindow *win);
 #define ID_ModeCycle 13
 #define ID_StripLED 14
 #define ID_StripFXCycle 15
+#define ID_StripFXRGB 16
 
 #define WIN_W 265
 #define WIN_H 164
@@ -174,7 +181,8 @@ struct myGadProto TextActive ={80,4, 94,10, NULL,ID_ActiveLED,TEXT_KIND,0,0,0,NU
 struct myGadProto cycleMode  ={5,88,72,14,(STRPTR)"Mode",ID_ModeCycle,CYCLE_KIND,1,0,0,ModeStrings};
 
 struct myGadProto LEDStrip1 = {26,176, 8, 8, (STRPTR)"Strip", ID_StripLED,CAPSIMAGE_KIND,7,0,0,NULL};
-struct myGadProto cycleStrip= {60,177,182,14,(STRPTR)"LED Strip FX",ID_StripFXCycle,CYCLE_KIND,1,0,0,StripModeStrings};
+struct myGadProto cycleStrip= {80,177,162,14,(STRPTR)"LED Strip FX",ID_StripFXCycle,CYCLE_KIND,1,0,0,StripModeStrings};
+struct myGadProto CBoxStrip=  {50,177,16,16,(STRPTR)"RBG",ID_StripFXRGB,CHECKBOX_KIND,1,0,0,NULL};
 
 #define FRAME_UP     0
 #define FRAME_DOWN   1
@@ -216,8 +224,11 @@ extern LONG keyboard_version;
 #define CMD_SAVE  0x80000003
 #define CMD_HIDE  0x80000004
 #define CMD_QUIT  0x80000005
+#define CMD_PRESETA500R 0x80000006
+#define CMD_PRESETA500G 0x80000007
+#define CMD_PRESETTEST  0x80000008
 
-#define DEF_ITEMS 7
+#define DEF_ITEMS 11 
 struct NewMenu defmenus[DEF_ITEMS] = {
  {NM_TITLE,(STRPTR)"Project", 0, 0, 0, NULL },
  {NM_ITEM, (STRPTR)"About",0 , 0, 0, (APTR)CMD_ABOUT },
@@ -225,16 +236,28 @@ struct NewMenu defmenus[DEF_ITEMS] = {
  {NM_ITEM, (STRPTR)"Save Preset",(STRPTR)"S" , 0, 0, (APTR)CMD_SAVE },
  {NM_ITEM, (STRPTR)"Hide", (STRPTR)"H", 0, 0, (APTR)CMD_HIDE },
  {NM_ITEM, (STRPTR)"Quit", (STRPTR)"Q", 0, 0, (APTR)CMD_QUIT },
+ {NM_TITLE,(STRPTR)"Presets",0,0,0,NULL },
+ {NM_ITEM, (STRPTR)"A500 Red/Green",   0, 0, 0, (APTR)CMD_PRESETA500R },
+ {NM_ITEM, (STRPTR)"A500 Green/Yellow",0, 0, 0, (APTR)CMD_PRESETA500G },
+ {NM_ITEM, (STRPTR)"Test Mode",0, 0, 0, (APTR)CMD_PRESETTEST },
  {NM_END,  NULL, NULL, 0, 0, NULL},
 };
 
 /* evil Bebbo hack (I like it): move.b d0,(a3+);rts */
 STATIC const ULONG tricky=0x16c04e75;
+/* Strangely, gcc6.5.0 doesn't like this. Works well with SAS/C */
 VOID mysprintf(char *ostring, char *fmt,...)
 {
   STRPTR *arg = (STRPTR *)( (&fmt)+1);
   RawDoFmt( (STRPTR) fmt, arg, (void (*)())&tricky, ostring );
 }
+/* gcc6.5.0 won't work with regular macro, using something w/o varargs here... */
+VOID mysprintf_int(char *ostring, char *fmt, LONG arg)
+{
+  RawDoFmt( (STRPTR) fmt, (STRPTR*)&arg, (void (*)())&tricky, ostring );
+}
+
+
 
 
 struct myWindow *Window_Open( struct configvars *conf )
@@ -301,7 +324,7 @@ struct myWindow *Window_Open( struct configvars *conf )
 		 if( keyboard_type == LEDGV_TYPE_A500MINI )
 		 	titlestr = (char*)name500mini;
 
-		 mysprintf( namebuffer, titlestr, (LONG)keyboard_version );
+		 mysprintf_int( namebuffer, titlestr, (ULONG)(keyboard_version&0xFF) );
 		}
 
                 if( !(win->window = OpenWindowTags(NULL,WA_Height,h,
@@ -339,7 +362,9 @@ struct myWindow *Window_Open( struct configvars *conf )
 		win->IdleTickCount = 0;
 		win->sigmask = 1L<<win->window->UserPort->mp_SigBit;
 		UpdateSrcState( win, LED_ACTIVE , win->SrcState );
-		UpdateLEDButton( win, 0, win->PowerLED, &LEDPower ); 
+		if( win->StripLED1 )
+			UpdateLEDButton( win, 0, win->StripLED1,  &LEDStrip1 );
+		UpdateLEDButton( win, 0, win->PowerLED, &LEDPower );
 		DrawFrames( win ); 
 #if 0
 		/* quick test */
@@ -487,8 +512,11 @@ void UpdateLEDButton( struct myWindow *win, ULONG code, struct Gadget *gad, stru
 	 GT_SetGadgetAttrs( win->CycleMode, win->window, NULL,GA_Disabled,TRUE,TAG_DONE);
 	 GT_SetGadgetAttrs( win->SrcState,win->window,NULL,GA_Disabled,TRUE,TAG_DONE);
 
-	 map = ledmanager_getMode( win->active_led );
-	 GT_SetGadgetAttrs( win->CycleDFX, win->window, NULL, GTCY_Active,map,TAG_DONE);
+	 map = ledmanager_getMode( LEDIDX_DFX ); // win->active_led );
+	 /*Printf((STRPTR)"DFX Map 0x%lx\n",(ULONG)map);*/
+	 if( win->StripRGB )
+		 GT_SetGadgetAttrs( win->StripRGB, win->window, NULL, GTCB_Checked, (map&(~MSK_MODESTRIP)) ? 1 : 0, TAG_DONE );
+	 GT_SetGadgetAttrs( win->CycleDFX, win->window, NULL, GTCY_Active,(map&MSK_MODESTRIP),TAG_DONE);
 	}
 	else
 	{
@@ -528,8 +556,30 @@ void UpdateCycleMode( struct myWindow *win, ULONG code, struct Gadget *gad )
 	LONG idx = win->active_led;
 
 	if( gad == win->CycleDFX )
-		idx = 7;
+	{
+		ULONG map = ledmanager_getMode( LEDIDX_DFX );
+		idx   = LEDIDX_DFX;
+		code |= map & (~MSK_MODESTRIP); /* keep all upper bits */
+	}
 	ledmanager_setMode( idx, code );
+}
+
+void UpdateCheckBox( struct myWindow *win, ULONG code, struct Gadget *gad )
+{
+	ULONG status=0;
+	
+	GT_GetGadgetAttrs( gad, win->window, NULL, GTCB_Checked, (ULONG)&status, TAG_DONE );
+
+	if( gad == win->StripRGB )
+	{
+		ULONG map = ledmanager_getMode( LEDIDX_DFX );
+		map &= ~RGB_MODESTRIP; /* MSK_MODESTRIP; */
+
+		if( status )
+			map |= RGB_MODESTRIP;
+
+		ledmanager_setMode( LEDIDX_DFX, map );
+	}
 }
 
 /*
@@ -833,6 +883,8 @@ LONG Window_Event(struct configvars *conf, struct myWindow *win )
 					ledmanager_saveEEPROM();
 					SaveEEPROM_Req( win );
 				}
+				if( gad == win->StripRGB )
+					UpdateCheckBox( win, code, gad );
 				break;
 			case IDCMP_MENUPICK:
 				while( code != MENUNULL )
@@ -885,6 +937,22 @@ LONG Window_Event(struct configvars *conf, struct myWindow *win )
 							 }
 							}
 							break;
+						case CMD_PRESETA500R:
+							ledmanager_setpreset( LEDPR_A500RED ); /* pre-defined color schemes */
+							UpdateSrcState( win, LED_ACTIVE , win->SrcState );
+							UpdateLEDButton( win, 0, win->PowerLED, &LEDPower ); 
+							break;
+						case CMD_PRESETA500G:
+							ledmanager_setpreset( LEDPR_A500GRN ); /* pre-defined color schemes */
+							UpdateSrcState( win, LED_ACTIVE , win->SrcState );
+							UpdateLEDButton( win, 0, win->PowerLED, &LEDPower ); 
+							break;
+						case CMD_PRESETTEST:
+							ledmanager_setpreset( LEDPR_TEST ); /* pre-defined color schemes */
+							UpdateSrcState( win, LED_ACTIVE , win->SrcState );
+							UpdateLEDButton( win, 0, win->PowerLED, &LEDPower ); 
+							break;
+
 						case CMD_QUIT:
 		                                        Window_Close( conf, win );
                 		                        return -1;
@@ -1142,6 +1210,14 @@ struct Gadget *MakeGad( struct myWindow *win, struct Gadget *glist, struct myGad
 				/* GTTX_Text, NULL */
 				TAG_END );
 	}
+	if( prot->type == CHECKBOX_KIND )
+	{
+		ng.ng_Flags      = PLACETEXT_ABOVE; /* TODO: make this flexible */
+
+		gad = CreateGadget(CHECKBOX_KIND,glist,&ng,
+				GTCB_Checked, TRUE,
+				TAG_END );
+	}
 
 	if( prot->type == PLEDIMAGE_KIND )
 	{
@@ -1301,6 +1377,8 @@ struct Gadget *CreateGads( struct myWindow *win )
 		{
 		  if( !(win->CycleDFX = glist= MakeGad( win, glist, &cycleStrip)) )
 		  	break;
+		  if( !(win->StripRGB = glist= MakeGad( win, glist, &CBoxStrip)) )
+		        break;
 		}
 
 		//success = 1;

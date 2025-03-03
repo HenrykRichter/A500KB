@@ -23,7 +23,7 @@
 #define LCS_NLEDs    N_LED
 #define LCS_NLEDsDIGI N_DIGITAL_LED
 LONG keyboard_type;
-LONG keyboard_version = 0;
+LONG keyboard_version = 5; /* uneven numbers >4 mean: LED strip present */
 
 struct EasyStruct SavingES = {
 	    sizeof (struct EasyStruct),
@@ -36,7 +36,7 @@ struct EasyStruct AboutES = {
 	    sizeof (struct EasyStruct),
 	    0,
 	    (STRPTR)("About A500KB " LIBVERSION "." LIBREVISION),
-	    (STRPTR)"Configurator for LEDs on A500KB custom Keyboard\n(C) 2022 Henryk Richter\n\nPlease note that this tool is not useful\nfor regular Amiga keyboards.",
+	    (STRPTR)"Configurator for LEDs on A500KB custom Keyboard\n(C) 2022-2025 Henryk Richter\n\nPlease note that this tool is not useful\nfor regular Amiga keyboards.",
 	    (STRPTR)"OK"
 	};
 struct EasyStruct LoadConfigES = {

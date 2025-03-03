@@ -103,6 +103,7 @@ struct myWindow {
 
 	struct Gadget *StripLED1;      /* V5+ */
 	struct Gadget *CycleDFX;       /* V5+ */
+	struct Gadget *StripRGB;       /* V5+ */
 
 	ULONG	active_state;		/* current state 0-2 */
 	ULONG	active_led;             /* LED index */

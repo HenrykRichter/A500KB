@@ -61,6 +61,9 @@
 /* set mode (static, cycle etc.), 1 byte argument */
 #define LEDCMD_SETMODE    0xC0
 
+/* mode mask for LED strip FX (upper bits are for flags like RGB/BGR) */
+#define MSK_MODESTRIP 0xf
+
 /* Please note that the protocol is designed for short packets to avoid
    overflows in send/receive buffers. As a consequence, only one command
    with return values (from Keyboard to Amiga) may be issued at a time.
@@ -77,6 +80,9 @@
 #define LEDGV_TYPE_A500MINI 0x03
 #define LEDGV_VERSION    0x01 /* software version */
 
+#define LEDPR_A500RED 0x1
+#define LEDPR_A500GRN 0x2
+#define LEDPR_TEST    0x3
 
 /* PUBLIC PROTO */
 
@@ -104,5 +110,6 @@ LONG ledmanager_exit(void);
 /* load/save preset (FILE) */
 LONG ledmanager_loadpresets( STRPTR fname );
 LONG ledmanager_savepresets( STRPTR fname );
+LONG ledmanager_setpreset( ULONG type ); /* pre-defined color schemes */
 
 #endif /* _INC_LEDMANAGER_H */

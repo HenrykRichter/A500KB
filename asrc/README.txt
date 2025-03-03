@@ -2,7 +2,7 @@ Short:        Configuration tool for A500KB
 Author:       Henryk Richter
 Uploader:     henryk.richter@gmx.net (Henryk Richter)
 Type:         util/misc
-Version:      1.8
+Version:      1.9
 Architecture: m68k-amigaos >= 3.0.0
 Distribution: NoCD
 
@@ -31,13 +31,21 @@ Distribution: NoCD
  sources per LED.
 
 
- Invocation
- ----------
+ Installation
+ ------------
+ 
+ No special installation procedure is required. Just copy it
+ to a convenient place on HDD or Floppy.
 
  Make sure, you have at least AmigaOS3.0. This program makes
  use of the color pen feature that was introduced with 
  Kickstart 3.0. Also needed are the Colorwheel.gadget and
  Gradientslider.gadget in SYS:Classes/Gadgets.
+
+
+ Invocation
+ ----------
+
 
  The tool can be started from Workbench, as usual. In case
  of problems at this stage, please verify that the permissions
@@ -94,6 +102,9 @@ Distribution: NoCD
  History
  -------
 
+ 1.9 - added abiity to switch between BRG and BGR
+       for LED strip (SK9822 vs. APA102)
+     - added presets menu
  1.8 - added support for LED strip on board revision
        3b (and 4) including base color and effect
        control

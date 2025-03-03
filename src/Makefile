@@ -105,6 +105,7 @@ main.o: main.c $(HEADERS)
 .c.s:
 	$(COMPILE) -S $< -o $@
 
+# defaults to AtmegaBoard.hex which is identical to A500A3000Uni.hex
 flash:	all
 	$(AVRDUDE) -U flash:w:AtmegaBoard.hex:i
 
@@ -119,7 +120,7 @@ load: all
 	bootloadHID AtmegaBoard.hex
 
 clean:
-	rm -f AtmegaBoard.hex main.elf $(OBJECTS) led.o
+	rm -f AtmegaBoard.hex A500A3000Uni.hex main.elf $(OBJECTS) led.o
 	rm -f A3000.hex A500.hex A500mini.hex led500.o led500M.o led3000.o main3000.elf main500.elf main500M.elf
 
 

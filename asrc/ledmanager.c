@@ -308,7 +308,7 @@ LONG ledmanager_loadconfigentry( LONG led, UBYTE *recvbuf, LONG nbytes, ULONG fl
 	if( nbytes == 11 )
 	{
 		LED_MODES[led] = *recvbuf;
-		if( LED_MODES[led] > MAXMODE )
+		if( (LED_MODES[led] > MAXMODE) && (led < N_LED)  )
 			LED_MODES[led] = 0;
 	}
 
@@ -502,6 +502,117 @@ void led_defaults()
 	for( i=0 ; i < N_LED+N_DIGITAL_LED ; i++ )
 		ledmanager_copy_last( i, 0 );
 
+}
+
+#define PR_POWER0 0
+#define PR_POWER1 3
+#define PR_FLOPPY 6
+#define PR_STRIP  9
+#define PR_FLOPPYOFF 12
+const UBYTE pr_rgb[3][15] = {
+/* PowerOff        PowerOn         Floppy         Strip            Floppy OFF */
+ { 0x2D,0x00,0x00, 0x9F,0x04,0x00, 0x59,0x9E,0x3B, 0x9F,0x04,0x00, 0x00,0x00,0x00 }, // LEDPR_A500RED
+ { 0x19,0x2D,0x10, 0x59,0x9E,0x3B, 0xFF,0x6C,0x00, 0x11,0x9E,0x09, 0x00,0x00,0x00 }, // LEDPR_A500GRN
+ { 0x24,0x0E,0x08, 0xFF,0x8D,0x82, 0xFF,0x8D,0x82, 0x88,0x7A,0x1A, 0x24,0x0E,0x08 }, // LEDPR_TEST
+};
+
+
+LONG ledmanager_setpreset( ULONG type ) /* pre-defined color schemes */
+{
+	ULONG idx;
+	int i;
+
+	for( i=0 ; i < N_LED ; i++ )
+	{
+		LED_MODES[i] = 0;
+	}
+	LED_MODES[N_LED] &= 0x20; /* LEDD_FXRGB */
+
+	switch( type )
+	{
+		case LEDPR_A500GRN:
+			idx = 1;
+			break;
+		case LEDPR_TEST:
+			idx = 2;
+			for( i=0 ; i < N_LED ; i++ )
+			{
+				LED_MODES[i] = 1;
+			}
+			LED_MODES[N_LED] |= 2; /* 2=LEDD_FX_RAINBOWSLW */
+			break;
+		default: /* LEDPR_A500RED */
+			idx = 0;
+			break;
+	}
+
+        /* RGB defaults */
+        for( i=0 ; i < 2 ; i++ )
+        { /* floppy (first two LEDs in second row */
+                LED_RGB[i][LED_IDLE][0] = pr_rgb[idx][PR_FLOPPYOFF+0];
+                LED_RGB[i][LED_IDLE][1] = pr_rgb[idx][PR_FLOPPYOFF+1];
+                LED_RGB[i][LED_IDLE][2] = pr_rgb[idx][PR_FLOPPYOFF+2];
+                LED_RGB[i][LED_ACTIVE][0] = pr_rgb[idx][PR_FLOPPY]; /* orange */
+                LED_RGB[i][LED_ACTIVE][1] = pr_rgb[idx][PR_FLOPPY+1];
+                LED_RGB[i][LED_ACTIVE][2] = pr_rgb[idx][PR_FLOPPY+2];
+                LED_RGB[i][LED_SECONDARY][0] = 0x83; /* magenta */
+                LED_RGB[i][LED_SECONDARY][1] = 0x00; //+((i-3)<<5);
+                LED_RGB[i][LED_SECONDARY][2] = 0x83; //+((i-3)<<4);
+        }
+        /* IN3 */
+        i=2;
+        LED_RGB[i][LED_IDLE][0] = pr_rgb[idx][PR_FLOPPYOFF+0];
+        LED_RGB[i][LED_IDLE][1] = pr_rgb[idx][PR_FLOPPYOFF+1];
+        LED_RGB[i][LED_IDLE][2] = pr_rgb[idx][PR_FLOPPYOFF+2];
+        LED_RGB[i][LED_ACTIVE][0] = 0x00; /* cyan */
+        LED_RGB[i][LED_ACTIVE][1] = 0xEA;
+        LED_RGB[i][LED_ACTIVE][2] = 0xFF;
+        LED_RGB[i][LED_SECONDARY][0] = pr_rgb[idx][PR_FLOPPY]; /* dark white */
+        LED_RGB[i][LED_SECONDARY][1] = pr_rgb[idx][PR_FLOPPY+1]; //+((i-3)<<5);
+        LED_RGB[i][LED_SECONDARY][2] = pr_rgb[idx][PR_FLOPPY+2]; //+((i-3)<<4);
+
+        /* Power */
+        for( i=3 ; i < 6 ; i++ )
+        {
+                LED_RGB[i][LED_IDLE][0] = pr_rgb[idx][PR_POWER0]; /* dark green */
+                LED_RGB[i][LED_IDLE][1] = pr_rgb[idx][PR_POWER0+1]; //+((i-3)<<2);
+                LED_RGB[i][LED_IDLE][2] = pr_rgb[idx][PR_POWER0+2]; //+((i-3)<<1);
+                LED_RGB[i][LED_ACTIVE][0] = pr_rgb[idx][PR_POWER1];  /* green-ish */
+                LED_RGB[i][LED_ACTIVE][1] = pr_rgb[idx][PR_POWER1+1]; //+((i-3)<<5);
+                LED_RGB[i][LED_ACTIVE][2] = pr_rgb[idx][PR_POWER1+2]; //+((i-3)<<4);
+                LED_RGB[i][LED_SECONDARY][0] = 0x10; /* cyan */
+                LED_RGB[i][LED_SECONDARY][1] = 0x83; //+((i-3)<<5);
+                LED_RGB[i][LED_SECONDARY][2] = 0x83; //+((i-3)<<4);
+        }
+
+        /* Caps */
+        i=6;
+        LED_RGB[i][LED_IDLE][0] = 0x00;	  /* cyan, faint */
+        LED_RGB[i][LED_IDLE][1] = 0x00;
+        LED_RGB[i][LED_IDLE][2] = 0x00;
+        LED_RGB[i][LED_ACTIVE][0] = pr_rgb[idx][PR_POWER1];  
+        LED_RGB[i][LED_ACTIVE][1] = pr_rgb[idx][PR_POWER1+1]; /* same as power */
+        LED_RGB[i][LED_ACTIVE][2] = pr_rgb[idx][PR_POWER1+2];
+
+        /* Strip (if present) */
+        i=7;
+        LED_RGB[i][LED_IDLE][0] = 0x01;	  /* cyan, medium */
+        LED_RGB[i][LED_IDLE][1] = 0x84;
+        LED_RGB[i][LED_IDLE][2] = 0x84;
+        LED_RGB[i][LED_ACTIVE][0] = pr_rgb[idx][PR_STRIP];
+        LED_RGB[i][LED_ACTIVE][1] = pr_rgb[idx][PR_STRIP+1]; /* same as power */
+        LED_RGB[i][LED_ACTIVE][2] = pr_rgb[idx][PR_STRIP+2];
+
+
+	/* don't assign "changed" status that would cause to send
+	   the default configuration to the keyboard at startup:
+	   bring both arrays in sync */
+/*	for( i=0 ; i < N_LED+N_DIGITAL_LED ; i++ )
+		ledmanager_copy_last( i, 0 );*/
+
+
+
+	return 0;
 }
 
 /*
