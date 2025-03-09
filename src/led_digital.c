@@ -208,14 +208,15 @@ unsigned char LED_update_kitt( unsigned char pos, unsigned char rgbmode )
      g = r>>2;
    }
 
-   LCD_SPI( b ); // B
    if( rgbmode )
    {
     LCD_SPI( r ); // R
+    LCD_SPI( b ); // B
     LCD_SPI( g ); // G
    }
    else
    {
+    LCD_SPI( b ); // B
     LCD_SPI( g ); // G
     LCD_SPI( r ); // R
    }
@@ -249,9 +250,9 @@ unsigned char LED_update_saturation( unsigned char pos, unsigned char spd, unsig
 
   if( rgbmode )
   {
-    unsigned char t = r;
-    r = g;
-    g = t;
+    b = pgm_read_byte(&gamma24_tableLH[rgb[0]][GAMMATAB_H]);
+    g = pgm_read_byte(&gamma24_tableLH[rgb[2]][GAMMATAB_H]);
+    r = pgm_read_byte(&gamma24_tableLH[rgb[1]][GAMMATAB_H]);
   }
 
   for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
@@ -338,7 +339,8 @@ unsigned char LED_update_dot( unsigned char ledd_cur, unsigned char rgbmode )
  b = rgb[2];
  if( rgbmode )
  {
-	g = rgb[0]; /* swap r,g for BRG mode */
+	b = rgb[0]; /* red */
+	g = rgb[2]; /* swap r,g for RBG mode */
 	r = rgb[1]; 
  }
 
@@ -377,7 +379,7 @@ unsigned char LED_update_dot( unsigned char ledd_cur, unsigned char rgbmode )
 
 unsigned char LED_update_splash( unsigned char ledd_cur, unsigned char rgbmode )
 {
- unsigned char idx,cnt,i;
+ unsigned char idx,cnt,i,c0,c1,c2;
  unsigned char *rgb = led_getcolor( IDX_LED_DIGI, LEDD_STATE );
  int16_t ledadd[N_DIGI_LED];
  int16_t rs;
@@ -428,6 +430,19 @@ unsigned char LED_update_splash( unsigned char ledd_cur, unsigned char rgbmode )
 // if( !cnt )
 //	return LED_update_dot( N_DIGI_LED );
 
+ if( rgbmode )
+ {
+	c0 = 0; /* RBG */
+	c1 = 2;
+	c2 = 1;
+ }
+ else
+ {
+	c0 = 2; /* BGR */
+	c1 = 1;
+	c2 = 0;
+ }
+
  for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
  {
   LCD_SPI( 0xE0 + 31 ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
@@ -440,12 +455,12 @@ unsigned char LED_update_splash( unsigned char ledd_cur, unsigned char rgbmode )
   }
   else
   {
-	rs = rgb[2] + ledadd[idx];
-	LCD_SPI( CLIP(rs) ); // B
-	rs = rgb[1] + ledadd[idx];
-	LCD_SPI( CLIP(rs) ); // G
-	rs = rgb[0] + ledadd[idx];
-	LCD_SPI( CLIP(rs) ); // R
+	 rs = rgb[c0] + ledadd[idx];
+	 LCD_SPI( CLIP(rs) ); // B
+	 rs = rgb[c1] + ledadd[idx];
+	 LCD_SPI( CLIP(rs) ); // G
+	 rs = rgb[c2] + ledadd[idx];
+	 LCD_SPI( CLIP(rs) ); // R
   }
  }
 
