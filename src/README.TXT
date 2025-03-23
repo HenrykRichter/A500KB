@@ -65,6 +65,8 @@ in the version (Bit0). Therefore, versions come in pairs now.
 The indicator for LED strip presence is R11. If populated,
 then the strip is assumed to be present.
 
+7/8 = watchdog added, reduced clock to 8 MHz, reduced digital LED brightness 
+      in order to keep power consumption in check
 5/6 = support for LED strip added to the firmware
 4 = USB mode added to firmware 
 3 = Added A500KB Mini to build variants

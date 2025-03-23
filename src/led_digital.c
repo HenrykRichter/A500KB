@@ -43,6 +43,11 @@
 
 #define LEDD_SPLASH_STEPS 50 
 
+/* full brightness = 31 */
+/* half brightness = 15 */
+#define LEDD_PREAMBLE (0xE0+7)
+//#define LEDD_PREAMBLE (0xE0+31)
+
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 //#include <avr/io.h>
@@ -72,7 +77,11 @@ unsigned char LED_update_kitt( unsigned char pos, unsigned char rgbmode );
 unsigned char LED_update_splash( unsigned char ledd_cur, unsigned char rgbmode );
 
 /* actual update rate */
+#if (F_CPU == 8000000 )
+#define LED_DELAY 3 
+#else
 #define LED_DELAY 1
+#endif
 
 unsigned char ledd_cur = 0;
 unsigned char ledd_dly = LED_DELAY;
@@ -116,6 +125,7 @@ char led_digital_step()
 
 // { unsigned char *rgb = led_getcolor( IDX_LED_DIGI, LEDD_STATE );
 
+#if (LED_DELAY > 0)
  /* global update interval ( 15.2ms*(1+LED_DELAY) ) */
  if( ledd_dly > 0 )
  {
@@ -123,6 +133,7 @@ char led_digital_step()
 	return 0;
  }
  ledd_dly = LED_DELAY;
+#endif
 
  /* start update cycle */
  LED_Start_Frame();
@@ -198,14 +209,14 @@ unsigned char LED_update_kitt( unsigned char pos, unsigned char rgbmode )
 
    r = ledd_fxstate[idx] + 5; /* some background glow */
 
-   LCD_SPI( 0xE0 + 31 ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
+   LCD_SPI( LEDD_PREAMBLE ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
    g = 0;
    b = 0;
 
    if( cur==idx )
    {
     if( (idx == 0) || (idx == (N_KITT_LED-1)))
-     g = r>>2;
+	g = r>>5; //     g = r>>2;
    }
 
    if( rgbmode )
@@ -257,7 +268,7 @@ unsigned char LED_update_saturation( unsigned char pos, unsigned char spd, unsig
 
   for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
   {
-	LCD_SPI( 0xE0 + 31 ); /* preamble + brightness */
+	LCD_SPI( LEDD_PREAMBLE ); /* preamble + brightness */
 	LCD_SPI( b );
 	LCD_SPI( g ); /* BGR or BRG */
 	LCD_SPI( r );
@@ -302,7 +313,7 @@ unsigned char LED_update_rainbow( unsigned char pos, unsigned char spd, unsigned
 //  h = (h<<2) + ledd_fxstate[0]; 
   for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
   {
-	LCD_SPI( 0xE0 + 31 ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
+	LCD_SPI( LEDD_PREAMBLE ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
 #if 1
 /*	if( spd == 1 )
 	{
@@ -346,7 +357,7 @@ unsigned char LED_update_dot( unsigned char ledd_cur, unsigned char rgbmode )
 
  for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
  {
-  LCD_SPI( 0xE0 + 31 ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
+  LCD_SPI( LEDD_PREAMBLE ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
   if( idx == ledd_cur )
   {
 	LCD_SPI( 0xf1 ); // B
@@ -445,7 +456,7 @@ unsigned char LED_update_splash( unsigned char ledd_cur, unsigned char rgbmode )
 
  for( idx = 0 ; idx < N_DIGI_LED ; idx++ )
  {
-  LCD_SPI( 0xE0 + 31 ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
+  LCD_SPI( LEDD_PREAMBLE ); /* preamble + brightness (<31 might flicker, see https://cpldcpu.com/2014/11/30/understanding-the-apa102-superled/) */
   if( ledd_fxkeycolstate[idx] > 0 )
   {
   	/* active key column */

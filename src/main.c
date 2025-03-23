@@ -16,11 +16,15 @@
  *                                                                              *
  ********************************************************************************
 */
+#define ENABLE_WATCHDOG WDTO_250MS
 #define ENABLE_USB
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 #include <avr/io.h>
 #include <util/delay.h> /* might be <avr/delay.h>, depending on toolchain */
+#ifdef ENABLE_WATCHDOG
+#include <avr/wdt.h>
+#endif
 //#include "avr/delay.h"
 #include "baxtypes.h"
 #include "twi.h"
@@ -454,7 +458,9 @@ void mainloop_usb(void)
 	pos = 0; /* first key in list */
 	actct = 0;
 	trig  = 0; /* trigger for USB interrupt to send something */
-
+#ifdef ENABLE_WATCHDOG
+	wdt_reset();    /* we're alive (!) */
+#endif
 	for( j=OSTART; j != 0 ; j <<= 1 )
 	{
 	  if( !(j & OMASK ) )	/* oport bit inactive ? */
@@ -575,9 +581,23 @@ int main(void)
   /* disable clock prescaler: this is usually intended to be done by "make fuse" (see MakeFile),
      but when that step is omitted, the device would run at 2 MHz instead of 16 */
   CLKPR = 0x80; /* enable prescaler change */
-  CLKPR = 0x00; /* prescaler 1 */
+#if (F_CPU == 8000000 )
+  CLKPR = 0x01; /* prescaler 2 (0x1) 1 (0x0) */
+#else
+  CLKPR = 0x00;
+#endif
+//  clock_prescale_set(clock_div_2);
+
+
 
 //  cli();
+
+#ifdef ENABLE_WATCHDOG
+  /* watchdog, clocking */
+  MCUSR &= ~(1 << WDRF); /* Disable watchdog if enabled by bootloader/fuses */
+//      wdt_disable();
+  wdt_enable(WDTO_8S);    /* we hang for more than 8s -> reset */
+#endif
 
   /* initialize computer communication ports (D2/D3 regular, F2/F3 in debug) */
   KBDSEND_SENDD &= ~(1<<KBDSEND_SENDB); /* send data port to input */
@@ -661,7 +681,11 @@ int main(void)
 
   led_init(); /* start up LED controller (and enable interrupts) */
   TCCR2A = 0; /* normal mode, OC0A disconnected, OC0B disconnected,   */
+#if (F_CPU == 8000000 )
+  TCCR2B = (1<<CS22) | (1<<CS21); /* prescaler 256 -> 8 MHz/256 = 31250 Hz counter  -> 8 ms before overflow */
+#else
   TCCR2B = (1<<CS20) | (1<<CS21) | (1<<CS22); /* prescaler 1024 -> 16 MHz/1024 = 15625 Hz counter -> 16.3 ms before overflow */
+#endif
   TCNT2  = 0x00; /* start timer with 0 */
   TIFR2  = 0x01; /* clear TOV0 overflow flag (write 1 to set flag to 0) */
 // while( (TIFR2 & 0x01) == 0  ) /* break waiting loop after 4ms */
@@ -725,6 +749,12 @@ int main(void)
   }
 #endif
 
+#ifdef ENABLE_WATCHDOG
+  /* start watchdog (for real, this time) */
+  wdt_disable();
+  wdt_enable(ENABLE_WATCHDOG);    /* we hang for more than 250ms -> reset */
+#endif
+
   /* */
   init_ring();	/* prepare ringbuffer */
   state = STATE_POWERUP; /* synchronize with Amiga, perform power-up procedure */
@@ -748,6 +778,10 @@ int main(void)
 	}	
 #endif /* ENABLE_USB */
 
+#ifdef ENABLE_WATCHDOG
+	wdt_reset();    /* we're alive (!) */
+#endif
+
 	/* Digital LED strip update -> make sure not to miss KB ACK */
 	if( !(state & STATE_KBWAIT) )
 	{
@@ -762,6 +796,9 @@ int main(void)
 	{
 		kbdwait = 0;
 		/* synchronize with Amiga, stay here until Amiga answers */
+#ifdef ENABLE_WATCHDOG
+		wdt_reset();    /* we're alive (!), needed here because we're in a loop for potentially a long time */
+#endif
 
 		/* LED control is part of KBSync Mode */
 //		led_updatecontroller(inputstate); /* */

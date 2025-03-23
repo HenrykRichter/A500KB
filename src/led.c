@@ -1065,18 +1065,23 @@ void led_defaults()
 	for( i=3 ; i < 6 ; i++ )
 	{ 
 		LED_RGB[i][LED_IDLE][0] = 0x20;
-		LED_RGB[i][LED_IDLE][1] = 0x01+((i-3)<<2);
-		LED_RGB[i][LED_IDLE][2] = 0x04+((i-3)<<1);
+		LED_RGB[i][LED_IDLE][1] = 0x01;
+		LED_RGB[i][LED_IDLE][2] = 0x04;
+//		LED_RGB[i][LED_IDLE][1] = 0x01+((i-3)<<2);
+//		LED_RGB[i][LED_IDLE][2] = 0x04+((i-3)<<1);
 		LED_RGB[i][LED_ACTIVE][0] = 0xFF; /* red-ish */
-		LED_RGB[i][LED_ACTIVE][1] = 0x03+((i-3)<<5);
-		LED_RGB[i][LED_ACTIVE][2] = 0x46+((i-3)<<4);
+		LED_RGB[i][LED_ACTIVE][1] = 0x03;
+		LED_RGB[i][LED_ACTIVE][2] = 0x46;
+//		LED_RGB[i][LED_ACTIVE][1] = 0x03+((i-3)<<5);
+//		LED_RGB[i][LED_ACTIVE][2] = 0x46+((i-3)<<4);
+
 	}
 
 	/* Caps */
 	i=6;
 	LED_RGB[i][LED_IDLE][0] = 0x01;
-	LED_RGB[i][LED_IDLE][1] = 0x32;
-	LED_RGB[i][LED_IDLE][2] = 0x26;
+	LED_RGB[i][LED_IDLE][1] = (0x32>>1);
+	LED_RGB[i][LED_IDLE][2] = (0x26>>1);
 	LED_RGB[i][LED_ACTIVE][0] = 0xA1; /* violet */
 	LED_RGB[i][LED_ACTIVE][1] = 0x00;
 	LED_RGB[i][LED_ACTIVE][2] = 0xC9;

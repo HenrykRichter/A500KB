@@ -68,9 +68,10 @@ unsigned char led_getmode( uint8_t ledidx );
 #define LEDGV_TYPE_A500  0x01 /* 7 LEDs */
 #define LEDGV_TYPE_A3000 0x02 /* 1 LED only */
 #define LEDGV_TYPE_A500Mini 0x03 /* 6 LEDs, no CAPS */
-#define LEDGV_VERSION    0x06 /* software version (1=initial, 2=with mode support, 3=mini added, 4=USB added) */
+#define LEDGV_VERSION    0x08 /* software version (1=initial, 2=with mode support, 3=mini added, 4=USB added) */
                               /* 5=DigitalLED added, also: even numbers > 4 = no digi LED, odd numbers = digi LED
 			         6=DigitalLED capable but not enabled
+				 8=Watchdog added, DigitalLED capable
 			      */
 
 /* LED MODES */
