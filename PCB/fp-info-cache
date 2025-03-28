@@ -1,4 +1,4 @@
-24176220904568476
+24179717951207170
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -65905,6 +65905,13 @@ MXMitsumi-2.75U-PlateCutout_Cherry_exact
 0
 0
 MXMitsumi
+MXMitsumi-2.75U-SPCLEFT_LR
+
+
+0
+10
+4
+MXMitsumi
 MXMitsumi-2U-NoLED
 
 
@@ -66023,6 +66030,13 @@ mounting hole 3.2mm no annular m3 iso7380
 0
 0
 0
+MXMitsumi
+SW_Gateron_LowProfile_THT
+Gateron Low Profile (KS-27 & KS-33) style mechanical keyboard switch, through-hole soldering, single-sided mounting. Gateron Low Profile and Cherry MX Low Profile are NOT compatible.
+switch, low_profile
+0
+2
+2
 Module
 A20_OLINUXINO_LIME2
 A20 Olinuxino LIME2, 1.2GHz, 512-1024MB RAM, Micro-SD, NAND or eMMC, 1000Mbit Ethernet

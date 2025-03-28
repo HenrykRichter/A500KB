@@ -8,7 +8,7 @@ The two variants of the PCBs in this repository are discussed below. In a nutshe
 ### PCB ordering
 
 - 1 PCB from A500KB\_Gerber, 2 layer PCB in FR4, 1.2mm thickness for a little more space in bottom case (standard 1.6mm will still be compatible)
-- 1 PCB from A500KBPlate\_Gerber, 1 layer PCB in FR4 or Alu, 1.2mm thickness (this thickness matches to the 3D printed parts) for plate mounted MX stabilizers _OR_ A500KBPlate\_Gerber\_V2D.zip for Costar style stabilizers
+- 1 PCB from A500KBPlate\_Gerber, 1 layer PCB in FR4 or Alu, 1mm thickness for PCB or plate mounted MX stabilizers _OR_ A500KBPlate\_Gerber\_V2D.zip for Costar style stabilizers
 
 ### 3D printing
 
@@ -16,15 +16,18 @@ The 3D printed parts are in the 3DPrint/ subfolder. Which of those files are to 
 The keyboard framing spacers are designed for countersunk M2.5 bolts with a total length of 5mm. 
 The LED frame is to be mounted by flathead M2 bolts with a total length of 5mm and matching nuts.
 
-A500
-- Keyboard\_Spacer\_L, Keyboard\_Spacer\_R for left/right side of keyboard
-- Keyboard\_Spacer\_VL, Keyboard\_Spacer\_VR for front left/right below spacebar and cursor keys
-- Keyboard\_LEDs\_Rahmen as frame for holding the LED lenses
-- Keyboard\_LEDs LED lenses to be printed (twice!) in transparent filament or resin
+As of A500KB V4, the 3D printed parts have been unified. The side spacers will fit A500 (and reproduction cases), as well as at least most of the external keyboard cases (tested: A2000,A3000,A4000 Mitsumi cases).
 
-A2000/3000/4000 external enclosure
-- Keyboard\_Spacer\_L, Keyboard\_Spacer\_R for left/right side of keyboard
-- A3000KB\_Spacer\_VL, A3000KB\_Spacer\_VR for front left/right below spacebar and cursor keys
+Four parts are designed for all keyboard types: 
+- Keyboard\_Spacer\_L\_F2025  - left side of keyboard
+- Keyboard\_Spacer\_R\_F2025  - right side of keyboard
+- Keyboard\_Spacer\_VL\_F2025 - front left below spacebar
+- Keyboard\_Spacer\_VR\_F2025 - front right below cursor keys
+
+A500
+- Keyboard\_LEDs\_Rahmen - frame for holding the LED lenses
+- Keyboard\_LEDs - LED lenses to be printed (twice!) in transparent filament or resin. Keep infill low.
+
 
 You also might consider to look at Spacebar\_ExtraSprings for Mitsumi mechanical based builds. This part allows to place additional springs under the space bar in the same way that was present with Mitsumi Amiga keyboards. 
 

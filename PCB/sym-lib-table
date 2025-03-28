@@ -1,6 +1,6 @@
 (sym_lib_table
   (version 7)
-  (lib (name "MX_Hybrid")(type "Legacy")(uri "${KIPRJMOD}/Partlibs/MX_Alps_Hybrid.lib")(options "")(descr ""))
+  (lib (name "MX_Hybrid")(type "KiCad")(uri "${KIPRJMOD}/MX_Hybrid.kicad_sym")(options "")(descr ""))
   (lib (name "Commodore")(type "Legacy")(uri "${KIPRJMOD}/Partlibs/Commodore.lib")(options "")(descr ""))
   (lib (name "LED_Cutout_LIB")(type "KiCad")(uri "${KIPRJMOD}/Partlibs/LED_Cutout_LIB.kicad_sym")(options "")(descr ""))
 )

@@ -7,7 +7,7 @@
 	(title_block
 		(title "A500 Keyboard")
 		(date "2021-12-04")
-		(rev "0.0")
+		(rev "4e")
 		(company "Henryk Richter")
 	)
 	(lib_symbols
@@ -6775,6 +6775,237 @@
 				)
 			)
 		)
+		(symbol "MX_Hybrid:MX-LSHIFT_LR"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "MX"
+				(at 5.842 4.572 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+				)
+			)
+			(property "Value" "MX-LSHIFT_LR"
+				(at -0.508 3.048 0)
+				(effects
+					(font
+						(size 0.508 0.508)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -15.875 -0.635 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at -15.875 -0.635 0)
+				(effects
+					(font
+						(size 1.524 1.524)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MX-LSHIFT_LR_0_0"
+				(rectangle
+					(start -2.54 2.54)
+					(end 1.27 -1.27)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -1.27) (xy -1.27 1.27)
+					)
+					(stroke
+						(width 0.127)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 11.43 -1.27) (xy 11.43 1.27)
+					)
+					(stroke
+						(width 0.127)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 1.27) (xy 0 1.27) (xy -1.27 1.905)
+					)
+					(stroke
+						(width 0.127)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 13.97 1.27) (xy 12.7 1.27) (xy 11.43 1.905)
+					)
+					(stroke
+						(width 0.127)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 2.54)
+					(end 13.97 -1.27)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "COL"
+					(at 3.175 0 0)
+					(effects
+						(font
+							(size 0.762 0.762)
+						)
+					)
+				)
+				(text "COL"
+					(at 15.875 0 0)
+					(effects
+						(font
+							(size 0.762 0.762)
+						)
+					)
+				)
+				(text "ROW"
+					(at 0 -1.905 900)
+					(effects
+						(font
+							(size 0.762 0.762)
+						)
+						(justify right)
+					)
+				)
+				(text "ROW"
+					(at 12.7 -1.905 900)
+					(effects
+						(font
+							(size 0.762 0.762)
+						)
+						(justify right)
+					)
+				)
+			)
+			(symbol "MX-LSHIFT_LR_1_1"
+				(pin passive line
+					(at 3.81 1.27 180)
+					(length 2.54)
+					(name "COL"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -1.27 -3.81 90)
+					(length 2.54)
+					(name "ROW"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 16.51 1.27 180)
+					(length 2.54)
+					(name "COL"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 11.43 -3.81 90)
+					(length 2.54)
+					(name "ROW"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "MX_Hybrid:MX-NoLED"
 			(pin_names
 				(offset 1.016)
@@ -11093,6 +11324,16 @@
 	)
 	(wire
 		(pts
+			(xy 63.5 361.95) (xy 63.5 359.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "36513c06-70ee-451d-a400-aa3d0adcbcb6")
+	)
+	(wire
+		(pts
 			(xy 167.64 316.23) (xy 168.91 316.23)
 		)
 		(stroke
@@ -12083,7 +12324,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 374.65) (xy 55.88 375.92)
+			(xy 58.42 367.03) (xy 58.42 368.3)
 		)
 		(stroke
 			(width 0)
@@ -12963,16 +13204,6 @@
 	)
 	(wire
 		(pts
-			(xy 60.96 369.57) (xy 62.23 369.57)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6d31c2c3-497c-4ed5-b424-f67a7c551f95")
-	)
-	(wire
-		(pts
 			(xy 387.35 344.17) (xy 386.08 344.17)
 		)
 		(stroke
@@ -13270,6 +13501,16 @@
 			(type default)
 		)
 		(uuid "74ddaba5-8dff-4e48-8bb1-9364c7110aa5")
+	)
+	(wire
+		(pts
+			(xy 48.26 359.41) (xy 48.26 227.965)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "755dcdad-382e-4362-a601-129cb2103393")
 	)
 	(wire
 		(pts
@@ -14563,16 +14804,6 @@
 	)
 	(wire
 		(pts
-			(xy 48.26 363.22) (xy 48.26 227.965)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "994d6c43-631e-4ff3-94d5-d4f80005bc94")
-	)
-	(wire
-		(pts
 			(xy 515.62 86.995) (xy 526.415 86.995)
 		)
 		(stroke
@@ -15020,16 +15251,6 @@
 			(type default)
 		)
 		(uuid "a5ce0789-2284-4155-a08b-9607e1f1f281")
-	)
-	(wire
-		(pts
-			(xy 62.23 369.57) (xy 62.23 363.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a5fa4996-37ba-4ff8-8204-08976e6d586b")
 	)
 	(wire
 		(pts
@@ -16663,6 +16884,16 @@
 	)
 	(wire
 		(pts
+			(xy 63.5 359.41) (xy 48.26 359.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d4797e17-6247-4783-b9e1-579c4c58361c")
+	)
+	(wire
+		(pts
 			(xy 249.555 240.03) (xy 391.16 240.03)
 		)
 		(stroke
@@ -17780,16 +18011,6 @@
 			(type default)
 		)
 		(uuid "f502c6d0-88c2-4162-957a-8b8c784b2f89")
-	)
-	(wire
-		(pts
-			(xy 62.23 363.22) (xy 48.26 363.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f5343c2c-b188-4073-ade9-054c335371a5")
 	)
 	(wire
 		(pts
@@ -23714,140 +23935,6 @@
 	)
 	(symbol
 		(lib_id "MX_Hybrid:MX-NoLED")
-		(at 57.15 370.84 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-000061bbb892")
-		(property "Reference" "MX5"
-			(at 57.9882 365.1758 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "LShift"
-			(at 57.9882 367.0554 0)
-			(effects
-				(font
-					(size 0.508 0.508)
-				)
-			)
-		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-1.75U-NoLED"
-			(at 41.275 371.475 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 41.275 371.475 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 57.15 370.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5ebce73b-6a44-426b-b6eb-332670854093")
-		)
-		(pin "2"
-			(uuid "e2f7d714-a5c1-4546-a5b7-ffe308eb51de")
-		)
-		(instances
-			(project ""
-				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
-					(reference "MX5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MX_Hybrid:MX-NoLED")
-		(at 72.39 363.22 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-000061bbb898")
-		(property "Reference" "MX11"
-			(at 73.2282 357.5558 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "<>"
-			(at 73.2282 359.4354 0)
-			(effects
-				(font
-					(size 0.508 0.508)
-				)
-			)
-		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-1U-NoLED"
-			(at 56.515 363.855 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 56.515 363.855 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 72.39 363.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "72236e03-0ab5-4691-8944-483e5d287225")
-		)
-		(pin "2"
-			(uuid "7abbeca4-aa44-44f8-8405-cc98330a9f64")
-		)
-		(instances
-			(project ""
-				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
-					(reference "MX11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MX_Hybrid:MX-NoLED")
 		(at 87.63 362.585 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -28529,7 +28616,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 55.88 375.92 0)
+		(at 58.42 368.3 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -28537,7 +28624,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-000061d81302")
 		(property "Reference" "#PWR0105"
-			(at 55.88 382.27 0)
+			(at 58.42 374.65 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28546,7 +28633,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 56.007 380.3142 0)
+			(at 58.547 372.6942 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28554,7 +28641,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 55.88 375.92 0)
+			(at 58.42 368.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28563,7 +28650,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 55.88 375.92 0)
+			(at 58.42 368.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28572,7 +28659,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 55.88 375.92 0)
+			(at 58.42 368.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -41619,6 +41706,79 @@
 			(project ""
 				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
 					(reference "baxlogo1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-LSHIFT_LR")
+		(at 59.69 363.22 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d66d939e-c20b-4b18-a946-b9363aa325ce")
+		(property "Reference" "MX5"
+			(at 66.04 356.87 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "LShift <>"
+			(at 66.9352 359.41 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-2.75U-SPCLEFT_LR"
+			(at 43.815 363.855 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 43.815 363.855 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 59.69 363.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "e3f9015a-8c47-452d-a3a9-bbc7c45e937e")
+		)
+		(pin "3"
+			(uuid "7bdd1068-59e5-4ab7-bb5c-776ff0fb04d6")
+		)
+		(pin "2"
+			(uuid "698f9fe3-b60b-42c0-87ff-3a6ab345ff79")
+		)
+		(pin "1"
+			(uuid "29cb07e9-666a-4bd1-96b5-8e0cb2cbb39b")
+		)
+		(instances
+			(project ""
+				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
+					(reference "MX5")
 					(unit 1)
 				)
 			)
