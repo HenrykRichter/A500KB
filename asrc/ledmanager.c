@@ -505,16 +505,47 @@ void led_defaults()
 }
 
 #define PR_POWER0 0
-#define PR_POWER1 3
-#define PR_FLOPPY 6
-#define PR_STRIP  9
-#define PR_FLOPPYOFF 12
-const UBYTE pr_rgb[3][15] = {
-/* PowerOff        PowerOn         Floppy         Strip            Floppy OFF */
- { 0x2D,0x00,0x00, 0x9F,0x04,0x00, 0x59,0x9E,0x3B, 0x9F,0x04,0x00, 0x00,0x00,0x00 }, // LEDPR_A500RED
- { 0x19,0x2D,0x10, 0x59,0x9E,0x3B, 0xFF,0x6C,0x00, 0x11,0x9E,0x09, 0x00,0x00,0x00 }, // LEDPR_A500GRN
- { 0x24,0x0E,0x08, 0xFF,0x8D,0x82, 0xFF,0x8D,0x82, 0x88,0x7A,0x1A, 0x24,0x0E,0x08 }, // LEDPR_TEST
+#define PR_POWER1 9 
+#define PR_FLOPPY 18
+#define PR_STRIP  27
+#define PR_FLOPPYOFF 30
+const UBYTE pr_rgb[7][33] = {
+/* PowerOff                                        PowerOn                                         */
+ { 0x2D,0x00,0x00, 0x2D,0x00,0x00, 0x2D,0x00,0x00, 0x9F,0x04,0x00, 0x9F,0x04,0x00, 0x9F,0x04,0x00, 
+/* Floppy ON                                       Strip           Floppy OFF     */
+   0x59,0x9E,0x3B, 0x59,0x9E,0x3B, 0x59,0x9E,0x3B, 0x9F,0x04,0x00, 0x00,0x00,0x00 }, // LEDPR_A500RED
+
+/* PowerOff                                        PowerOn                                         */
+ { 0x19,0x2D,0x10, 0x19,0x2D,0x10, 0x19,0x2D,0x10, 0x59,0x9E,0x3B, 0x59,0x9E,0x3B, 0x59,0x9E,0x3B, 
+/* Floppy ON                                       Strip           Floppy OFF     */
+   0xFF,0x6C,0x00, 0xFF,0x6C,0x00, 0xFF,0x6C,0x00, 0x11,0x9E,0x09, 0x00,0x00,0x00 }, // LEDPR_A500GRN
+
+/* PowerOff                                        PowerOn                                         */
+ { 0x24,0x0E,0x08, 0x24,0x0E,0x08, 0x24,0x0E,0x08, 0xFF,0x8D,0x82, 0xFF,0x8D,0x82, 0xFF,0x8D,0x82, 
+/* Floppy ON                                       Strip           Floppy OFF     */
+   0xFF,0x8D,0x82, 0xFF,0x8D,0x82, 0xFF,0x8D,0x82, 0x88,0x7A,0x1A, 0x24,0x0E,0x08 }, // LEDPR_TEST
+
+/* PowerOff                                        PowerOn                                         */
+ { 0x2D,0x1D,0x0B, 0x10,0x0E,0x0D, 0x0E,0x08,0x12, 0xCE,0x84,0x32, 0xB7,0xA0,0x94, 0x72,0x41,0x92, 
+/* Floppy ON                                       Strip           Floppy OFF     */
+   0xCE,0x84,0x32, 0xB7,0xA0,0x94, 0x72,0x41,0x92, 0x64,0x27,0x06, 0x00,0x00,0x00 }, // LEDPR_SUNSET
+
+/* PowerOff                                        PowerOn                                         */
+ { 0x16,0x16,0x2D, 0x0F,0x0F,0x24, 0x16,0x16,0x2D, 0x63,0x63,0xC4, 0x50,0x50,0xAA, 0x63,0x63,0xC4, 
+/* Floppy ON                                       Strip           Floppy OFF     */
+   0x63,0x63,0xC4, 0x50,0x50,0xAA, 0x63,0x63,0xC4, 0x50,0x50,0x54, 0x00,0x00,0x00 }, // LEDPR_STEEL
+
+/* PowerOff                                        PowerOn                                         */
+ { 0x27,0x21,0x24, 0x27,0x21,0x24, 0x27,0x21,0x24, 0xD7,0xC6,0xB7, 0xD7,0xB6,0xC7, 0xD7,0xB6,0xC7, 
+/* Floppy ON                                       Strip           Floppy OFF     */
+   0xD7,0xC6,0xB7, 0xD7,0xC6,0xB7, 0xD7,0xC6,0xB7, 0x3F,0x24,0x18, 0x00,0x00,0x00 }, // LEDPR_WHITE
+
+/* PowerOff                                        PowerOn                                         */
+ { 0x19,0x00,0x00, 0x00,0x19,0x00, 0x00,0x00,0x19, 0xFF,0x00,0x00, 0x00,0xFF,0x00, 0x00,0x00,0xFF, 
+/* Floppy ON                                       Strip           Floppy OFF     */
+   0xFF,0x00,0x00, 0x00,0xFF,0x00, 0x00,0x00,0xFF, 0x3F,0x24,0x18, 0x00,0x00,0x00 }, // LEDPR_RGB
 };
+
 
 
 LONG ledmanager_setpreset( ULONG type ) /* pre-defined color schemes */
@@ -528,23 +559,21 @@ LONG ledmanager_setpreset( ULONG type ) /* pre-defined color schemes */
 	}
 	LED_MODES[N_LED] &= 0x20; /* LEDD_FXRGB */
 
-	switch( type )
+        idx = type - LEDPR_A500RED;
+	if( type == LEDPR_TEST )
 	{
-		case LEDPR_A500GRN:
-			idx = 1;
-			break;
-		case LEDPR_TEST:
-			idx = 2;
 			for( i=0 ; i < N_LED ; i++ )
 			{
 				LED_MODES[i] = 1;
 			}
 			LED_MODES[N_LED] |= 2; /* 2=LEDD_FX_RAINBOWSLW */
-			break;
-		default: /* LEDPR_A500RED */
-			idx = 0;
-			break;
 	}
+	if( type == LEDPR_RGB )
+		LED_MODES[N_LED] |= 2; /* 2=LEDD_FX_RAINBOWSLW */
+
+	if( type >= LEDPR_RGB )
+		idx = LEDPR_RGB-LEDPR_A500RED;
+
 
         /* RGB defaults */
         for( i=0 ; i < 2 ; i++ )
@@ -552,9 +581,9 @@ LONG ledmanager_setpreset( ULONG type ) /* pre-defined color schemes */
                 LED_RGB[i][LED_IDLE][0] = pr_rgb[idx][PR_FLOPPYOFF+0];
                 LED_RGB[i][LED_IDLE][1] = pr_rgb[idx][PR_FLOPPYOFF+1];
                 LED_RGB[i][LED_IDLE][2] = pr_rgb[idx][PR_FLOPPYOFF+2];
-                LED_RGB[i][LED_ACTIVE][0] = pr_rgb[idx][PR_FLOPPY]; /* orange */
-                LED_RGB[i][LED_ACTIVE][1] = pr_rgb[idx][PR_FLOPPY+1];
-                LED_RGB[i][LED_ACTIVE][2] = pr_rgb[idx][PR_FLOPPY+2];
+                LED_RGB[i][LED_ACTIVE][0] = pr_rgb[idx][(3*i)+PR_FLOPPY]; /* orange */
+                LED_RGB[i][LED_ACTIVE][1] = pr_rgb[idx][3*i+PR_FLOPPY+1];
+                LED_RGB[i][LED_ACTIVE][2] = pr_rgb[idx][3*i+PR_FLOPPY+2];
                 LED_RGB[i][LED_SECONDARY][0] = 0x83; /* magenta */
                 LED_RGB[i][LED_SECONDARY][1] = 0x00; //+((i-3)<<5);
                 LED_RGB[i][LED_SECONDARY][2] = 0x83; //+((i-3)<<4);
@@ -567,22 +596,22 @@ LONG ledmanager_setpreset( ULONG type ) /* pre-defined color schemes */
         LED_RGB[i][LED_ACTIVE][0] = 0x00; /* cyan */
         LED_RGB[i][LED_ACTIVE][1] = 0xEA;
         LED_RGB[i][LED_ACTIVE][2] = 0xFF;
-        LED_RGB[i][LED_SECONDARY][0] = pr_rgb[idx][PR_FLOPPY]; /* dark white */
-        LED_RGB[i][LED_SECONDARY][1] = pr_rgb[idx][PR_FLOPPY+1]; //+((i-3)<<5);
-        LED_RGB[i][LED_SECONDARY][2] = pr_rgb[idx][PR_FLOPPY+2]; //+((i-3)<<4);
+        LED_RGB[i][LED_SECONDARY][0] = pr_rgb[idx][3*i+PR_FLOPPY]; /* dark white */
+        LED_RGB[i][LED_SECONDARY][1] = pr_rgb[idx][3*i+PR_FLOPPY+1]; //+((i-3)<<5);
+        LED_RGB[i][LED_SECONDARY][2] = pr_rgb[idx][3*i+PR_FLOPPY+2]; //+((i-3)<<4);
 
         /* Power */
         for( i=3 ; i < 6 ; i++ )
         {
-                LED_RGB[i][LED_IDLE][0] = pr_rgb[idx][PR_POWER0]; /* dark green */
-                LED_RGB[i][LED_IDLE][1] = pr_rgb[idx][PR_POWER0+1]; //+((i-3)<<2);
-                LED_RGB[i][LED_IDLE][2] = pr_rgb[idx][PR_POWER0+2]; //+((i-3)<<1);
-                LED_RGB[i][LED_ACTIVE][0] = pr_rgb[idx][PR_POWER1];  /* green-ish */
-                LED_RGB[i][LED_ACTIVE][1] = pr_rgb[idx][PR_POWER1+1]; //+((i-3)<<5);
-                LED_RGB[i][LED_ACTIVE][2] = pr_rgb[idx][PR_POWER1+2]; //+((i-3)<<4);
-                LED_RGB[i][LED_SECONDARY][0] = 0x10; /* cyan */
-                LED_RGB[i][LED_SECONDARY][1] = 0x83; //+((i-3)<<5);
-                LED_RGB[i][LED_SECONDARY][2] = 0x83; //+((i-3)<<4);
+                LED_RGB[i][LED_IDLE][0] = pr_rgb[idx][3*(i-3)+PR_POWER0];   
+                LED_RGB[i][LED_IDLE][1] = pr_rgb[idx][3*(i-3)+PR_POWER0+1]; 
+                LED_RGB[i][LED_IDLE][2] = pr_rgb[idx][3*(i-3)+PR_POWER0+2]; 
+                LED_RGB[i][LED_ACTIVE][0] = pr_rgb[idx][3*(i-3)+PR_POWER1]; 
+                LED_RGB[i][LED_ACTIVE][1] = pr_rgb[idx][3*(i-3)+PR_POWER1+1]; 
+                LED_RGB[i][LED_ACTIVE][2] = pr_rgb[idx][3*(i-3)+PR_POWER1+2]; 
+                LED_RGB[i][LED_SECONDARY][0] = 0x10; 
+                LED_RGB[i][LED_SECONDARY][1] = 0x83; 
+                LED_RGB[i][LED_SECONDARY][2] = 0x83; 
         }
 
         /* Caps */

@@ -12,7 +12,7 @@
 #define LIBVERSION  "1"
 #define LIBREVISION "9"
 /* #define DEVICEEXTRA Beta */
-#define LIBDATE     "3.3.25"
+#define LIBDATE     "28.3.25"
 
 #endif
 

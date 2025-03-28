@@ -80,9 +80,14 @@
 #define LEDGV_TYPE_A500MINI 0x03
 #define LEDGV_VERSION    0x01 /* software version */
 
+/* see index mapping in ledmanager.c, should be consecutive */
 #define LEDPR_A500RED 0x1
 #define LEDPR_A500GRN 0x2
 #define LEDPR_TEST    0x3
+#define LEDPR_SUNSET  0x4
+#define LEDPR_STEEL   0x5
+#define LEDPR_WHITE   0x6
+#define LEDPR_RGB     0x7
 
 /* PUBLIC PROTO */
 

@@ -224,11 +224,15 @@ extern LONG keyboard_version;
 #define CMD_SAVE  0x80000003
 #define CMD_HIDE  0x80000004
 #define CMD_QUIT  0x80000005
-#define CMD_PRESETA500R 0x80000006
-#define CMD_PRESETA500G 0x80000007
-#define CMD_PRESETTEST  0x80000008
+#define CMD_PRESETA500R  0x80000006
+#define CMD_PRESETA500G  0x80000007
+#define CMD_PRESETSUNSET 0x80000008
+#define CMD_PRESETSTEEL  0x80000009
+#define CMD_PRESETWHITE  0x8000000A
+#define CMD_PRESETRGB    0x8000000B
+#define CMD_PRESETTEST   0x8000000C
 
-#define DEF_ITEMS 11 
+#define DEF_ITEMS 15 
 struct NewMenu defmenus[DEF_ITEMS] = {
  {NM_TITLE,(STRPTR)"Project", 0, 0, 0, NULL },
  {NM_ITEM, (STRPTR)"About",0 , 0, 0, (APTR)CMD_ABOUT },
@@ -239,6 +243,10 @@ struct NewMenu defmenus[DEF_ITEMS] = {
  {NM_TITLE,(STRPTR)"Presets",0,0,0,NULL },
  {NM_ITEM, (STRPTR)"A500 Red/Green",   0, 0, 0, (APTR)CMD_PRESETA500R },
  {NM_ITEM, (STRPTR)"A500 Green/Yellow",0, 0, 0, (APTR)CMD_PRESETA500G },
+ {NM_ITEM, (STRPTR)"Sunset",   0, 0, 0, (APTR)CMD_PRESETSUNSET },
+ {NM_ITEM, (STRPTR)"Steel",0, 0, 0, (APTR)CMD_PRESETSTEEL },
+ {NM_ITEM, (STRPTR)"White",   0, 0, 0, (APTR)CMD_PRESETWHITE },
+ {NM_ITEM, (STRPTR)"RGB",0, 0, 0, (APTR)CMD_PRESETRGB },
  {NM_ITEM, (STRPTR)"Test Mode",0, 0, 0, (APTR)CMD_PRESETTEST },
  {NM_END,  NULL, NULL, 0, 0, NULL},
 };
@@ -795,6 +803,12 @@ void UpdateSliders( struct myWindow *win, ULONG code, struct Gadget *gad, struct
 
 }
 
+void updatePreset( struct myWindow *win, ULONG type )
+{
+	ledmanager_setpreset( type ); /* pre-defined color schemes */
+	UpdateSrcState( win, LED_ACTIVE , win->SrcState );
+	UpdateLEDButton( win, 0, win->PowerLED, &LEDPower );
+}
 
 LONG Window_Event(struct configvars *conf, struct myWindow *win )
 {
@@ -937,6 +951,14 @@ LONG Window_Event(struct configvars *conf, struct myWindow *win )
 							 }
 							}
 							break;
+						case CMD_PRESETA500R: updatePreset( win, LEDPR_A500RED );break;
+						case CMD_PRESETA500G: updatePreset( win, LEDPR_A500GRN );break;
+						case CMD_PRESETSUNSET:updatePreset( win, LEDPR_SUNSET  );break;
+						case CMD_PRESETSTEEL: updatePreset( win, LEDPR_STEEL   );break;
+						case CMD_PRESETWHITE: updatePreset( win, LEDPR_WHITE   );break;
+						case CMD_PRESETRGB:   updatePreset( win, LEDPR_RGB     );break;
+						case CMD_PRESETTEST:  updatePreset( win, LEDPR_TEST    );break;
+#if 0
 						case CMD_PRESETA500R:
 							ledmanager_setpreset( LEDPR_A500RED ); /* pre-defined color schemes */
 							UpdateSrcState( win, LED_ACTIVE , win->SrcState );
@@ -952,7 +974,7 @@ LONG Window_Event(struct configvars *conf, struct myWindow *win )
 							UpdateSrcState( win, LED_ACTIVE , win->SrcState );
 							UpdateLEDButton( win, 0, win->PowerLED, &LEDPower ); 
 							break;
-
+#endif
 						case CMD_QUIT:
 		                                        Window_Close( conf, win );
                 		                        return -1;
