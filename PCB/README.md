@@ -40,8 +40,9 @@ Also of relevance for Mitsumi builds is Keyboard\_CapsLockLED to be printed in t
 - Choose between D1 and D69, depending on switches and keycaps. For CherryMX switches (with SMD LED provision), D69 would be a good choice. D1 is better suited for Mitsumi switches and associated keycaps.
 - C15/C16 are not needed.
 - The 1x31 flat cable connector (J1) is not needed and stays unpopulated
-- Screw-In PCB mounted stabilizers are needed for Cherry MX and compatible
+- Screw-In PCB mounted stabilizers are recommended for Cherry MX and compatible
 - see below for a description in which cases R6/R10/R11 need to be installed
+- an iBOM is provided as PCB/bom/ibom.html as soldering aid. Please download before use.
 
 ### Building
 
@@ -54,7 +55,7 @@ After placing the SMD components, flash the ATMega firmware and verify that the 
 - Option A) connect by USB to some PC and shorten the pins of the individual keys
 - Option B) add A500 cable to J4 and test with AmigaTestKit or similar
 
-Please note that diode reworking after the plate was placed and keyswitches were soldered is not a job I'd look forward to. Therefore, diode soldering and orientation really should be verified before going further.
+Please note that diode reworking after the plate was placed and keyswitches were soldered is not a job I'd look forward to. Therefore, diode soldering and orientation should be verified before going further (!)
 
 For CherryMX based builds, place the PCB mounted stabilizers including their wires in the next step. Screw-In type stabilizers should be preferred. 8U stabilizer wires are not commonly available. Hence, it might be necessary to custom-bend the spacebar wire (133.4mm wide, 1.5-1.6mm diameter).
 
