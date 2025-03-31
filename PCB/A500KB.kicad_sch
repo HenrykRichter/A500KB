@@ -8575,12 +8575,6 @@
 		(uuid "8eaad877-ba21-420f-9385-c3faa59f30d2")
 	)
 	(junction
-		(at 256.54 339.725)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "918ebb37-11ac-41cb-a682-b93fbb6df950")
-	)
-	(junction
 		(at 138.43 316.23)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -8813,6 +8807,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c26b8bd0-600f-4a1d-ae45-4f7a00d159c9")
+	)
+	(junction
+		(at 256.54 342.9)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c27cd1e5-7611-4c53-a53d-b101f32fdc74")
 	)
 	(junction
 		(at 317.5 382.27)
@@ -9324,16 +9324,6 @@
 	)
 	(wire
 		(pts
-			(xy 256.54 339.725) (xy 256.54 356.87)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0287ebb9-0db7-480c-8d73-20e8a5c8bd49")
-	)
-	(wire
-		(pts
 			(xy 118.745 67.31) (xy 121.285 67.31)
 		)
 		(stroke
@@ -9411,6 +9401,16 @@
 			(type default)
 		)
 		(uuid "04751b71-46a7-4e5f-be49-e60ec9a58bc6")
+	)
+	(wire
+		(pts
+			(xy 256.54 342.9) (xy 256.54 356.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "049cd89d-d40e-43c4-943e-82c0c717f41b")
 	)
 	(wire
 		(pts
@@ -10041,6 +10041,16 @@
 			(type default)
 		)
 		(uuid "15e7e915-887b-48c6-adc4-acfee6688602")
+	)
+	(wire
+		(pts
+			(xy 273.05 330.2) (xy 270.51 330.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15fd0194-12fa-458a-9868-1528446c7e4c")
 	)
 	(wire
 		(pts
@@ -11434,6 +11444,16 @@
 	)
 	(wire
 		(pts
+			(xy 251.46 344.17) (xy 265.43 344.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3937a2d9-c119-4a90-9681-e4965b333cc8")
+	)
+	(wire
+		(pts
 			(xy 101.6 354.33) (xy 116.84 354.33)
 		)
 		(stroke
@@ -11481,6 +11501,16 @@
 			(type default)
 		)
 		(uuid "3a7acfef-d8e3-4308-90a9-38235d863e04")
+	)
+	(wire
+		(pts
+			(xy 256.54 339.09) (xy 256.54 342.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3ae0c21f-0890-4522-a264-ef8db72ba9b2")
 	)
 	(wire
 		(pts
@@ -12434,6 +12464,16 @@
 	)
 	(wire
 		(pts
+			(xy 265.43 344.17) (xy 265.43 337.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "54ea5eca-4a0e-439e-968a-24774e91fad6")
+	)
+	(wire
+		(pts
 			(xy 200.025 193.675) (xy 217.805 193.675)
 		)
 		(stroke
@@ -12461,16 +12501,6 @@
 			(type default)
 		)
 		(uuid "563e3141-3970-4d5b-8b70-22df33c2ab48")
-	)
-	(wire
-		(pts
-			(xy 256.54 339.09) (xy 256.54 339.725)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "56811ee5-df1e-439f-ba96-4c84a10fa1a7")
 	)
 	(wire
 		(pts
@@ -13011,6 +13041,16 @@
 			(type default)
 		)
 		(uuid "6618f6f2-8794-4c57-acb7-c18ef09f4f5f")
+	)
+	(wire
+		(pts
+			(xy 273.05 318.77) (xy 273.05 330.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "663b3a7e-2cc9-4b5d-9c21-35dac517e0da")
 	)
 	(wire
 		(pts
@@ -15854,6 +15894,16 @@
 	)
 	(wire
 		(pts
+			(xy 266.7 318.77) (xy 273.05 318.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b25ab24e-f61f-425e-a6ee-f1553424268f")
+	)
+	(wire
+		(pts
 			(xy 152.4 240.03) (xy 249.555 240.03)
 		)
 		(stroke
@@ -16594,6 +16644,16 @@
 	)
 	(wire
 		(pts
+			(xy 261.62 323.85) (xy 265.43 323.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cce91862-fa76-4e5d-ab3b-f0202c03f040")
+	)
+	(wire
+		(pts
 			(xy 132.08 330.835) (xy 132.08 328.93)
 		)
 		(stroke
@@ -16861,6 +16921,16 @@
 			(type default)
 		)
 		(uuid "d2c0f5d1-9da3-4b9e-9ba1-0e5792ce3539")
+	)
+	(wire
+		(pts
+			(xy 265.43 323.85) (xy 265.43 325.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d2c715e7-2697-44c2-ab8b-c5e3c8306e32")
 	)
 	(wire
 		(pts
@@ -17204,16 +17274,6 @@
 	)
 	(wire
 		(pts
-			(xy 242.57 339.725) (xy 256.54 339.725)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dd7d6b84-62a7-4cd7-9758-841b3968b38a")
-	)
-	(wire
-		(pts
 			(xy 360.045 230.505) (xy 262.255 230.505)
 		)
 		(stroke
@@ -17451,6 +17511,16 @@
 			(type default)
 		)
 		(uuid "e5d70188-71bd-474e-a1ce-2f0fc5928704")
+	)
+	(wire
+		(pts
+			(xy 256.54 339.09) (xy 242.57 339.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e5e0f54e-bcca-458e-b35d-c398d16e1c29")
 	)
 	(wire
 		(pts
@@ -18194,6 +18264,16 @@
 	)
 	(wire
 		(pts
+			(xy 256.54 342.9) (xy 270.51 342.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f960a1b2-fd48-4ecc-bcc6-508145d9cd70")
+	)
+	(wire
+		(pts
 			(xy 332.74 183.515) (xy 335.28 183.515)
 		)
 		(stroke
@@ -18374,7 +18454,7 @@
 	)
 	(wire
 		(pts
-			(xy 242.57 316.23) (xy 242.57 339.725)
+			(xy 242.57 316.23) (xy 242.57 339.09)
 		)
 		(stroke
 			(width 0)
@@ -23868,73 +23948,6 @@
 	)
 	(symbol
 		(lib_id "MX_Hybrid:MX-NoLED")
-		(at 252.73 340.36 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-000061bb2e33")
-		(property "Reference" "MX70"
-			(at 253.5682 334.6958 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "#"
-			(at 253.5682 336.5754 0)
-			(effects
-				(font
-					(size 0.508 0.508)
-				)
-			)
-		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-1U-NoLED"
-			(at 236.855 340.995 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 236.855 340.995 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 252.73 340.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2cbf50ac-0e47-4d25-9301-ca0eb4ef9209")
-		)
-		(pin "2"
-			(uuid "57ab5297-04d4-4801-9b6c-4f2c5e15b9f7")
-		)
-		(instances
-			(project ""
-				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
-					(reference "MX70")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MX_Hybrid:MX-NoLED")
 		(at 87.63 362.585 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -25517,73 +25530,6 @@
 			(project ""
 				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
 					(reference "C14")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MX_Hybrid:MX-NoLED")
-		(at 262.89 320.04 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-000061bcf710")
-		(property "Reference" "MX71"
-			(at 263.7282 314.3758 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "Return"
-			(at 263.7282 316.2554 0)
-			(effects
-				(font
-					(size 0.508 0.508)
-				)
-			)
-		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-ISO-NoLED"
-			(at 247.015 320.675 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 247.015 320.675 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 262.89 320.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b4f7e88f-3597-4636-8edf-bc142e7606b2")
-		)
-		(pin "2"
-			(uuid "2fd5532c-4ba3-4289-b36f-471fc61d8e3d")
-		)
-		(instances
-			(project ""
-				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
-					(reference "MX71")
 					(unit 1)
 				)
 			)
@@ -40351,6 +40297,79 @@
 			(project "A500KB"
 				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
 					(reference "D73")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "MX_Hybrid:MX-LSHIFT_LR")
+		(at 269.24 326.39 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "554d883a-a148-4758-9b5b-b87dfe055539")
+		(property "Reference" "MX70"
+			(at 275.59 332.74 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+			)
+		)
+		(property "Value" "# Return"
+			(at 273.05 333.6352 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-ISO-Combo-Hash"
+			(at 268.605 310.515 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 268.605 310.515 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 269.24 326.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "783f5c85-f03b-443e-8c0f-3c4edb469448")
+		)
+		(pin "3"
+			(uuid "1f9b89d3-c571-4e60-a203-310ae2d399fa")
+		)
+		(pin "2"
+			(uuid "b62be02d-7a48-455c-a4bd-383d1df1e0b8")
+		)
+		(pin "1"
+			(uuid "e7207498-2d2e-4c87-a032-0450d5c471b0")
+		)
+		(instances
+			(project "A500KB"
+				(path "/0fb41543-9ec7-44b0-8d09-79a8fb596336"
+					(reference "MX70")
 					(unit 1)
 				)
 			)

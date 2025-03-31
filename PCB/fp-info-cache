@@ -1,4 +1,4 @@
-24179717951207170
+24188434585392491
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -65842,6 +65842,13 @@ MXMitsumi-1.25U-PlateCutout_Square
 0
 0
 MXMitsumi
+MXMitsumi-1.75U+1U-PlateCutout
+
+
+0
+0
+0
+MXMitsumi
 MXMitsumi-1.75U-NoLED
 
 
@@ -65996,6 +66003,27 @@ MXMitsumi-9U-PlateCutout_Cherry_exact
 0
 0
 MXMitsumi
+MXMitsumi-ANSI-Combo-Hash
+
+
+0
+9
+4
+MXMitsumi
+MXMitsumi-ISO+#_PlateCutout_Cherry
+
+
+0
+0
+0
+MXMitsumi
+MXMitsumi-ISO-Combo-Hash
+
+
+0
+11
+4
+MXMitsumi
 MXMitsumi-ISO-NoLED
 
 
@@ -66018,6 +66046,13 @@ MXMitsumi-ISO-PlateCutout_Cherry
 0
 MXMitsumi
 MXMitsumi-ISO-PlateCutout_Cherry_exact
+
+
+0
+0
+0
+MXMitsumi
+MXMitsumi-USReturn+Dummy_PlateCutout_Cherry
 
 
 0

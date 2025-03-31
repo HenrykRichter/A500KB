@@ -504,6 +504,190 @@
 				)
 			)
 		)
+		(symbol "Switch:SW_Push_Dual_x2"
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "SW"
+				(at 1.27 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "SW_Push_Dual_x2"
+				(at 0 -1.524 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Push button switch, generic, separate symbols, four pins"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "switch normally-open pushbutton push-button"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "SW_Push_Dual_x2_0_1"
+				(circle
+					(center -2.032 0)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 1.27) (xy 0 3.048)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 1.27) (xy -2.54 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.032 0)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "SW_Push_Dual_x2_1_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "SW_Push_Dual_x2_2_1"
+				(pin passive line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 	)
 	(wire
 		(pts
@@ -927,16 +1111,6 @@
 	)
 	(wire
 		(pts
-			(xy 62.23 368.935) (xy 63.5 368.935)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aaae9883-82a1-4baa-966f-f99ec2752d55")
-	)
-	(wire
-		(pts
 			(xy 139.7 368.935) (xy 138.43 368.935)
 		)
 		(stroke
@@ -1124,6 +1298,17 @@
 			(type default)
 		)
 		(uuid "f569c8fd-49cf-435f-967c-896584271ed9")
+	)
+	(text "To swap between ISO and US layouts:\n- Change footprint MX5+11 \n   from ISO version: MXMitsumi:MXMitsumi-1.75U+1U-PlateCutout\n   to US version: MXMitsumi:MXMitsumi-2.75U-PlateCutout_Cherry_exact\n- Change footprint MX71+70\n   from ISO version: MXMitsumi:MXMitsumi-ISO+#_PlateCutout_Cherry\n   to US version: MXMitsumi-USReturn+Dummy_PlateCutout_Cherry\n\n(It may be easier in PCB Editor, where you have to re-do the fills, anyway - hotkey \"B\")"
+		(exclude_from_sim no)
+		(at 108.966 246.126 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "71b9f6b6-b640-45c1-bd2f-765874d57732")
 	)
 	(symbol
 		(lib_id "MX_Hybrid:MX-NoLED")
@@ -4611,207 +4796,6 @@
 	)
 	(symbol
 		(lib_id "MX_Hybrid:MX-NoLED")
-		(at 254 347.345 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-000061bb2e33")
-		(property "Reference" "MX70"
-			(at 254.8382 341.6808 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "#"
-			(at 254.8382 343.5604 0)
-			(effects
-				(font
-					(size 0.508 0.508)
-				)
-			)
-		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
-			(at 238.125 347.98 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 238.125 347.98 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 254 347.345 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "07f942c2-f664-4df3-b44d-9cb5f9d630c9")
-		)
-		(pin "1"
-			(uuid "b26c2f97-d786-4efc-bc01-4a506d4ac8b4")
-		)
-		(instances
-			(project ""
-				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
-					(reference "MX70")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MX_Hybrid:MX-NoLED")
-		(at 58.42 370.205 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-000061bbb892")
-		(property "Reference" "MX5"
-			(at 59.2582 364.5408 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "LShift"
-			(at 59.2582 366.4204 0)
-			(effects
-				(font
-					(size 0.508 0.508)
-				)
-			)
-		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-1.75U-PlateCutout"
-			(at 42.545 370.84 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 42.545 370.84 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 58.42 370.205 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "a11499d4-fdb5-4588-a2a9-cecab060bba2")
-		)
-		(pin "2"
-			(uuid "bf6f61cc-6f71-4211-9d32-03476521b5c2")
-		)
-		(instances
-			(project ""
-				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
-					(reference "MX5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MX_Hybrid:MX-NoLED")
-		(at 73.66 370.205 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-000061bbb898")
-		(property "Reference" "MX11"
-			(at 74.4982 364.5408 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "<>"
-			(at 74.4982 366.4204 0)
-			(effects
-				(font
-					(size 0.508 0.508)
-				)
-			)
-		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-1U-PlateCutout_Square"
-			(at 57.785 370.84 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 57.785 370.84 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 73.66 370.205 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b5c116a2-3413-46b9-8f4b-5839e1d0cbf4")
-		)
-		(pin "2"
-			(uuid "e68c1845-dc1b-45da-bccf-dac4c8bd01f9")
-		)
-		(instances
-			(project ""
-				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
-					(reference "MX11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "MX_Hybrid:MX-NoLED")
 		(at 88.9 370.205 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5899,7 +5883,7 @@
 				)
 			)
 		)
-		(property "Value" "Return"
+		(property "Value" "Return, #"
 			(at 264.9982 323.2404 0)
 			(effects
 				(font
@@ -5907,7 +5891,7 @@
 				)
 			)
 		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-ISO-PlateCutout_Cherry"
+		(property "Footprint" "MXMitsumi:MXMitsumi-ISO+#_PlateCutout_Cherry"
 			(at 248.285 327.66 0)
 			(effects
 				(font
@@ -7999,6 +7983,80 @@
 		)
 	)
 	(symbol
+		(lib_id "Switch:SW_Push_Dual_x2")
+		(at 59.69 372.11 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "464a7cc9-a503-431f-a960-17c81051c65b")
+		(property "Reference" "MX5+11"
+			(at 59.69 364.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Lshift, <>"
+			(at 59.69 367.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-2.75U-PlateCutout_Cherry_exact"
+			(at 59.69 367.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 59.69 367.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, separate symbols, four pins"
+			(at 59.69 372.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3fc1a9b4-8956-49c2-9359-b207ccb312aa")
+		)
+		(pin "3"
+			(uuid "4f630356-5f66-44c4-916e-776c5b5aa994")
+		)
+		(pin "4"
+			(uuid "5b9620e8-ec45-403f-ae6d-3aebb69976ef")
+		)
+		(pin "2"
+			(uuid "dbd365f6-afef-41db-b4f0-93c4e69f2f14")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX5+11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "LED_Cutout_LIB:LED_Cutout")
 		(at 88.9 222.25 0)
 		(unit 1)
@@ -8183,6 +8241,79 @@
 				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
 					(reference "LEDC10")
 					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push_Dual_x2")
+		(at 73.66 372.11 0)
+		(unit 2)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "73d64687-5773-4177-9034-4497d4d1093b")
+		(property "Reference" "MX5+11"
+			(at 73.66 364.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Lshift, <>"
+			(at 73.66 367.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "MXMitsumi:MXMitsumi-2.75U-PlateCutout_Cherry_exact"
+			(at 73.66 367.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 73.66 367.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Push button switch, generic, separate symbols, four pins"
+			(at 73.66 372.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3fc1a9b4-8956-49c2-9359-b207ccb312ab")
+		)
+		(pin "3"
+			(uuid "4f630356-5f66-44c4-916e-776c5b5aa995")
+		)
+		(pin "4"
+			(uuid "5b9620e8-ec45-403f-ae6d-3aebb69976f0")
+		)
+		(pin "2"
+			(uuid "dbd365f6-afef-41db-b4f0-93c4e69f2f15")
+		)
+		(instances
+			(project ""
+				(path "/14d2be24-e894-4dc3-9020-12862a44e771"
+					(reference "MX5+11")
+					(unit 2)
 				)
 			)
 		)
