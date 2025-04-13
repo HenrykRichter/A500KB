@@ -763,21 +763,6 @@ int main(void)
 	inputstate = led_getinputstate(); /* get current inputs state */
 	keyb_idle++;
 
-#ifdef ENABLE_USB
-	/* jump to USB main loop when USB connection was established */
-	if( get_usb_config_status() != 0 )
-	{
-#ifdef DEBUG
-  		uart1_puts("Entering USB mode\r\n");
-#endif
-		mainloop_usb();
-#ifdef DEBUG
-  		uart1_puts("Left USB mode\r\n");
-#endif
-		continue;
-	}	
-#endif /* ENABLE_USB */
-
 #ifdef ENABLE_WATCHDOG
 	wdt_reset();    /* we're alive (!) */
 #endif
@@ -790,6 +775,21 @@ int main(void)
 		TIFR2  = 0x01; /* clear TOV0 overflow flag (write 1 to set flag to 0) */
 		led_digital_step();
 	 }
+
+#ifdef ENABLE_USB
+		/* jump to USB main loop when USB connection was established */
+		if( get_usb_config_status() != 0 )
+		{
+#ifdef DEBUG
+  			uart1_puts("Entering USB mode\r\n");
+#endif
+			mainloop_usb();
+#ifdef DEBUG
+  			uart1_puts("Left USB mode\r\n");
+#endif
+			continue;
+		}	
+#endif /* ENABLE_USB */
 	}
 
 	while( state & (STATE_POWERUP|STATE_RESYNC) )
@@ -880,11 +880,6 @@ int main(void)
 //	  OPORT = (OPORT&(~(OMASK))) | j ; /* make current high, clear rest */
 	  OPORT =  (OPORT|(OMASK)) ^ j; /* make current low, set rest to high */
 
-	  /* this delay could be a bit higher considering impedances/capacitance across the keyboard */
-	  /* e.g. 10-20 us delay + check if KBClock is low from the other end */
-	  /* also: differentiate between KBWAIT and idle or include a short loop */
-	  _delay_us(5); /* wait a little (200 kHz @ 5us) */
-
 	  /*------------------------------------------------------ */
 	  /* check whether we got an acknowledgement               */
 	  /*                                                       */
@@ -924,6 +919,11 @@ int main(void)
 	  }
 	  else
 	  {
+		/* this delay could be a bit higher considering impedances/capacitance across the keyboard */
+		/* e.g. 10-20 us delay + check if KBClock is low from the other end */
+		/* also: differentiate between KBWAIT and idle or include a short loop */
+		_delay_us(5); /* wait a little (200 kHz @ 5us) */
+
 		if( keyb_idle > 5 )
 		{
 			/* check if there is a command from remote end */

@@ -18,7 +18,8 @@
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
 DEVICE     = at90usb1287
-CLOCK      = 8000000
+#CLOCK      = 8000000
+CLOCK      = 16000000
 PROGRAMMER = -c usbasp
 OBJECTS    = uart.o twi.o main.o usb.o spi.o led_digital.o
 OBJECTS3000 = led3000.o $(OBJECTS)
