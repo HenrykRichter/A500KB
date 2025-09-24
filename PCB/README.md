@@ -7,8 +7,12 @@ The two variants of the PCBs in this repository are discussed below. In a nutshe
 
 ### PCB ordering
 
+**Caution** There are two styles of Keyboard and Plate designs. The one with the suffix "US" is designed specifically for large left Shift (2.75U) and the "BigAss" mirrored L style return key. Should your keycap set include an ISO-style return key (like in most of my pictures), please choose the variant without "US" suffix.
+
 - 1 PCB from A500KB\_Gerber, 2 layer PCB in FR4, 1.2mm thickness for a little more space in bottom case (standard 1.6mm will still be compatible)
 - 1 PCB from A500KBPlate\_Gerber, 1 layer PCB in FR4 or Alu, 1mm thickness for PCB or plate mounted MX stabilizers _OR_ A500KBPlate\_Gerber\_V2D.zip for Costar style stabilizers
+
+Starting with V5, there is also a US version of PCB and Plate designs. The US variant includes a large LShift (2.75U) and a large Return (inverted L). Please note that the respective keycaps for ISO Keyboards will not fit on the US version and vice versa.
 
 ### 3D printing
 
