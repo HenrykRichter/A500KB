@@ -37,6 +37,10 @@ You also might consider to look at Spacebar\_ExtraSprings for Mitsumi mechanical
 
 Also of relevance for Mitsumi builds is Keyboard\_CapsLockLED to be printed in transparent filament or resin. This light guide is supposed to point towards the clear dot on the CapsLock key from underneath.
 
+One CDTV Keyboard I came across had studs in its lower case which were about 2mm shorter than those of other 
+A2000-4000 keyboards I encountered. The A500KB might sit a bit too low in such CDTV keyboard enclosures. Simply place
+three 3D printed adapters of CDTVKeyboard\_Stud\_Adapter.stl on the top row studs in that case.
+
 ### Parts
 
 - Please see schematics and/or A500KB.csv for the latest list. All needed components were marked active at the last check with common distributors (like Digikey or Mouser).
