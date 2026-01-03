@@ -1,7 +1,7 @@
 (kicad_sch
-	(version 20231120)
+	(version 20250114)
 	(generator "eeschema")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(uuid "14d2be24-e894-4dc3-9020-12862a44e771")
 	(paper "A2")
 	(title_block
@@ -12,9 +12,13 @@
 	)
 	(lib_symbols
 		(symbol "Graphic:Logo_Open_Hardware_Small"
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
-				(offset 1.016) hide)
+				(offset 1.016)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -82,17 +86,6 @@
 			)
 			(symbol "Logo_Open_Hardware_Small_0_1"
 				(rectangle
-					(start -10.16 -7.62)
-					(end -6.35 -11.43)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
 					(start -10.16 8.89)
 					(end -6.35 2.54)
 					(stroke
@@ -104,8 +97,8 @@
 					)
 				)
 				(rectangle
-					(start -6.35 -3.81)
-					(end -2.54 -11.43)
+					(start -10.16 -7.62)
+					(end -6.35 -11.43)
 					(stroke
 						(width 0)
 						(type default)
@@ -126,8 +119,8 @@
 					)
 				)
 				(rectangle
-					(start -3.81 -1.27)
-					(end 0 -3.81)
+					(start -6.35 -3.81)
+					(end -2.54 -11.43)
 					(stroke
 						(width 0)
 						(type default)
@@ -148,8 +141,8 @@
 					)
 				)
 				(rectangle
-					(start 0 -1.27)
-					(end 3.81 -11.43)
+					(start -3.81 -1.27)
+					(end 0 -3.81)
 					(stroke
 						(width 0)
 						(type default)
@@ -161,6 +154,17 @@
 				(rectangle
 					(start 0 5.08)
 					(end 3.81 2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0 -1.27)
+					(end 3.81 -11.43)
 					(stroke
 						(width 0)
 						(type default)
@@ -214,11 +218,16 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "LED_Cutout_LIB:LED_Cutout"
-			(pin_numbers hide)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom no)
 			(on_board yes)
@@ -278,6 +287,7 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "MX_Hybrid:MX-NoLED"
 			(pin_names
@@ -365,14 +375,6 @@
 						(type none)
 					)
 				)
-				(text "COL"
-					(at 3.175 0 0)
-					(effects
-						(font
-							(size 0.762 0.762)
-						)
-					)
-				)
 				(text "ROW"
 					(at 0 -1.905 900)
 					(effects
@@ -382,26 +384,16 @@
 						(justify right)
 					)
 				)
-			)
-			(symbol "MX-NoLED_1_1"
-				(pin passive line
-					(at 3.81 1.27 180)
-					(length 2.54)
-					(name "COL"
-						(effects
-							(font
-								(size 0 0)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 0 0)
-							)
+				(text "COL"
+					(at 3.175 0 0)
+					(effects
+						(font
+							(size 0.762 0.762)
 						)
 					)
 				)
+			)
+			(symbol "MX-NoLED_1_1"
 				(pin passive line
 					(at -1.27 -3.81 90)
 					(length 2.54)
@@ -420,7 +412,26 @@
 						)
 					)
 				)
+				(pin passive line
+					(at 3.81 1.27 180)
+					(length 2.54)
+					(name "COL"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 0 0)
+							)
+						)
+					)
+				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "Mechanical:MountingHole"
 			(pin_names
@@ -503,10 +514,13 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
 		(symbol "Switch:SW_Push_Dual_x2"
 			(pin_names
-				(offset 1.016) hide)
+				(offset 1.016)
+				(hide yes)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -587,10 +601,9 @@
 						(type none)
 					)
 				)
-				(polyline
-					(pts
-						(xy 2.54 1.27) (xy -2.54 1.27)
-					)
+				(circle
+					(center 2.032 0)
+					(radius 0.508)
 					(stroke
 						(width 0)
 						(type default)
@@ -599,9 +612,10 @@
 						(type none)
 					)
 				)
-				(circle
-					(center 2.032 0)
-					(radius 0.508)
+				(polyline
+					(pts
+						(xy 2.54 1.27) (xy -2.54 1.27)
+					)
 					(stroke
 						(width 0)
 						(type default)
@@ -687,7 +701,19 @@
 					)
 				)
 			)
+			(embedded_fonts no)
 		)
+	)
+	(text "To swap between ISO and US layouts:\n- Change footprint MX5+11 \n   from ISO version: MXMitsumi:MXMitsumi-1.75U+1U-PlateCutout\n   to US version: MXMitsumi:MXMitsumi-2.75U-PlateCutout_Cherry_exact\n   CAUTION: the US footprint must be rotated 180°, i.e. flipped compared to right shift\n- Change footprint MX71+70\n   from ISO version: MXMitsumi:MXMitsumi-ISO+#_PlateCutout_Cherry\n   to US version: MXMitsumi-USReturn+Dummy_PlateCutout_Cherry\n\n(It may be easier in PCB Editor, where you have to re-do the fills, anyway - hotkey \"B\")"
+		(exclude_from_sim no)
+		(at 108.966 246.126 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "71b9f6b6-b640-45c1-bd2f-765874d57732")
 	)
 	(wire
 		(pts
@@ -1298,17 +1324,6 @@
 			(type default)
 		)
 		(uuid "f569c8fd-49cf-435f-967c-896584271ed9")
-	)
-	(text "To swap between ISO and US layouts:\n- Change footprint MX5+11 \n   from ISO version: MXMitsumi:MXMitsumi-1.75U+1U-PlateCutout\n   to US version: MXMitsumi:MXMitsumi-2.75U-PlateCutout_Cherry_exact\n- Change footprint MX71+70\n   from ISO version: MXMitsumi:MXMitsumi-ISO+#_PlateCutout_Cherry\n   to US version: MXMitsumi-USReturn+Dummy_PlateCutout_Cherry\n\n(It may be easier in PCB Editor, where you have to re-do the fills, anyway - hotkey \"B\")"
-		(exclude_from_sim no)
-		(at 108.966 246.126 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "71b9f6b6-b640-45c1-bd2f-765874d57732")
 	)
 	(symbol
 		(lib_id "MX_Hybrid:MX-NoLED")
@@ -5891,7 +5906,7 @@
 				)
 			)
 		)
-		(property "Footprint" "MXMitsumi:MXMitsumi-ISO+#_PlateCutout_Cherry"
+		(property "Footprint" "MXMitsumi:MXMitsumi-USReturn+Dummy_PlateCutout_Cherry"
 			(at 248.285 327.66 0)
 			(effects
 				(font
@@ -8951,4 +8966,5 @@
 			(page "1")
 		)
 	)
+	(embedded_fonts no)
 )
