@@ -7,7 +7,7 @@ The two variants of the PCBs in this repository are discussed below. In a nutshe
 
 ### PCB ordering
 
-**Caution** There are two styles of Keyboard and Plate designs. The one with the suffix "US" is designed specifically for large left Shift (2.75U) and the "BigAss" mirrored L style return key. Should your keycap set include an ISO-style return key (like in most of my pictures), please choose the variant without "US" suffix.
+**Caution** There are two styles of Keyboard and Plate designs. The one with the suffix "US" is designed specifically for large left Shift (2.75U) and the "BigAss" mirrored L style return key. Should your keycap set include an ISO-style return key (like in most of my pictures), please choose the variant without "US" suffix. See below for comparison pictures towards Keycap styles, if still unsure.
 
 - 1 PCB from A500KB\_Gerber, 2 layer PCB in FR4, 1.2mm thickness for a little more space in bottom case (standard 1.6mm will still be compatible)
 - 1 PCB from A500KBPlate\_Gerber, 1 layer PCB in FR4 or Alu, 1mm thickness for PCB or plate mounted MX stabilizers _OR_ A500KBPlate\_Gerber\_V2D.zip for Costar style stabilizers
@@ -72,6 +72,14 @@ Afterwards, the keyswitches may be added. It is suggested to place four keyswitc
 Add the 3D printed spacers, LED frame and lenses.
 
 Consider some electric short protection as the last step after fitment tests are done and possibly remaining THT parts (like J5) are in. For me, two layers of Kapton (or generic Polyimide) tape have been working well. The Kapton doesn't add significant thickness to the main PCB.
+
+### PCB / Plate variant choice
+
+The following pictures should help to decide which PCB and Plate variant to obtain. The critical part in this choice is the Return key, where the mounting points differ significantly between the international version (ISO) version and the US (ANSI) layout.
+![INTL](https://github.com/HenrykRichter/A500KB/raw/main/Pics/PCB_Plate_INT_1.jpeg)
+![US1](https://github.com/HenrykRichter/A500KB/raw/main/Pics/PCB_Plate_US_1.jpeg)
+![CMP1](https://github.com/HenrykRichter/A500KB/raw/main/Pics/PCB_Plate_USvsINT_1.jpeg)
+![CMP2](https://github.com/HenrykRichter/A500KB/raw/main/Pics/PCB_Plate_USvsINT_2.jpeg)
 
 
 ## A500KBMini
